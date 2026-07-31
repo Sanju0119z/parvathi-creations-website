@@ -570,3 +570,7 @@ section {
   width: auto;
   display: block;
 }
+.nav-links a.active{
+  color: var(--gold);
+  font-weight: bold;
+}
