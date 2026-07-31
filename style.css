@@ -1,4 +1,4 @@
- Creations - Premium Boutique Theme */
+ /* Parvathi Creations -Premium Boutique Theme */
 
 * {
   margin: 0;
@@ -334,4 +334,116 @@ header {
   .gallery-item {
     height: 250px;
   }
+}
+/* Reviews Section */
+
+.reviews {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+.review-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.review-card {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.4s;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+}
+
+.review-card h3 {
+  color: var(--maroon);
+}
+
+.stars {
+  color: var(--gold);
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+
+/* Contact Section */
+
+.contact {
+  padding: 80px 8%;
+  text-align: center;
+  background: #fff3e8;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.contact-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.contact-box:hover {
+  transform: translateY(-8px);
+}
+
+.contact-box h3 {
+  color: var(--maroon);
+  margin-bottom: 10px;
+}
+
+
+/* WhatsApp Button */
+
+.whatsapp-btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 35px;
+  border-radius: 30px;
+  background: #25D366;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.05);
+}
+
+
+/* Footer */
+
+footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+footer span {
+  color: var(--gold);
+}
+
+
+/* Mobile Contact */
+
+@media(max-width:768px){
+
+  .reviews,
+  .contact {
+    padding: 60px 5%;
+  }
+
 }
