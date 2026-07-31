@@ -103,8 +103,7 @@ header {
 .fade-in {
   animation: fadeIn 1.2s ease-in-out;
 }
-
-@ke@keyframes fadeIn {
+ @keyframes fadeIn {
   ffrom {
     opacity: 0;
     transform: translateY(30px);
