@@ -1,1 +1,40 @@
+ Creations - Premium Boutique Theme */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fffaf5;
+  color: #3a1f1f;
+  line-height: 1.6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --gold: #c9a227;
+  --maroon: #6b1f2b;
+  --cream: #fffaf5;
+  --dark: #2b1515;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
