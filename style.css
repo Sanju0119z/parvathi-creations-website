@@ -98,14 +98,14 @@ header {
   transform: translateY(-5px);
 }
 
-/* Animation */
+/* /* Animation */
 
 .fade-in {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from {
+@ke@keyframes fadeIn {
+  ffrom {
     opacity: 0;
     transform: translateY(30px);
   }
@@ -113,5 +113,73 @@ header {
   to {
     opacity: 1;
     transform: translateY(0);
+  }}
+}}   }
+/* Hero Section */
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 8%;
+  background: linear-gradient(
+    rgba(255,250,245,0.85),
+    rgba(255,250,245,0.95)
+  );
+}
+
+.hero-content {
+  max-width: 800px;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero h1 {
+  font-size: 55px;
+  color: var(--maroon);
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: var(--gold);
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: var(--dark);
+}
+
+.hero .btn {
+  margin: 10px;
+}
+
+/* Floating effect */
+
+.hero img {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Mobile Hero */
+
+@media(max-width:768px){
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 17px;
   }
 }
