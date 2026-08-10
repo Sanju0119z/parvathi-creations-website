@@ -56,3 +56,97 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+/* =================================
+   FEATURED DESIGNS JAVASCRIPT
+================================= */
+
+let selectedDesign = "";
+
+
+/* LIKE BUTTON */
+
+function likeDesign(button) {
+
+    button.classList.toggle("liked");
+
+    if (button.classList.contains("liked")) {
+
+        button.innerHTML = "♥ Liked";
+
+    } else {
+
+        button.innerHTML = "♡ I Like This";
+
+    }
+
+}
+
+
+/* OPEN DESIGN DETAILS */
+
+function showDesignDetails(title, description) {
+
+    selectedDesign = title;
+
+    document.getElementById("modalDesignTitle")
+        .textContent = title;
+
+    document.getElementById("modalDesignDescription")
+        .textContent = description;
+
+    document.getElementById("designModal")
+        .classList.add("active");
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeDesignDetails() {
+
+    document.getElementById("designModal")
+        .classList.remove("active");
+
+}
+
+
+/* ENQUIRY */
+
+function sendDesignEnquiry() {
+
+    const message =
+        "Hello Parvathi Creations! " +
+        "I am interested in the design: " +
+        selectedDesign +
+        ". Please share more details.";
+
+    const whatsappNumber = "YOUR_WHATSAPP_NUMBER";
+
+    const url =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+    window.open(url, "_blank");
+
+}
+
+
+/* CLOSE WHEN CLICKING OUTSIDE */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById("designModal");
+
+        if (
+            event.target === modal
+        ) {
+            closeDesignDetails();
+        }
+
+    }
+);
