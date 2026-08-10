@@ -130,6 +130,171 @@
 
   </div>
 </section>
+  <!-- ==============================
+     FEATURED DESIGNS
+================================ -->
+
+<section class="featured-designs" id="featured">
+
+    <div class="section-heading">
+        <span class="section-subtitle">Our Collection</span>
+        <h2>Featured Designs</h2>
+        <p>Explore some of our beautiful handcrafted designs.</p>
+    </div>
+
+    <div class="featured-grid">
+
+        <!-- Design 1 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="images/featured1.jpg"
+                     alt="Elegant Maggam Work Design">
+                <span class="design-badge">Featured</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Elegant Maggam Work</h3>
+                <p>Beautiful traditional handwork designed for special occasions.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Elegant Maggam Work',
+                        'Beautiful traditional Maggam work created with detailed craftsmanship.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 2 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="images/featured2.jpg"
+                     alt="Designer Blouse">
+                <span class="design-badge">Popular</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Designer Blouse</h3>
+                <p>Stylish blouse designs customized to match your saree.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Designer Blouse',
+                        'Custom blouse designs with elegant finishing and personalized details.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 3 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="images/featured3.jpg"
+                     alt="Wedding Lehenga">
+                <span class="design-badge">New</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Wedding Lehenga</h3>
+                <p>Traditional and modern designs for weddings and celebrations.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Wedding Lehenga',
+                        'A beautiful festive design suitable for weddings and special occasions.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 4 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="images/featured4.jpg"
+                     alt="Saree Tassels">
+                <span class="design-badge">Handmade</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Saree Tassels</h3>
+                <p>Handcrafted tassels that add a beautiful finishing touch.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Saree Tassels',
+                        'Handcrafted saree tassels available in different colours and styles.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="featured-footer">
+        <a href="#gallery" class="view-all-btn">
+            View All Designs →
+        </a>
+    </div>
+
+</section>
+
+
+<!-- DESIGN DETAILS POPUP -->
+
+<div class="design-modal" id="designModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close"
+                onclick="closeDesignDetails()">
+            ×
+        </button>
+
+        <span class="modal-label">Parvathi Creations</span>
+
+        <h2 id="modalDesignTitle">
+            Design Name
+        </h2>
+
+        <p id="modalDesignDescription">
+            Design description
+        </p>
+
+        <button class="enquiry-btn"
+                onclick="sendDesignEnquiry()">
+            💬 Enquire About This Design
+        </button>
+
+    </div>
+
+</div>
 <!-- Gallery Section -->
 
 <section class="gallery" id="gallery">
