@@ -574,3 +574,352 @@ section {
   color: var(--gold);
   font-weight: bold;
 }
+/* =================================
+   FEATURED DESIGNS
+================================= */
+
+.featured-designs {
+    padding: 90px 7%;
+    background: #fffaf5;
+    text-align: center;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin: 0 auto 50px;
+}
+
+.section-subtitle {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.section-heading h2 {
+    font-size: 42px;
+    margin: 0 0 15px;
+}
+
+.section-heading p {
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* GRID */
+
+.featured-grid {
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 25px;
+}
+
+
+/* CARD */
+
+.design-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+
+    text-align: left;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.design-card:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.14);
+}
+
+
+/* IMAGE */
+
+.design-image {
+    position: relative;
+    height: 310px;
+    overflow: hidden;
+}
+
+.design-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease;
+}
+
+.design-card:hover .design-image img {
+    transform: scale(1.08);
+}
+
+
+/* BADGE */
+
+.design-badge {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    background: white;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.12);
+}
+
+
+/* INFORMATION */
+
+.design-info {
+    padding: 22px;
+}
+
+.design-info h3 {
+    margin: 0 0 10px;
+
+    font-size: 21px;
+}
+
+.design-info p {
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+}
+
+
+/* BUTTONS */
+
+.like-btn,
+.details-btn {
+    border: none;
+
+    padding: 10px 13px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    margin-right: 5px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.like-btn:hover,
+.details-btn:hover {
+    transform: translateY(-2px);
+}
+
+.like-btn {
+    background: #f7eee7;
+}
+
+.like-btn.liked {
+    background: #f1d3b9;
+}
+
+.details-btn {
+    background: #222;
+    color: white;
+}
+
+
+/* VIEW ALL */
+
+.featured-footer {
+    margin-top: 50px;
+}
+
+.view-all-btn {
+    display: inline-block;
+
+    padding: 14px 30px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    background: #222;
+    color: white;
+
+    transition:
+        transform 0.3s ease;
+}
+
+.view-all-btn:hover {
+    transform: translateY(-3px);
+}
+
+
+/* =================================
+   MODAL
+================================= */
+
+.design-modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+}
+
+.design-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: min(500px, 100%);
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    position: relative;
+
+    text-align: center;
+
+    animation:
+        modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 12px;
+    right: 16px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+.modal-label {
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.modal-content h2 {
+    font-size: 30px;
+
+    margin: 15px 0;
+}
+
+.modal-content p {
+    line-height: 1.7;
+
+    margin-bottom: 25px;
+}
+
+.enquiry-btn {
+    border: none;
+
+    padding: 14px 25px;
+
+    border-radius: 30px;
+
+    background: #222;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 1000px) {
+
+    .featured-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .featured-designs {
+        padding: 65px 5%;
+    }
+
+    .section-heading h2 {
+        font-size: 32px;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .design-image {
+        height: 350px;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+    }
+
+}
