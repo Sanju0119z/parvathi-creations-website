@@ -120,7 +120,7 @@ function sendDesignEnquiry() {
         selectedDesign +
         ". Please share more details.";
 
-    const whatsappNumber = "YOUR_WHATSAPP_NUMBER";
+    const whatsappNumber = "919550766784";
 
     const url =
         "https://wa.me/" +
