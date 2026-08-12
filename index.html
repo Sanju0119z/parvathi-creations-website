@@ -564,6 +564,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 30);
 });
 </script>
+  <script>
+function selectLanguage(language) {
+  localStorage.setItem("parvathiLanguage", language);
+
+  const languageScreen = document.getElementById("language-screen");
+
+  languageScreen.style.opacity = "0";
+  languageScreen.style.transition = "opacity 0.5s ease";
+
+  setTimeout(function () {
+    languageScreen.style.display = "none";
+
+    if (language === "te") {
+      alert("తెలుగులో Parvathi Creations కి స్వాగతం!");
+    } 
+    else if (language === "hi") {
+      alert("हिन्दी में Parvathi Creations में आपका स्वागत है!");
+    } 
+    else {
+      alert("Welcome to Parvathi Creations!");
+    }
+  }, 500);
+}
+
+/* Check if a language was already selected */
+document.addEventListener("DOMContentLoaded", function () {
+  const savedLanguage = localStorage.getItem("parvathiLanguage");
+
+  if (savedLanguage) {
+    const languageScreen = document.getElementById("language-screen");
+
+    if (languageScreen) {
+      languageScreen.style.display = "none";
+    }
+  }
+});
+</script>
 </body>
 
 </html>
