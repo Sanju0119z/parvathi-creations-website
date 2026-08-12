@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Parvathi Creations - Admin</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .admin-page {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 25px;
+        }
+
+        .admin-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+
+        .admin-card h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .admin-card label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .admin-card input,
+        .admin-card select,
+        .admin-card textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .admin-card textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        #imagePreview {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-top: 15px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .upload-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #8b3a62;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-page">
+
+    <div class="admin-card">
+
+        <h1>🌸 Parvathi Creations</h1>
+        <h2>Admin Upload</h2>
+
+        <label for="designName">Design Name</label>
+        <input
+            type="text"
+            id="designName"
+            placeholder="Example: Bridal Maggam Blouse"
+        >
+
+        <label for="category">Category</label>
+
+        <select id="category">
+            <option value="">Select Category</option>
+            <option value="Sarees">Sarees</option>
+            <option value="Blouse">Blouse</option>
+            <option value="Maggam">Maggam Work</option>
+            <option value="Wedding Dresses">Wedding Dresses</option>
+            <option value="Saree Tassels">Saree Tassels</option>
+            <option value="Frocks">Frocks</option>
+            <option value="Lehenga">Lehenga</option>
+        </select>
+
+        <label for="description">Description</label>
+
+        <textarea
+            id="description"
+            placeholder="Enter details about this design..."
+        ></textarea>
+
+        <label for="designImage">Design Photo</label>
+
+        <input
+            type="file"
+            id="designImage"
+            accept="image/*"
+        >
+
+        <img id="imagePreview" alt="Image Preview">
+
+        <button class="upload-btn" onclick="uploadDesign()">
+            ⬆️ Upload Design
+        </button>
+
+        <a class="back-btn" href="index.html">
+            ← Back to Website
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("designImage");
+const imagePreview = document.getElementById("imagePreview");
+
+imageInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = "block";
+    }
+
+});
+
+function uploadDesign() {
+
+    const name = document.getElementById("designName").value;
+    const category = document.getElementById("category").value;
+    const description = document.getElementById("description").value;
+    const image = document.getElementById("designImage").files[0];
+
+    if (!name || !category || !image) {
+        alert("Please enter the design name, category and photo.");
+        return;
+    }
+
+    alert("Admin page is ready! Next we will connect the upload button to secure online storage.");
+
+}
+
+</script>
+
+</body>
+</html>
