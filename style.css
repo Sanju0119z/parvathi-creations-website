@@ -1011,3 +1011,24 @@ section {
         padding: 25px 20px;
     }
 }
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #24151b;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+footer span {
+    font-weight: 600;
+}
