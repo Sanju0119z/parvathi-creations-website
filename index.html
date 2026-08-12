@@ -520,6 +520,29 @@
 
 </footer>
   <script src="script.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  let progress = 0;
+  const progressBar = document.getElementById("loading-progress");
+  const percentText = document.getElementById("loading-percent");
+  const loadingScreen = document.getElementById("loading-screen");
+
+  const loadingTimer = setInterval(function () {
+    progress += 1;
+
+    progressBar.style.width = progress + "%";
+    percentText.textContent = progress + "%";
+
+    if (progress >= 100) {
+      clearInterval(loadingTimer);
+
+      setTimeout(function () {
+        loadingScreen.classList.add("hide");
+      }, 500);
+    }
+  }, 30);
+});
+</script>
 </body>
 
 </html>
