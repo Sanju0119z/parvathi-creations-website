@@ -1032,3 +1032,111 @@ footer p {
 footer span {
     font-weight: 600;
 }
+/* ===== TRADITIONAL TAILOR LOADING SCREEN ===== */
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #2b101b;
+  color: #f6d58a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loading-logo {
+  width: 70px;
+  height: 70px;
+  border: 2px solid #f6d58a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-family: Georgia, serif;
+  margin-bottom: 12px;
+}
+
+#loading-screen h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 38px;
+  letter-spacing: 4px;
+}
+
+#loading-screen > p {
+  margin: 5px 0 25px;
+  letter-spacing: 5px;
+}
+
+.tailor-animation {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 48px;
+  margin: 10px 0 25px;
+  animation: tailorWalk 1.5s infinite ease-in-out;
+}
+
+.tailor-animation span {
+  font-size: 28px;
+  animation: threadMove 1s infinite alternate;
+}
+
+.loading-bar {
+  width: min(80%, 420px);
+  height: 12px;
+  border: 1px solid #f6d58a;
+  border-radius: 20px;
+  padding: 2px;
+}
+
+#loading-progress {
+  width: 0%;
+  height: 100%;
+  border-radius: 20px;
+  background: #f6d58a;
+  transition: width 0.2s ease;
+}
+
+#loading-percent {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.loading-text {
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-top: 18px;
+}
+
+@keyframes tailorWalk {
+  0%, 100% {
+    transform: translateX(-25px);
+  }
+
+  50% {
+    transform: translateX(25px);
+  }
+}
+
+@keyframes threadMove {
+  from {
+    transform: rotate(-10deg);
+  }
+
+  to {
+    transform: rotate(10deg);
+  }
+}
+
+/* Hide loading screen */
+#loading-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
