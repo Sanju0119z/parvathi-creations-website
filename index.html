@@ -600,7 +600,52 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+<script>
+const translations = {
+  en: {
+    home: "Home",
+    designs: "Designs",
+    services: "Services",
+    gallery: "Gallery",
+    about: "About Us",
+    contact: "Contact",
+    language: "Language"
+  },
+
+  te: {
+    home: "హోమ్",
+    designs: "డిజైన్స్",
+    services: "సేవలు",
+    gallery: "గ్యాలరీ",
+    about: "మా గురించి",
+    contact: "సంప్రదించండి",
+    language: "భాష"
+  },
+
+  hi: {
+    home: "होम",
+    designs: "डिज़ाइन्स",
+    services: "सेवाएँ",
+    gallery: "गैलरी",
+    about: "हमारे बारे में",
+    contact: "संपर्क करें",
+    language: "भाषा"
+  }
+};
+
+function applyLanguage(language) {
+  localStorage.setItem("parvathiLanguage", language);
+
+  document.querySelectorAll("[data-translate]").forEach(function(element) {
+    const key = element.getAttribute("data-translate");
+
+    if (translations[language] && translations[language][key]) {
+      element.textContent = translations[language][key];
+    }
+  });
+}   
 </script>
+  
 </body>
 
 </html>
