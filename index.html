@@ -570,24 +570,49 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
     const progressBar = document.getElementById("progressBar");
     const percentText = document.getElementById("percentText");
     const loadingScreen = document.getElementById("loadingScreen");
 
+    if (!loadingScreen) return;
+
     let progress = 0;
 
-    const loadingTimer = setInterval(function () {
+    const timer = setInterval(function () {
 
-        progress += 2;
-
-        if (progress > 100) {
-            progress = 100;
-        }
+        progress += 1;
 
         if (progressBar) {
             progressBar.style.width = progress + "%";
         }
 
+        if (percentText) {
+            percentText.textContent = progress + "%";
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(timer);
+
+            setTimeout(function () {
+
+                loadingScreen.style.transition = "opacity 0.8s ease";
+                loadingScreen.style.opacity = "0";
+
+                setTimeout(function () {
+                    loadingScreen.style.display = "none";
+                }, 800);
+
+            }, 400);
+        }
+
+    }, 30);
+
+});
+</script>
         if (percentText) {
             percentText.textContent = progress + "%";
         }
