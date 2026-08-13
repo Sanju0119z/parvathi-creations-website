@@ -567,27 +567,51 @@
 </footer>
   <script src="script.js"></script>
   <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
-  let progress = 0;
-  const progressBar = document.getElementById("loading-progress");
-  const percentText = document.getElementById("loading-percent");
-  const loadingScreen = document.getElementById("loading-screen");
 
-  const loadingTimer = setInterval(function () {
-    progress += 1;
+    const progressBar = document.getElementById("progressBar");
+    const percentText = document.getElementById("percentText");
+    const loadingScreen = document.getElementById("loadingScreen");
 
-    progressBar.style.width = progress + "%";
-    percentText.textContent = progress + "%";
+    let progress = 0;
 
-    if (progress >= 100) {
-      clearInterval(loadingTimer);
+    const loadingTimer = setInterval(function () {
 
-      setTimeout(function () {
-        loadingScreen.classList.add("hide");
-      }, 500);
-    }
-  }, 30);
+        progress += 2;
+
+        if (progress > 100) {
+            progress = 100;
+        }
+
+        if (progressBar) {
+            progressBar.style.width = progress + "%";
+        }
+
+        if (percentText) {
+            percentText.textContent = progress + "%";
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(loadingTimer);
+
+            setTimeout(function () {
+
+                loadingScreen.style.opacity = "0";
+                loadingScreen.style.pointerEvents = "none";
+
+                setTimeout(function () {
+                    loadingScreen.style.display = "none";
+                }, 600);
+
+            }, 300);
+        }
+
+    }, 30);
+
 });
+</script>
 </script>
   <script>
 function selectLanguage(language) {
