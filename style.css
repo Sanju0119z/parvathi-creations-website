@@ -547,14 +547,24 @@ section {
 }
 
 
-/* Loading animation */
-
 .loader {
-  width: 45px;
-  height: 45px;
-  border: 4px solid var(--gold);
-  border-top-color: var(--maroon);
-  border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    border: 4px solid #d4af37;
+    border-top-color: #800000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: block;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
   animation: spin 1s linear infinite;
 }
 
