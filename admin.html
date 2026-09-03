@@ -8,6 +8,9 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         .admin-page {
             max-width: 600px;
@@ -23,6 +26,11 @@
         }
 
         .admin-card h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-card h2 {
             text-align: center;
             margin-bottom: 25px;
         }
@@ -72,6 +80,29 @@
             cursor: pointer;
         }
 
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
         .back-btn {
             display: block;
             text-align: center;
@@ -91,6 +122,7 @@
         <h2>Admin Upload</h2>
 
         <label for="designName">Design Name</label>
+
         <input
             type="text"
             id="designName"
@@ -127,9 +159,15 @@
 
         <img id="imagePreview" alt="Image Preview">
 
-        <button class="upload-btn" onclick="uploadDesign()">
+        <button
+            class="upload-btn"
+            id="uploadButton"
+            onclick="uploadDesign()"
+        >
             ⬆️ Upload Design
         </button>
+
+        <div id="message" class="message"></div>
 
         <a class="back-btn" href="index.html">
             ← Back to Website
@@ -141,21 +179,307 @@
 
 <script>
 
-const imageInput = document.getElementById("designImage");
-const imagePreview = document.getElementById("imagePreview");
+    // ==========================================
+    // SUPABASE CONNECTION
+    // ==========================================
 
-imageInput.addEventListener("change", function () {
+const SUPABASE_URL =
+    "https://ydhqjkyzbbooolaugydk.supabase.co";
 
-    const file = this.files[0];
+const SUPABASE_KEY =
+    "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
 
-    if (file) {
-        imagePreview.src = URL.createObjectURL(file);
-        imagePreview.style.display = "block";
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+    // ==========================================
+    // IMAGE PREVIEW
+    // ==========================================
+
+    const imageInput =
+        document.getElementById("designImage");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (file) {
+            imagePreview.src =
+                URL.createObjectURL(file);
+
+            imagePreview.style.display =
+                "block";
+        } else {
+            imagePreview.style.display =
+                "none";
+        }
+
+    });
+
+
+    // ==========================================
+    // CHECK LOGIN
+    // ==========================================
+
+    async function checkLogin() {
+
+        const {
+            data: { session }
+        } = await supabaseClient.auth.getSession();
+
+        if (!session) {
+
+            showMessage(
+                "Please log in before uploading a design.",
+                "error"
+            );
+
+            document.getElementById(
+                "uploadButton"
+            ).disabled = true;
+
+            return false;
+        }
+
+        return true;
     }
 
-});
+
+    // ==========================================
+    // UPLOAD DESIGN
+    // ==========================================
+
+    async function uploadDesign() {
+
+        const loggedIn =
+            await checkLogin();
+
+        if (!loggedIn) {
+            return;
+        }
+
+        const name =
+            document.getElementById(
+                "designName"
+            ).value.trim();
+
+        const category =
+            document.getElementById(
+                "category"
+            ).value;
+
+        const description =
+            document.getElementById(
+                "description"
+            ).value.trim();
+
+        const file =
+            document.getElementById(
+                "designImage"
+            ).files[0];
 
 
+        if (!name) {
+            showMessage(
+                "Please enter the design name.",
+                "error"
+            );
+            return;
+        }
+
+        if (!category) {
+            showMessage(
+                "Please select a category.",
+                "error"
+            );
+            return;
+        }
+
+        if (!file) {
+            showMessage(
+                "Please select a design photo.",
+                "error"
+            );
+            return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+            showMessage(
+                "Please select a valid image file.",
+                "error"
+            );
+            return;
+        }
+
+
+        const uploadButton =
+            document.getElementById(
+                "uploadButton"
+            );
+
+        uploadButton.disabled = true;
+        uploadButton.textContent =
+            "Uploading...";
+
+
+        try {
+
+            // Create unique file name
+
+            const fileExtension =
+                file.name.split(".").pop();
+
+            const fileName =
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2) +
+                "." +
+                fileExtension;
+
+
+            // Upload image
+
+            const {
+                error: uploadError
+            } = await supabaseClient.storage
+                .from("design-images")
+                .upload(
+                    fileName,
+                    file
+                );
+
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+
+            // Get public URL
+
+            const {
+                data: publicUrlData
+            } = supabaseClient.storage
+                .from("design-images")
+                .getPublicUrl(
+                    fileName
+                );
+
+            const imageUrl =
+                publicUrlData.publicUrl;
+
+
+            // Save to designs table
+
+            const {
+                error: databaseError
+            } = await supabaseClient
+                .from("designs")
+                .insert({
+
+                    name: name,
+
+                    category: category,
+
+                    description: description,
+
+                    image_url: imageUrl,
+
+                    featured: false
+
+                });
+
+
+            if (databaseError) {
+                throw databaseError;
+            }
+
+
+            // Success
+
+            showMessage(
+                "✅ Design uploaded successfully!",
+                "success"
+            );
+
+
+            // Clear form
+
+            document.getElementById(
+                "designName"
+            ).value = "";
+
+            document.getElementById(
+                "category"
+            ).value = "";
+
+            document.getElementById(
+                "description"
+            ).value = "";
+
+            document.getElementById(
+                "designImage"
+            ).value = "";
+
+            imagePreview.src = "";
+            imagePreview.style.display =
+                "none";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Upload failed: " +
+                error.message,
+                "error"
+            );
+
+        }
+
+
+        uploadButton.disabled = false;
+
+        uploadButton.textContent =
+            "⬆️ Upload Design";
+
+    }
+
+
+    // ==========================================
+    // MESSAGE
+    // ==========================================
+
+    function showMessage(text, type) {
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+        message.style.display =
+            "block";
+    }
+
+
+    // Check login when page opens
+
+    checkLogin();
 
 </script>
 
