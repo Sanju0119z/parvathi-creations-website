@@ -25,26 +25,26 @@
             box-shadow: 0 5px 25px rgba(0,0,0,0.12);
         }
 
-        .admin-card h1 {
+        h1 {
             text-align: center;
             margin-bottom: 10px;
         }
 
-        .admin-card h2 {
+        h2 {
             text-align: center;
             margin-bottom: 25px;
         }
 
-        .admin-card label {
+        label {
             display: block;
             margin-top: 15px;
             margin-bottom: 6px;
             font-weight: bold;
         }
 
-        .admin-card input,
-        .admin-card select,
-        .admin-card textarea {
+        input,
+        select,
+        textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -53,23 +53,14 @@
             font-size: 16px;
         }
 
-        .admin-card textarea {
+        textarea {
             min-height: 100px;
             resize: vertical;
         }
 
-        #imagePreview {
+        button {
             width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            margin-top: 15px;
-            border-radius: 15px;
-            display: none;
-        }
-
-        .upload-btn {
-            width: 100%;
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 14px;
             border: none;
             border-radius: 12px;
@@ -80,9 +71,14 @@
             cursor: pointer;
         }
 
-        .upload-btn:disabled {
+        button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+
+        .logout-btn {
+            background: #555;
+            margin-bottom: 15px;
         }
 
         .message {
@@ -103,11 +99,30 @@
             color: #c62828;
         }
 
+        #imagePreview {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-top: 15px;
+            border-radius: 15px;
+            display: none;
+        }
+
         .back-btn {
             display: block;
             text-align: center;
             margin-top: 20px;
             text-decoration: none;
+        }
+
+        /* Upload dashboard hidden until login */
+        #uploadSection {
+            display: none;
+        }
+
+        /* Login screen */
+        #loginSection {
+            display: block;
         }
     </style>
 </head>
@@ -119,63 +134,174 @@
     <div class="admin-card">
 
         <h1>🌸 Parvathi Creations</h1>
-        <h2>Admin Upload</h2>
 
-        <label for="designName">Design Name</label>
 
-        <input
-            type="text"
-            id="designName"
-            placeholder="Example: Bridal Maggam Blouse"
-        >
+        <!-- ============================= -->
+        <!-- LOGIN SECTION -->
+        <!-- ============================= -->
 
-        <label for="category">Category</label>
+        <div id="loginSection">
 
-        <select id="category">
-            <option value="">Select Category</option>
-            <option value="Sarees">Sarees</option>
-            <option value="Blouse">Blouse</option>
-            <option value="Maggam">Maggam Work</option>
-            <option value="Wedding Dresses">Wedding Dresses</option>
-            <option value="Saree Tassels">Saree Tassels</option>
-            <option value="Frocks">Frocks</option>
-            <option value="Lehenga">Lehenga</option>
-        </select>
+            <h2>🔐 Admin Login</h2>
 
-        <label for="description">Description</label>
+            <label for="loginEmail">
+                Email
+            </label>
 
-        <textarea
-            id="description"
-            placeholder="Enter details about this design..."
-        ></textarea>
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter admin email"
+            >
 
-        <label for="designImage">Design Photo</label>
+            <label for="loginPassword">
+                Password
+            </label>
 
-        <input
-            type="file"
-            id="designImage"
-            accept="image/*"
-        >
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter password"
+            >
 
-        <img id="imagePreview" alt="Image Preview">
+            <button
+                id="loginButton"
+                onclick="loginAdmin()"
+            >
+                🔐 Login
+            </button>
 
-        <button
-            class="upload-btn"
-            id="uploadButton"
-            onclick="uploadDesign()"
-        >
-            ⬆️ Upload Design
-        </button>
+            <div
+                id="loginMessage"
+                class="message"
+            ></div>
 
-        <div id="message" class="message"></div>
+            <a class="back-btn" href="index.html">
+                ← Back to Website
+            </a>
 
-        <a class="back-btn" href="index.html">
-            ← Back to Website
-        </a>
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- UPLOAD SECTION -->
+        <!-- ============================= -->
+
+        <div id="uploadSection">
+
+            <h2>📤 Admin Upload</h2>
+
+            <button
+                class="logout-btn"
+                onclick="logoutAdmin()"
+            >
+                🚪 Logout
+            </button>
+
+
+            <label for="designName">
+                Design Name
+            </label>
+
+            <input
+                type="text"
+                id="designName"
+                placeholder="Example: Bridal Maggam Blouse"
+            >
+
+
+            <label for="category">
+                Category
+            </label>
+
+            <select id="category">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Sarees">
+                    Sarees
+                </option>
+
+                <option value="Blouse">
+                    Blouse
+                </option>
+
+                <option value="Maggam">
+                    Maggam Work
+                </option>
+
+                <option value="Wedding Dresses">
+                    Wedding Dresses
+                </option>
+
+                <option value="Saree Tassels">
+                    Saree Tassels
+                </option>
+
+                <option value="Frocks">
+                    Frocks
+                </option>
+
+                <option value="Lehenga">
+                    Lehenga
+                </option>
+
+            </select>
+
+
+            <label for="description">
+                Description
+            </label>
+
+            <textarea
+                id="description"
+                placeholder="Enter details about this design..."
+            ></textarea>
+
+
+            <label for="designImage">
+                Design Photo
+            </label>
+
+            <input
+                type="file"
+                id="designImage"
+                accept="image/*"
+            >
+
+
+            <img
+                id="imagePreview"
+                alt="Image Preview"
+            >
+
+
+            <button
+                id="uploadButton"
+                onclick="uploadDesign()"
+            >
+                ⬆️ Upload Design
+            </button>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <a class="back-btn" href="index.html">
+                ← Back to Website
+            </a>
+
+        </div>
 
     </div>
 
 </div>
+
 
 <script>
 
@@ -183,49 +309,151 @@
     // SUPABASE CONNECTION
     // ==========================================
 
-const SUPABASE_URL =
-    "https://ydhqjkyzbbooolaugydk.supabase.co";
+    const SUPABASE_URL =
+        "https://ydhqjkyzbbooolaugydk.supabase.co";
 
-const SUPABASE_KEY =
-    "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+    const SUPABASE_KEY =
+        "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
 
     // ==========================================
-    // IMAGE PREVIEW
+    // LOGIN
     // ==========================================
 
-    const imageInput =
-        document.getElementById("designImage");
+    async function loginAdmin() {
 
-    const imagePreview =
-        document.getElementById("imagePreview");
+        const email =
+            document.getElementById(
+                "loginEmail"
+            ).value.trim();
 
-    imageInput.addEventListener("change", function () {
+        const password =
+            document.getElementById(
+                "loginPassword"
+            ).value;
 
-        const file = this.files[0];
 
-        if (file) {
-            imagePreview.src =
-                URL.createObjectURL(file);
+        if (!email || !password) {
 
-            imagePreview.style.display =
-                "block";
-        } else {
-            imagePreview.style.display =
-                "none";
+            showLoginMessage(
+                "Please enter your email and password.",
+                "error"
+            );
+
+            return;
         }
 
-    });
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            if (!data.session) {
+                throw new Error(
+                    "Login session was not created."
+                );
+            }
+
+
+            showUploadSection();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showLoginMessage(
+                "Login failed: " + error.message,
+                "error"
+            );
+
+        }
+
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+            "🔐 Login";
+    }
 
 
     // ==========================================
-    // CHECK LOGIN
+    // SHOW UPLOAD SECTION
+    // ==========================================
+
+    function showUploadSection() {
+
+        document.getElementById(
+            "loginSection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "uploadSection"
+        ).style.display = "block";
+    }
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    async function logoutAdmin() {
+
+        await supabaseClient.auth.signOut();
+
+        document.getElementById(
+            "uploadSection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "loginSection"
+        ).style.display = "block";
+
+        document.getElementById(
+            "loginPassword"
+        ).value = "";
+
+        showLoginMessage(
+            "You have been logged out.",
+            "success"
+        );
+    }
+
+
+    // ==========================================
+    // CHECK EXISTING LOGIN
     // ==========================================
 
     async function checkLogin() {
@@ -234,22 +462,62 @@ const supabaseClient =
             data: { session }
         } = await supabaseClient.auth.getSession();
 
-        if (!session) {
 
-            showMessage(
-                "Please log in before uploading a design.",
-                "error"
-            );
+        if (session) {
+
+            showUploadSection();
+
+        } else {
 
             document.getElementById(
-                "uploadButton"
-            ).disabled = true;
+                "loginSection"
+            ).style.display = "block";
 
-            return false;
+            document.getElementById(
+                "uploadSection"
+            ).style.display = "none";
         }
-
-        return true;
     }
+
+
+    // ==========================================
+    // IMAGE PREVIEW
+    // ==========================================
+
+    const imageInput =
+        document.getElementById(
+            "designImage"
+        );
+
+    const imagePreview =
+        document.getElementById(
+            "imagePreview"
+        );
+
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                this.files[0];
+
+            if (file) {
+
+                imagePreview.src =
+                    URL.createObjectURL(file);
+
+                imagePreview.style.display =
+                    "block";
+
+            } else {
+
+                imagePreview.style.display =
+                    "none";
+            }
+
+        }
+    );
 
 
     // ==========================================
@@ -258,12 +526,21 @@ const supabaseClient =
 
     async function uploadDesign() {
 
-        const loggedIn =
-            await checkLogin();
+        const {
+            data: { session }
+        } = await supabaseClient.auth.getSession();
 
-        if (!loggedIn) {
+
+        if (!session) {
+
+            showMessage(
+                "Please log in first.",
+                "error"
+            );
+
             return;
         }
+
 
         const name =
             document.getElementById(
@@ -287,35 +564,45 @@ const supabaseClient =
 
 
         if (!name) {
+
             showMessage(
                 "Please enter the design name.",
                 "error"
             );
+
             return;
         }
 
+
         if (!category) {
+
             showMessage(
                 "Please select a category.",
                 "error"
             );
+
             return;
         }
 
+
         if (!file) {
+
             showMessage(
                 "Please select a design photo.",
                 "error"
             );
+
             return;
         }
 
 
         if (!file.type.startsWith("image/")) {
+
             showMessage(
                 "Please select a valid image file.",
                 "error"
             );
+
             return;
         }
 
@@ -326,13 +613,14 @@ const supabaseClient =
             );
 
         uploadButton.disabled = true;
+
         uploadButton.textContent =
             "Uploading...";
 
 
         try {
 
-            // Create unique file name
+            // Create unique filename
 
             const fileExtension =
                 file.name.split(".").pop();
@@ -374,11 +662,12 @@ const supabaseClient =
                     fileName
                 );
 
+
             const imageUrl =
                 publicUrlData.publicUrl;
 
 
-            // Save to designs table
+            // Insert into designs table
 
             const {
                 error: databaseError
@@ -431,6 +720,7 @@ const supabaseClient =
             ).value = "";
 
             imagePreview.src = "";
+
             imagePreview.style.display =
                 "none";
 
@@ -452,15 +742,37 @@ const supabaseClient =
 
         uploadButton.textContent =
             "⬆️ Upload Design";
-
     }
 
 
     // ==========================================
-    // MESSAGE
+    // MESSAGES
     // ==========================================
 
-    function showMessage(text, type) {
+    function showLoginMessage(
+        text,
+        type
+    ) {
+
+        const message =
+            document.getElementById(
+                "loginMessage"
+            );
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+        message.style.display =
+            "block";
+    }
+
+
+    function showMessage(
+        text,
+        type
+    ) {
 
         const message =
             document.getElementById(
@@ -477,7 +789,9 @@ const supabaseClient =
     }
 
 
-    // Check login when page opens
+    // ==========================================
+    // START
+    // ==========================================
 
     checkLogin();
 
