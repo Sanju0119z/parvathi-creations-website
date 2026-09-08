@@ -863,8 +863,8 @@ async function loadUploadedDesigns() {
             const item =
                 document.createElement("div");
 
-            item.className =
-                "gallery-item uploaded-design";
+            item.className = "gallery-item uploaded-design";
+item.dataset.category = design.category || "Other";
 
 
             item.innerHTML = `
