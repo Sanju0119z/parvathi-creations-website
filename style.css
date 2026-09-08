@@ -1332,3 +1332,58 @@ footer span {
     }
 
 }
+/* ==========================================
+   UPLOADED DESIGN BUTTONS
+========================================== */
+
+.uploaded-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.uploaded-buttons button {
+    border: none;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.upload-like-btn {
+    background: #f7eee7;
+    color: var(--maroon);
+}
+
+.upload-like-btn.liked {
+    background: #f1d3b9;
+}
+
+.upload-details-btn {
+    background: #222;
+    color: white;
+}
+
+.upload-whatsapp-btn {
+    background: #25d366;
+    color: white;
+}
+
+.uploaded-buttons button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .uploaded-buttons {
+        justify-content: center;
+    }
+
+    .uploaded-buttons button {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+}
