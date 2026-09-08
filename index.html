@@ -920,6 +920,29 @@ item.dataset.category = design.category || "Other";
 
     }
 }
+function filterGallery(category, button) {
+
+    document.querySelectorAll(".filter-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    document.querySelectorAll(".uploaded-design").forEach(function(card) {
+
+        const cardCategory = card.dataset.category || "";
+
+        if (
+            category === "all" ||
+            cardCategory.toLowerCase() === category.toLowerCase()
+        ) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+}
 function likeUploadedDesign(button) {
     button.classList.toggle("liked");
 
