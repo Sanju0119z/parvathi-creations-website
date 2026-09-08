@@ -812,14 +812,39 @@ async function loadUploadedDesigns() {
 
 
             item.innerHTML = `
-                <img
-                    src="${design.image_url}"
-                    alt="${design.name || "Parvathi Creations Design"}"
-                >
+    <img
+        src="${design.image_url}"
+        alt="${design.name || "Parvathi Creations Design"}"
+    >
 
-                <div class="gallery-overlay">
-                    <h3>${design.name || "New Design"}</h3>
+    <div class="gallery-overlay">
+        <h3>${design.name || "New Design"}</h3>
 
+        <p>${design.description || ""}</p>
+
+        <div class="uploaded-buttons">
+
+            <button class="upload-like-btn"
+                onclick="likeUploadedDesign(this)">
+                ♡ I Like This
+            </button>
+
+            <button class="upload-details-btn"
+                onclick="showDesignDetails(
+                    '${(design.name || "New Design").replace(/'/g, "\\'")}',
+                    '${(design.description || "Please contact us for more details.").replace(/'/g, "\\'")}'
+                )">
+                👀 Details
+            </button>
+
+            <button class="upload-whatsapp-btn"
+                onclick="enquireUploadedDesign('${(design.name || "New Design").replace(/'/g, "\\'")}')">
+                💬 WhatsApp
+            </button>
+
+        </div>
+    </div>
+`;
                     <p>
                         ${design.description || ""}
                     </p>
@@ -839,7 +864,33 @@ async function loadUploadedDesigns() {
 
     }
 }
+function likeUploadedDesign(button) {
+    button.classList.toggle("liked");
 
+    if (button.classList.contains("liked")) {
+        button.innerHTML = "♥ Liked";
+    } else {
+        button.innerHTML = "♡ I Like This";
+    }
+}
+
+function enquireUploadedDesign(designName) {
+    const whatsappNumber = "919550766784";
+
+    const message =
+        "Hello Parvathi Creations! " +
+        "I am interested in the design: " +
+        designName +
+        ". Please share more details.";
+
+    const url =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+    window.open(url, "_blank");
+}
 
 /* ==========================================
    START GALLERY
