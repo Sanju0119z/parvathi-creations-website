@@ -12,10 +12,7 @@
 
 <body>
   <!-- Loading Screen -->
-<div id="loading-screen">
-    <div class="loader"></div>
-    <div class="loading-text">Parvathi Creations</div>
-</div>
+
 <!-- Traditional Tailor Loading Screen -->
 <div id="loading-screen">
   <div class="loading-logo">P</div>
@@ -710,17 +707,163 @@ const translations = {
   }
 };
 
-function applyLanguage(language) {
-  localStorage.setItem("parvathiLanguage", language);
+<script src="script.js"></script>
 
-  document.querySelectorAll("[data-translate]").forEach(function(element) {
-    const key = element.getAttribute("data-translate");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (translations[language] && translations[language][key]) {
-      element.textContent = translations[language][key];
+    /* =========================
+       LOADING SCREEN
+    ========================= */
+
+    const loadingScreen = document.getElementById("loading-screen");
+    const progressBar = document.getElementById("loading-progress");
+    const percentText = document.getElementById("loading-percent");
+
+    if (loadingScreen) {
+
+        let progress = 0;
+
+        const loadingTimer = setInterval(function () {
+
+            progress += 2;
+
+            if (progressBar) {
+                progressBar.style.width = progress + "%";
+            }
+
+            if (percentText) {
+                percentText.textContent = progress + "%";
+            }
+
+            if (progress >= 100) {
+
+                clearInterval(loadingTimer);
+
+                setTimeout(function () {
+
+                    loadingScreen.style.transition =
+                        "opacity 0.6s ease";
+
+                    loadingScreen.style.opacity = "0";
+
+                    setTimeout(function () {
+                        loadingScreen.style.display = "none";
+                    }, 600);
+
+                }, 300);
+            }
+
+        }, 30);
     }
-  });
-}   
+
+
+    /* =========================
+       LANGUAGE
+    ========================= */
+
+    const savedLanguage =
+        localStorage.getItem("parvathiLanguage");
+
+    const languageScreen =
+        document.getElementById("language-screen");
+
+    if (savedLanguage && languageScreen) {
+        languageScreen.style.display = "none";
+        applyLanguage(savedLanguage);
+    }
+
+});
+
+
+function selectLanguage(language) {
+
+    localStorage.setItem(
+        "parvathiLanguage",
+        language
+    );
+
+    const languageScreen =
+        document.getElementById("language-screen");
+
+    if (languageScreen) {
+
+        languageScreen.style.opacity = "0";
+        languageScreen.style.transition =
+            "opacity 0.5s ease";
+
+        setTimeout(function () {
+
+            languageScreen.style.display = "none";
+
+            applyLanguage(language);
+
+        }, 500);
+    }
+}
+
+
+/* =========================
+   TRANSLATIONS
+========================= */
+
+const translations = {
+
+    en: {
+        home: "Home",
+        designs: "Designs",
+        services: "Services",
+        gallery: "Gallery",
+        about: "About Us",
+        contact: "Contact",
+        language: "Language"
+    },
+
+    te: {
+        home: "హోమ్",
+        designs: "డిజైన్స్",
+        services: "సేవలు",
+        gallery: "గ్యాలరీ",
+        about: "మా గురించి",
+        contact: "సంప్రదించండి",
+        language: "భాష"
+    },
+
+    hi: {
+        home: "होम",
+        designs: "डिज़ाइन्स",
+        services: "सेवाएँ",
+        gallery: "गैलरी",
+        about: "हमारे बारे में",
+        contact: "संपर्क करें",
+        language: "भाषा"
+    }
+};
+
+
+function applyLanguage(language) {
+
+    document
+        .querySelectorAll("[data-translate]")
+        .forEach(function (element) {
+
+            const key =
+                element.getAttribute("data-translate");
+
+            if (
+                translations[language] &&
+                translations[language][key]
+            ) {
+
+                element.textContent =
+                    translations[language][key];
+            }
+
+        });
+}
+</script>
+
+</body>
 </script>
   
 </body>
