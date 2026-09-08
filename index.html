@@ -862,7 +862,54 @@ function applyLanguage(language) {
         });
 }
 </script>
+<script src="script.js"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const loadingScreen = document.getElementById("loading-screen");
+    const progressBar = document.getElementById("loading-progress");
+    const percentText = document.getElementById("loading-percent");
+
+    if (!loadingScreen) return;
+
+    let progress = 0;
+
+    const loadingTimer = setInterval(function () {
+
+        progress++;
+
+        if (progressBar) {
+            progressBar.style.width = progress + "%";
+        }
+
+        if (percentText) {
+            percentText.textContent = progress + "%";
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(loadingTimer);
+
+            setTimeout(function () {
+
+                loadingScreen.style.opacity = "0";
+                loadingScreen.style.pointerEvents = "none";
+
+                setTimeout(function () {
+                    loadingScreen.style.display = "none";
+                }, 600);
+
+            }, 300);
+        }
+
+    }, 30);
+
+});
+</script>
+
+</body>
+</html>
 </body>
 </script>
   
