@@ -1387,3 +1387,52 @@ footer span {
         padding: 8px 10px;
     }
 }
+/* ==========================================
+   GALLERY FILTER BUTTONS
+========================================== */
+
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 30px auto 35px;
+}
+
+.filter-btn {
+    border: 1px solid rgba(107,31,43,0.2);
+    background: white;
+    color: var(--maroon);
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--maroon);
+    color: white;
+    box-shadow: 0 6px 18px rgba(107,31,43,0.25);
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .gallery-filters {
+        gap: 8px;
+        margin-bottom: 25px;
+    }
+
+    .filter-btn {
+        padding: 8px 13px;
+        font-size: 12px;
+    }
+
+}
