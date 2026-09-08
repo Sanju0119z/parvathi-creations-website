@@ -567,145 +567,9 @@
   </p>
 
 </footer>
-  <script src="script.js"></script>
-  <script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-
-    const progressBar = document.getElementById("progressBar");
-    const percentText = document.getElementById("percentText");
-    const loadingScreen = document.getElementById("loadingScreen");
-
-    if (!loadingScreen) return;
-
-    let progress = 0;
-
-    const timer = setInterval(function () {
-
-        progress += 1;
-
-        if (progressBar) {
-            progressBar.style.width = progress + "%";
-        }
-
-        if (percentText) {
-            percentText.textContent = progress + "%";
-        }
-
-        if (progress >= 100) {
-
-            clearInterval(timer);
-
-            setTimeout(function () {
-
-                loadingScreen.style.transition = "opacity 0.8s ease";
-                loadingScreen.style.opacity = "0";
-
-                setTimeout(function () {
-                    loadingScreen.style.display = "none";
-                }, 800);
-
-            }, 400);
-        }
-
-    }, 30);
-
-});
-</script>
-        if (percentText) {
-            percentText.textContent = progress + "%";
-        }
-
-        if (progress >= 100) {
-
-            clearInterval(loadingTimer);
-
-            setTimeout(function () {
-
-                loadingScreen.style.opacity = "0";
-                loadingScreen.style.pointerEvents = "none";
-
-                setTimeout(function () {
-                    loadingScreen.style.display = "none";
-                }, 600);
-
-            }, 300);
-        }
-
-    }, 30);
-
-});
-</script>
-</script>
-  <script>
-function selectLanguage(language) {
-  localStorage.setItem("parvathiLanguage", language);
-
-  const languageScreen = document.getElementById("language-screen");
-
-  languageScreen.style.opacity = "0";
-  languageScreen.style.transition = "opacity 0.5s ease";
-
-  setTimeout(function () {
-    languageScreen.style.display = "none";
-
-    if (language === "te") {
-
-    } 
-    else if (language === "hi") {
-      
-    } 
-    else {
-
-    }
-  }, 500);
-}
-
-/* Check if a language was already selected */
-document.addEventListener("DOMContentLoaded", function () {
-  const savedLanguage = localStorage.getItem("parvathiLanguage");
-
-  if (savedLanguage) {
-    const languageScreen = document.getElementById("language-screen");
-
-    if (languageScreen) {
-      languageScreen.style.display = "none";
-    }
-  }
-});
-<script>
-const translations = {
-  en: {
-    home: "Home",
-    designs: "Designs",
-    services: "Services",
-    gallery: "Gallery",
-    about: "About Us",
-    contact: "Contact",
-    language: "Language"
-  },
-
-  te: {
-    home: "హోమ్",
-    designs: "డిజైన్స్",
-    services: "సేవలు",
-    gallery: "గ్యాలరీ",
-    about: "మా గురించి",
-    contact: "సంప్రదించండి",
-    language: "భాష"
-  },
-
-  hi: {
-    home: "होम",
-    designs: "डिज़ाइन्स",
-    services: "सेवाएँ",
-    gallery: "गैलरी",
-    about: "हमारे बारे में",
-    contact: "संपर्क करें",
-    language: "भाषा"
-  }
-};
+<!-- =========================
+     WEBSITE JAVASCRIPT
+========================= -->
 
 <script src="script.js"></script>
 
@@ -716,9 +580,14 @@ document.addEventListener("DOMContentLoaded", function () {
        LOADING SCREEN
     ========================= */
 
-    const loadingScreen = document.getElementById("loading-screen");
-    const progressBar = document.getElementById("loading-progress");
-    const percentText = document.getElementById("loading-percent");
+    const loadingScreen =
+        document.getElementById("loading-screen");
+
+    const progressBar =
+        document.getElementById("loading-progress");
+
+    const percentText =
+        document.getElementById("loading-percent");
 
     if (loadingScreen) {
 
@@ -729,11 +598,13 @@ document.addEventListener("DOMContentLoaded", function () {
             progress += 2;
 
             if (progressBar) {
-                progressBar.style.width = progress + "%";
+                progressBar.style.width =
+                    progress + "%";
             }
 
             if (percentText) {
-                percentText.textContent = progress + "%";
+                percentText.textContent =
+                    progress + "%";
             }
 
             if (progress >= 100) {
@@ -748,7 +619,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     loadingScreen.style.opacity = "0";
 
                     setTimeout(function () {
-                        loadingScreen.style.display = "none";
+
+                        loadingScreen.style.display =
+                            "none";
+
                     }, 600);
 
                 }, 300);
@@ -759,7 +633,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================
-       LANGUAGE
+       SAVED LANGUAGE
     ========================= */
 
     const savedLanguage =
@@ -769,12 +643,18 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("language-screen");
 
     if (savedLanguage && languageScreen) {
+
         languageScreen.style.display = "none";
+
         applyLanguage(savedLanguage);
     }
 
 });
 
+
+/* =========================
+   LANGUAGE SELECTION
+========================= */
 
 function selectLanguage(language) {
 
@@ -789,6 +669,7 @@ function selectLanguage(language) {
     if (languageScreen) {
 
         languageScreen.style.opacity = "0";
+
         languageScreen.style.transition =
             "opacity 0.5s ease";
 
@@ -841,6 +722,10 @@ const translations = {
 };
 
 
+/* =========================
+   APPLY LANGUAGE
+========================= */
+
 function applyLanguage(language) {
 
     document
@@ -861,59 +746,8 @@ function applyLanguage(language) {
 
         });
 }
-</script>
-<script src="script.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const loadingScreen = document.getElementById("loading-screen");
-    const progressBar = document.getElementById("loading-progress");
-    const percentText = document.getElementById("loading-percent");
-
-    if (!loadingScreen) return;
-
-    let progress = 0;
-
-    const loadingTimer = setInterval(function () {
-
-        progress++;
-
-        if (progressBar) {
-            progressBar.style.width = progress + "%";
-        }
-
-        if (percentText) {
-            percentText.textContent = progress + "%";
-        }
-
-        if (progress >= 100) {
-
-            clearInterval(loadingTimer);
-
-            setTimeout(function () {
-
-                loadingScreen.style.opacity = "0";
-                loadingScreen.style.pointerEvents = "none";
-
-                setTimeout(function () {
-                    loadingScreen.style.display = "none";
-                }, 600);
-
-            }, 300);
-        }
-
-    }, 30);
-
-});
 </script>
 
 </body>
-</html>
-</body>
-</script>
-  
-</body>
-  
-
 </html>
