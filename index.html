@@ -570,7 +570,7 @@
 <!-- =========================
      WEBSITE JAVASCRIPT
 ========================= -->
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="script.js"></script>
 
 <script>
@@ -748,6 +748,109 @@ function applyLanguage(language) {
 }
 
 </script>
+<script>
+/* ==========================================
+   SUPABASE - AUTOMATIC DESIGN GALLERY
+========================================== */
 
+const SUPABASE_URL =
+    "https://ydhqjkyzbbooolaugydk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* ==========================================
+   LOAD DESIGNS FROM SUPABASE
+========================================== */
+
+async function loadUploadedDesigns() {
+
+    const gallery =
+        document.querySelector(".gallery-container");
+
+    if (!gallery) return;
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("designs")
+                .select("*")
+                .order("created_at", {
+                    ascending: false
+                });
+
+        if (error) {
+            console.error(
+                "Gallery loading error:",
+                error
+            );
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            return;
+        }
+
+
+        /* Add uploaded designs */
+
+        data.forEach(function (design) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "gallery-item uploaded-design";
+
+
+            item.innerHTML = `
+                <img
+                    src="${design.image_url}"
+                    alt="${design.name || "Parvathi Creations Design"}"
+                >
+
+                <div class="gallery-overlay">
+                    <h3>${design.name || "New Design"}</h3>
+
+                    <p>
+                        ${design.description || ""}
+                    </p>
+                </div>
+            `;
+
+            gallery.appendChild(item);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected gallery error:",
+            error
+        );
+
+    }
+}
+
+
+/* ==========================================
+   START GALLERY
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        loadUploadedDesigns();
+    }
+);
+</script>
 </body>
 </html>
