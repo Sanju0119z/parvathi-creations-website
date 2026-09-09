@@ -867,39 +867,27 @@ async function loadUploadedDesigns() {
 item.dataset.category = design.category || "Other";
 
 
-            item.innerHTML = `
-    <img
-        src="${design.image_url}"
-        alt="${design.name || "Parvathi Creations Design"}"
-    >
+     const item = document.createElement("div");
+item.className = "gallery-item uploaded-design";
+item.dataset.category = design.category || "all";
 
-    <div class="gallery-overlay">
-        <h3>${design.name || "New Design"}</h3>
+item.innerHTML = `
+  <img src="${design.image_url}" alt="${design.name || "Parvathi Creations design"}">
 
-        <p>${design.description || ""}</p>
+  <div class="gallery-overlay">
+    <h3>${design.name || "Parvathi Creations Design"}</h3>
 
-        <div class="uploaded-buttons">
+    <p>${design.category || ""}</p>
 
-            <button class="upload-like-btn"
-                onclick="likeUploadedDesign(this)">
-                ♡ I Like This
-            </button>
+    ${design.design_code ? `<small>Code: ${design.design_code}</small>` : ""}
 
-            <button class="upload-details-btn"
-                onclick="showDesignDetails(
-                    '${(design.name || "New Design").replace(/'/g, "\\'")}',
-                    '${(design.description || "Please contact us for more details.").replace(/'/g, "\\'")}'
-                )">
-                👀 Details
-            </button>
+    ${design.price ? `<p>₹${design.price}</p>` : ""}
 
-            <button class="upload-whatsapp-btn"
-                onclick="enquireUploadedDesign('${(design.name || "New Design").replace(/'/g, "\\'")}')">
-                💬 WhatsApp
-            </button>
-
-        </div>
-    </div>
+    <button onclick="showDesignDetails('${(design.name || "").replace(/'/g, "\\'")}', '${(design.description || "").replace(/'/g, "\\'")}')">
+      View Details
+    </button>
+  </div>
+`;       
 `;
                     <p>
                         ${design.description || ""}
