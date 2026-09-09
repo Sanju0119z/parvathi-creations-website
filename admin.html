@@ -2,128 +2,2398 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Parvathi Creations - Admin</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        .admin-page {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 25px;
+        /* =========================================
+           PARVATHI CREATIONS ADMIN
+           ========================================= */
+
+        :root {
+            --admin-maroon: #6b1f2b;
+            --admin-dark: #2b1515;
+            --admin-gold: #c9a227;
+            --admin-cream: #fffaf5;
+            --admin-white: #ffffff;
+            --admin-green: #287a45;
+            --admin-red: #b42318;
+            --admin-gray: #666;
+            --admin-border: #eadfd8;
+            --admin-shadow: 0 8px 30px rgba(43, 21, 21, 0.10);
         }
 
-        .admin-card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+        * {
             box-sizing: border-box;
-            font-size: 16px;
         }
 
-        textarea {
-            min-height: 100px;
-            resize: vertical;
+        body {
+            margin: 0;
+            background: var(--admin-cream);
+            color: var(--admin-dark);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
         }
 
         button {
-            width: 100%;
-            margin-top: 20px;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: #8b3a62;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
             cursor: pointer;
         }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        /* =========================================
+           HEADER
+           ========================================= */
+
+        .admin-header {
+            background: linear-gradient(
+                135deg,
+                var(--admin-dark),
+                var(--admin-maroon)
+            );
+            color: white;
+            padding: 18px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .logout-btn {
-            background: #555;
-            margin-bottom: 15px;
+        .admin-header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
         }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            padding: 3px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            opacity: 0.8;
+            font-size: 12px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        /* =========================================
+           BUTTONS
+           ========================================= */
+
+        .btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--admin-gold);
+            color: var(--admin-dark);
+        }
+
+        .btn-secondary {
+            background: #f2e7e1;
+            color: var(--admin-dark);
+        }
+
+        .btn-danger {
+            background: var(--admin-red);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--admin-green);
+            color: white;
+        }
+
+        .btn-dark {
+            background: var(--admin-dark);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 11px;
+            font-size: 13px;
+        }
+
+        /* =========================================
+           MAIN
+           ========================================= */
+
+        .admin-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px 18px 50px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================================
+           LOGIN
+           ========================================= */
+
+        .login-wrapper {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--admin-shadow);
+            border: 1px solid var(--admin-border);
+        }
+
+        .login-card h2 {
+            margin-top: 0;
+            color: var(--admin-maroon);
+            text-align: center;
+        }
+
+        .login-card .subtitle {
+            text-align: center;
+            color: var(--admin-gray);
+            margin-bottom: 25px;
+        }
+
+        /* =========================================
+           FORM
+           ========================================= */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d9ccc5;
+            border-radius: 10px;
+            outline: none;
+            background: white;
+            color: var(--admin-dark);
+        }
+
+        .form-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--admin-gold);
+            box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 8px 0 18px;
+        }
+
+        .checkbox-row input {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* =========================================
+           DASHBOARD
+           ========================================= */
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            margin: 0 0 5px;
+            color: var(--admin-maroon);
+        }
+
+        .page-title p {
+            margin: 0;
+            color: var(--admin-gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--admin-border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--admin-shadow);
+        }
+
+        .stat-card span {
+            display: block;
+            color: var(--admin-gray);
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .stat-card strong {
+            display: block;
+            color: var(--admin-maroon);
+            font-size: 30px;
+        }
+
+        /* =========================================
+           PANELS
+           ========================================= */
+
+        .panel {
+            background: white;
+            border: 1px solid var(--admin-border);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--admin-shadow);
+            margin-bottom: 25px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            color: var(--admin-maroon);
+        }
+
+        .search-box {
+            width: 280px;
+            max-width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d9ccc5;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        /* =========================================
+           IMAGE PREVIEW
+           ========================================= */
+
+        .image-preview {
+            display: none;
+            margin-top: 12px;
+            max-width: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--admin-border);
+        }
+
+        .image-preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* =========================================
+           DESIGN TABLE
+           ========================================= */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .design-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        .design-table th,
+        .design-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee3dd;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .design-table th {
+            background: #faf3ee;
+            color: var(--admin-maroon);
+            font-size: 13px;
+        }
+
+        .design-thumb {
+            width: 65px;
+            height: 65px;
+            border-radius: 9px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-featured {
+            background: #fff3c4;
+            color: #755b00;
+        }
+
+        .status-hidden {
+            background: #eee;
+            color: #555;
+        }
+
+        .status-visible {
+            background: #e4f5e9;
+            color: #216638;
+        }
+
+        .actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================================
+           MESSAGES
+           ========================================= */
 
         .message {
-            margin-top: 15px;
-            padding: 12px;
+            padding: 12px 14px;
             border-radius: 10px;
-            text-align: center;
+            margin-bottom: 15px;
             display: none;
+            font-size: 14px;
         }
 
-        .success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .error {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        #imagePreview {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            margin-top: 15px;
-            border-radius: 15px;
-            display: none;
-        }
-
-        .back-btn {
+        .message.success {
             display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
+            background: #e7f7ec;
+            color: #216638;
+            border: 1px solid #bde3c8;
         }
 
-        /* Upload dashboard hidden until login */
-        #uploadSection {
-            display: none;
-        }
-
-        /* Login screen */
-        #loginSection {
+        .message.error {
             display: block;
+            background: #fff0ef;
+            color: #a11b12;
+            border: 1px solid #f1c3bf;
         }
+
+        .message.info {
+            display: block;
+            background: #eef4ff;
+            color: #234a86;
+            border: 1px solid #cbd9f5;
+        }
+
+        /* =========================================
+           LOADING
+           ========================================= */
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--admin-gray);
+        }
+
+        .spinner {
+            width: 28px;
+            height: 28px;
+            border: 3px solid #eadfd8;
+            border-top-color: var(--admin-maroon);
+            border-radius: 50%;
+            animation: adminSpin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes adminSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (max-width: 850px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-header-inner {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .admin-header {
+                padding: 14px;
+            }
+
+            .admin-container {
+                padding: 18px 12px 40px;
+            }
+
+            .brand h1 {
+                font-size: 17px;
+            }
+
+            .brand p {
+                font-size: 11px;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-card strong {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .panel {
+                padding: 16px;
+                border-radius: 14px;
+            }
+
+            .login-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+         ========================================= -->
+
+    <header class="admin-header">
+        <div class="admin-header-inner">
+
+            <div class="brand">
+
+                <img
+                    src="IMG_20260731_155520.jpg"
+                    alt="Parvathi Creations"
+                    class="brand-logo"
+                >
+
+                <div>
+                    <h1>Parvathi Creations</h1>
+                    <p>Admin Panel</p>
+                </div>
+
+            </div>
+
+            <div
+                class="header-actions hidden"
+                id="headerActions"
+            >
+
+                <a
+                    href="index.html"
+                    class="btn btn-secondary"
+                    target="_blank"
+                >
+                    View Website
+                </a>
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="logoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================
+         LOGIN SECTION
+         ========================================= -->
+
+    <section id="loginSection">
+
+        <div class="admin-container">
+
+            <div class="login-wrapper">
+
+                <div class="login-card">
+
+                    <h2>Admin Login</h2>
+
+                    <p class="subtitle">
+                        Sign in to manage Parvathi Creations
+                    </p>
+
+                    <div
+                        id="loginMessage"
+                        class="message"
+                    ></div>
+
+                    <form id="loginForm">
+
+                        <div class="form-group">
+
+                            <label for="loginEmail">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="loginEmail"
+                                placeholder="Enter admin email"
+                                required
+                                autocomplete="email"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="loginPassword">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                placeholder="Enter password"
+                                required
+                                autocomplete="current-password"
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="loginBtn"
+                            style="width:100%;"
+                        >
+                            Login
+                        </button>
+
+                    </form>
+
+                    <p
+                        style="
+                            margin-top:18px;
+                            font-size:12px;
+                            color:#777;
+                            text-align:center;
+                        "
+                    >
+                        Admin access only
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         ADMIN APP
+         ========================================= -->
+
+    <section
+        id="adminSection"
+        class="hidden"
+    >
+
+        <main class="admin-container">
+
+            <div class="page-title">
+
+                <h2>Dashboard</h2>
+
+                <p>
+                    Manage your boutique designs from your phone or computer.
+                </p>
+
+            </div>
+
+
+            <!-- =====================================
+                 MESSAGES
+                 ===================================== -->
+
+            <div
+                id="adminMessage"
+                class="message"
+            ></div>
+
+
+            <!-- =====================================
+                 DASHBOARD STATS
+                 ===================================== -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <span>Total Designs</span>
+                    <strong id="totalDesigns">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Featured Designs</span>
+                    <strong id="featuredDesigns">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Visible Designs</span>
+                    <strong id="visibleDesigns">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Hidden Designs</span>
+                    <strong id="hiddenDesigns">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 ADD / EDIT DESIGN
+                 ===================================== -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3 id="formTitle">
+                        Add New Design
+                    </h3>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-small hidden"
+                        id="cancelEditBtn"
+                    >
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+
+                <form id="designForm">
+
+                    <input
+                        type="hidden"
+                        id="editingId"
+                    >
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="designCode">
+                                Design Code
+                            </label>
+
+                            <input
+                                type="text"
+                                id="designCode"
+                                placeholder="Example: PC-00001"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="designName">
+                                Design Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="designName"
+                                placeholder="Example: Bridal Maggam Blouse"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="designCategory">
+                                Category *
+                            </label>
+
+                            <select
+                                id="designCategory"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Category
+                                </option>
+
+                                <option value="Tailoring">
+                                    Tailoring
+                                </option>
+
+                                <option value="Maggam Work">
+                                    Maggam Work
+                                </option>
+
+                                <option value="Computer Work">
+                                    Computer Work
+                                </option>
+
+                                <option value="Blouse Designs">
+                                    Blouse Designs
+                                </option>
+
+                                <option value="Wedding Dresses">
+                                    Wedding Dresses
+                                </option>
+
+                                <option value="Saree Tassels">
+                                    Saree Tassels
+                                </option>
+
+                                <option value="Frocks">
+                                    Frocks
+                                </option>
+
+                                <option value="Lehengas">
+                                    Lehengas
+                                </option>
+
+                                <option value="Custom Designs">
+                                    Custom Designs
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="designPrice">
+                                Price (₹)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="designPrice"
+                                placeholder="Example: 2500"
+                                min="0"
+                                step="0.01"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="designDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="designDescription"
+                            placeholder="Describe the design, work, fabric, finishing, etc."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="designImage">
+                            Design Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="designImage"
+                            accept="image/*"
+                        >
+
+                        <small
+                            style="
+                                display:block;
+                                margin-top:7px;
+                                color:#777;
+                            "
+                        >
+                            Required for a new design. Optional when editing.
+                        </small>
+
+                        <div
+                            class="image-preview"
+                            id="imagePreview"
+                        >
+                            <img
+                                id="previewImage"
+                                src=""
+                                alt="Image preview"
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <label class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="designFeatured"
+                        >
+
+                        <span>
+                            Mark this design as Featured
+                        </span>
+
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="saveDesignBtn"
+                    >
+                        Add Design
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- =====================================
+                 DESIGN MANAGEMENT
+                 ===================================== -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Manage Designs
+                    </h3>
+
+                    <input
+                        type="search"
+                        id="searchDesigns"
+                        class="search-box"
+                        placeholder="Search designs..."
+                    >
+
+                </div>
+
+
+                <div
+                    id="designsLoading"
+                    class="loading"
+                >
+
+                    <div class="spinner"></div>
+
+                    Loading designs...
+
+                </div>
+
+
+                <div
+                    id="emptyDesigns"
+                    class="loading hidden"
+                >
+                    No designs found.
+                </div>
+
+
+                <div
+                    class="table-wrapper"
+                    id="designTableWrapper"
+                >
+
+                    <table class="design-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Image</th>
+
+                                <th>Code</th>
+
+                                <th>Name</th>
+
+                                <th>Category</th>
+
+                                <th>Price</th>
+
+                                <th>Status</th>
+
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="designTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </section>
+
+
+    <script>
+
+        /* =========================================
+           SUPABASE
+           ========================================= */
+
+        const SUPABASE_URL =
+            "https://ydhqjkyzbbooolaugydk.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        /* =========================================
+           ELEMENTS
+           ========================================= */
+
+        const loginSection =
+            document.getElementById("loginSection");
+
+        const adminSection =
+            document.getElementById("adminSection");
+
+        const headerActions =
+            document.getElementById("headerActions");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginBtn =
+            document.getElementById("loginBtn");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const loginMessage =
+            document.getElementById("loginMessage");
+
+        const adminMessage =
+            document.getElementById("adminMessage");
+
+        const designForm =
+            document.getElementById("designForm");
+
+        const editingId =
+            document.getElementById("editingId");
+
+        const designCode =
+            document.getElementById("designCode");
+
+        const designName =
+            document.getElementById("designName");
+
+        const designCategory =
+            document.getElementById("designCategory");
+
+        const designPrice =
+            document.getElementById("designPrice");
+
+        const designDescription =
+            document.getElementById("designDescription");
+
+        const designImage =
+            document.getElementById("designImage");
+
+        const designFeatured =
+            document.getElementById("designFeatured");
+
+        const saveDesignBtn =
+            document.getElementById("saveDesignBtn");
+
+        const formTitle =
+            document.getElementById("formTitle");
+
+        const cancelEditBtn =
+            document.getElementById("cancelEditBtn");
+
+        const imagePreview =
+            document.getElementById("imagePreview");
+
+        const previewImage =
+            document.getElementById("previewImage");
+
+        const designTableBody =
+            document.getElementById("designTableBody");
+
+        const designsLoading =
+            document.getElementById("designsLoading");
+
+        const emptyDesigns =
+            document.getElementById("emptyDesigns");
+
+        const designTableWrapper =
+            document.getElementById("designTableWrapper");
+
+        const searchDesigns =
+            document.getElementById("searchDesigns");
+
+
+        let allDesigns = [];
+
+
+        /* =========================================
+           MESSAGE HELPERS
+           ========================================= */
+
+        function showMessage(
+            element,
+            text,
+            type = "info"
+        ) {
+
+            element.textContent = text;
+
+            element.className =
+                "message " + type;
+
+        }
+
+
+        function clearMessage(element) {
+
+            element.textContent = "";
+
+            element.className = "message";
+
+        }
+
+
+        /* =========================================
+           LOGIN
+           ========================================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                clearMessage(loginMessage);
+
+                const email =
+                    document.getElementById(
+                        "loginEmail"
+                    ).value.trim();
+
+                const password =
+                    document.getElementById(
+                        "loginPassword"
+                    ).value;
+
+                loginBtn.disabled = true;
+                loginBtn.textContent = "Logging in...";
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } =
+                    await supabaseClient.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    if (!data.session) {
+                        throw new Error(
+                            "Login succeeded but no session was created."
+                        );
+                    }
+
+                    showAdmin();
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        loginMessage,
+                        error.message ||
+                        "Login failed. Please check your email and password.",
+                        "error"
+                    );
+
+                } finally {
+
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = "Login";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           LOGOUT
+           ========================================= */
+
+        logoutBtn.addEventListener(
+            "click",
+            async function() {
+
+                try {
+
+                    await supabaseClient.auth.signOut();
+
+                } catch (error) {
+
+                    console.error(error);
+
+                }
+
+                showLogin();
+
+            }
+        );
+
+
+        /* =========================================
+           SESSION CHECK
+           ========================================= */
+
+        async function checkLogin() {
+
+            try {
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                await supabaseClient.auth.getSession();
+
+                if (session) {
+
+                    showAdmin();
+
+                } else {
+
+                    showLogin();
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showLogin();
+
+            }
+
+        }
+
+
+        supabaseClient.auth.onAuthStateChange(
+            function(event, session) {
+
+                if (session) {
+
+                    showAdmin();
+
+                } else {
+
+                    showLogin();
+
+                }
+
+            }
+        );
+
+
+        function showLogin() {
+
+            loginSection.classList.remove("hidden");
+
+            adminSection.classList.add("hidden");
+
+            headerActions.classList.add("hidden");
+
+        }
+
+
+        async function showAdmin() {
+
+            loginSection.classList.add("hidden");
+
+            adminSection.classList.remove("hidden");
+
+            headerActions.classList.remove("hidden");
+
+            await loadDesigns();
+
+        }
+
+
+        /* =========================================
+           IMAGE PREVIEW
+           ========================================= */
+
+        designImage.addEventListener(
+            "change",
+            function() {
+
+                const file =
+                    designImage.files[0];
+
+                if (!file) {
+
+                    imagePreview.style.display =
+                        "none";
+
+                    previewImage.src = "";
+
+                    return;
+
+                }
+
+                if (!file.type.startsWith("image/")) {
+
+                    showMessage(
+                        adminMessage,
+                        "Please select an image file.",
+                        "error"
+                    );
+
+                    designImage.value = "";
+
+                    return;
+
+                }
+
+                const reader =
+                    new FileReader();
+
+                reader.onload =
+                    function(event) {
+
+                        previewImage.src =
+                            event.target.result;
+
+                        imagePreview.style.display =
+                            "block";
+
+                    };
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+
+        /* =========================================
+           LOAD DESIGNS
+           ========================================= */
+
+        async function loadDesigns() {
+
+            designsLoading.classList.remove(
+                "hidden"
+            );
+
+            designTableWrapper.classList.add(
+                "hidden"
+            );
+
+            emptyDesigns.classList.add(
+                "hidden"
+            );
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient
+                    .from("designs")
+                    .select("*")
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+                if (error) {
+                    throw error;
+                }
+
+                allDesigns = data || [];
+
+                updateDashboard();
+
+                renderDesigns();
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    adminMessage,
+                    "Could not load designs: " +
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                designsLoading.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           DASHBOARD
+           ========================================= */
+
+        function updateDashboard() {
+
+            const total =
+                allDesigns.length;
+
+            const featured =
+                allDesigns.filter(
+                    design =>
+                        design.featured === true
+                ).length;
+
+            const hidden =
+                allDesigns.filter(
+                    design =>
+                        design.hidden === true
+                ).length;
+
+            const visible =
+                total - hidden;
+
+            document.getElementById(
+                "totalDesigns"
+            ).textContent = total;
+
+            document.getElementById(
+                "featuredDesigns"
+            ).textContent = featured;
+
+            document.getElementById(
+                "visibleDesigns"
+            ).textContent = visible;
+
+            document.getElementById(
+                "hiddenDesigns"
+            ).textContent = hidden;
+
+        }
+
+
+        /* =========================================
+           SEARCH
+           ========================================= */
+
+        searchDesigns.addEventListener(
+            "input",
+            renderDesigns
+        );
+
+
+        function renderDesigns() {
+
+            const search =
+                searchDesigns.value
+                    .trim()
+                    .toLowerCase();
+
+            const filtered =
+                allDesigns.filter(
+                    design => {
+
+                        const text = [
+                            design.design_code,
+                            design.name,
+                            design.category,
+                            design.description
+                        ]
+                        .filter(Boolean)
+                        .join(" ")
+                        .toLowerCase();
+
+                        return text.includes(search);
+
+                    }
+                );
+
+
+            designTableBody.innerHTML = "";
+
+
+            if (filtered.length === 0) {
+
+                designTableWrapper.classList.add(
+                    "hidden"
+                );
+
+                emptyDesigns.classList.remove(
+                    "hidden"
+                );
+
+                return;
+
+            }
+
+
+            designTableWrapper.classList.remove(
+                "hidden"
+            );
+
+            emptyDesigns.classList.add(
+                "hidden"
+            );
+
+
+            filtered.forEach(
+                design => {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    const imageCell =
+                        document.createElement("td");
+
+                    if (design.image_url) {
+
+                        const img =
+                            document.createElement("img");
+
+                        img.src =
+                            design.image_url;
+
+                        img.alt =
+                            design.name || "Design";
+
+                        img.className =
+                            "design-thumb";
+
+                        imageCell.appendChild(img);
+
+                    } else {
+
+                        imageCell.textContent =
+                            "No image";
+
+                    }
+
+
+                    const codeCell =
+                        document.createElement("td");
+
+                    codeCell.textContent =
+                        design.design_code ||
+                        "—";
+
+
+                    const nameCell =
+                        document.createElement("td");
+
+                    nameCell.textContent =
+                        design.name || "—";
+
+
+                    const categoryCell =
+                        document.createElement("td");
+
+                    categoryCell.textContent =
+                        design.category || "—";
+
+
+                    const priceCell =
+                        document.createElement("td");
+
+                    priceCell.textContent =
+                        formatPrice(
+                            design.price
+                        );
+
+
+                    const statusCell =
+                        document.createElement("td");
+
+                    let statusHTML = "";
+
+                    if (design.featured) {
+
+                        statusHTML +=
+                            '<span class="status status-featured">★ Featured</span> ';
+
+                    }
+
+                    if (design.hidden === true) {
+
+                        statusHTML +=
+                            '<span class="status status-hidden">Hidden</span>';
+
+                    } else {
+
+                        statusHTML +=
+                            '<span class="status status-visible">Visible</span>';
+
+                    }
+
+                    statusCell.innerHTML =
+                        statusHTML;
+
+
+                    const actionsCell =
+                        document.createElement("td");
+
+                    const actions =
+                        document.createElement("div");
+
+                    actions.className =
+                        "actions";
+
+
+                    const editButton =
+                        document.createElement("button");
+
+                    editButton.type = "button";
+                    editButton.className =
+                        "btn btn-secondary btn-small";
+                    editButton.textContent =
+                        "Edit";
+
+                    editButton.addEventListener(
+                        "click",
+                        function() {
+                            startEdit(design);
+                        }
+                    );
+
+
+                    const hideButton =
+                        document.createElement("button");
+
+                    hideButton.type = "button";
+                    hideButton.className =
+                        "btn btn-dark btn-small";
+
+                    hideButton.textContent =
+                        design.hidden === true
+                            ? "Show"
+                            : "Hide";
+
+                    hideButton.addEventListener(
+                        "click",
+                        function() {
+                            toggleHidden(design);
+                        }
+                    );
+
+
+                    const deleteButton =
+                        document.createElement("button");
+
+                    deleteButton.type = "button";
+                    deleteButton.className =
+                        "btn btn-danger btn-small";
+                    deleteButton.textContent =
+                        "Delete";
+
+                    deleteButton.addEventListener(
+                        "click",
+                        function() {
+                            deleteDesign(design);
+                        }
+                    );
+
+
+                    actions.appendChild(
+                        editButton
+                    );
+
+                    actions.appendChild(
+                        hideButton
+                    );
+
+                    actions.appendChild(
+                        deleteButton
+                    );
+
+                    actionsCell.appendChild(
+                        actions
+                    );
+
+
+                    row.appendChild(
+                        imageCell
+                    );
+
+                    row.appendChild(
+                        codeCell
+                    );
+
+                    row.appendChild(
+                        nameCell
+                    );
+
+                    row.appendChild(
+                        categoryCell
+                    );
+
+                    row.appendChild(
+                        priceCell
+                    );
+
+                    row.appendChild(
+                        statusCell
+                    );
+
+                    row.appendChild(
+                        actionsCell
+                    );
+
+
+                    designTableBody.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           PRICE FORMAT
+           ========================================= */
+
+        function formatPrice(price) {
+
+            if (
+                price === null ||
+                price === undefined ||
+                price === ""
+            ) {
+
+                return "Ask";
+
+            }
+
+            const number =
+                Number(price);
+
+            if (Number.isNaN(number)) {
+
+                return "₹" + price;
+
+            }
+
+            return "₹" +
+                number.toLocaleString(
+                    "en-IN",
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        /* =========================================
+           ADD / EDIT DESIGN
+           ========================================= */
+
+        designForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                clearMessage(adminMessage);
+
+                const id =
+                    editingId.value.trim();
+
+                const code =
+                    designCode.value.trim();
+
+                const name =
+                    designName.value.trim();
+
+                const category =
+                    designCategory.value;
+
+                const priceValue =
+                    designPrice.value.trim();
+
+                const description =
+                    designDescription.value.trim();
+
+                const imageFile =
+                    designImage.files[0];
+
+                const featured =
+                    designFeatured.checked;
+
+
+                if (!name) {
+
+                    showMessage(
+                        adminMessage,
+                        "Please enter a design name.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!category) {
+
+                    showMessage(
+                        adminMessage,
+                        "Please select a category.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!id && !imageFile) {
+
+                    showMessage(
+                        adminMessage,
+                        "Please select a design image.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                saveDesignBtn.disabled = true;
+
+                saveDesignBtn.textContent =
+                    id
+                        ? "Saving Changes..."
+                        : "Uploading Design...";
+
+
+                try {
+
+                    let imageUrl = null;
+
+
+                    /* =================================
+                       UPLOAD NEW IMAGE
+                       ================================= */
+
+                    if (imageFile) {
+
+                        const safeName =
+                            imageFile.name
+                                .toLowerCase()
+                                .replace(
+                                    /[^a-z0-9.]+/g,
+                                    "-"
+                                );
+
+                        const uniqueName =
+                            Date.now() +
+                            "-" +
+                            Math.random()
+                                .toString(36)
+                                .substring(2, 8) +
+                            "-" +
+                            safeName;
+
+                        const filePath =
+                            "designs/" +
+                            uniqueName;
+
+
+                        const {
+                            error:
+                            uploadError
+                        } =
+                        await supabaseClient
+                            .storage
+                            .from("design-images")
+                            .upload(
+                                filePath,
+                                imageFile,
+                                {
+                                    cacheControl:
+                                        "3600",
+                                    upsert:
+                                        false
+                                }
+                            );
+
+
+                        if (uploadError) {
+                            throw uploadError;
+                        }
+
+
+                        const {
+                            data:
+                            publicData
+                        } =
+                        supabaseClient
+                            .storage
+                            .from(
+                                "design-images"
+                            )
+                            .getPublicUrl(
+                                filePath
+                            );
+
+
+                        imageUrl =
+                            publicData.publicUrl;
+
+                    }
+
+
+                    /* =================================
+                       BUILD DATABASE DATA
+                       ================================= */
+
+                    const designData = {
+
+                        name: name,
+
+                        category: category,
+
+                        description:
+                            description || null,
+
+                        price:
+                            priceValue === ""
+                                ? null
+                                : Number(
+                                    priceValue
+                                ),
+
+                        featured: featured
+
+                    };
+
+
+                    if (code) {
+
+                        designData.design_code =
+                            code;
+
+                    } else if (!id) {
+
+                        designData.design_code =
+                            "PC-" +
+                            Date.now()
+                                .toString()
+                                .slice(-8);
+
+                    }
+
+
+                    if (imageUrl) {
+
+                        designData.image_url =
+                            imageUrl;
+
+                    }
+
+
+                    /* =================================
+                       UPDATE EXISTING DESIGN
+                       ================================= */
+
+                    if (id) {
+
+                        const {
+                            error
+                        } =
+                        await supabaseClient
+                            .from("designs")
+                            .update(
+                                designData
+                            )
+                            .eq(
+                                "id",
+                                id
+                            );
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        showMessage(
+                            adminMessage,
+                            "Design updated successfully.",
+                            "success"
+                        );
+
+                    }
+
+
+                    /* =================================
+                       CREATE NEW DESIGN
+                       ================================= */
+
+                    else {
+
+                        const {
+                            error
+                        } =
+                        await supabaseClient
+                            .from("designs")
+                            .insert(
+                                designData
+                            );
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        showMessage(
+                            adminMessage,
+                            "Design uploaded successfully.",
+                            "success"
+                        );
+
+                    }
+
+
+                    resetDesignForm();
+
+                    await loadDesigns();
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        adminMessage,
+                        "Could not save design: " +
+                        error.message,
+                        "error"
+                    );
+
+                } finally {
+
+                    saveDesignBtn.disabled =
+                        false;
+
+                    saveDesignBtn.textContent =
+                        editingId.value
+                            ? "Save Changes"
+                            : "Add Design";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           START EDIT
+           ========================================= */
+
+        function startEdit(design) {
+
+            editingId.value =
+                design.id;
+
+            designCode.value =
+                design.design_code || "";
+
+            designName.value =
+                design.name || "";
+
+            designCategory.value =
+                design.category || "";
+
+            designPrice.value =
+                design.price ?? "";
+
+            designDescription.value =
+                design.description || "";
+
+            designFeatured.checked =
+                design.featured === true;
+
+
+            if (design.image_url) {
+
+                previewImage.src =
+                    design.image_url;
+
+                imagePreview.style.display =
+                    "block";
+
+            } else {
+
+                imagePreview.style.display =
+                    "none";
+
+            }
+
+
+            formTitle.textContent =
+                "Edit Design";
+
+            saveDesignBtn.textContent =
+                "Save Changes";
+
+            cancelEditBtn.classList.remove(
+                "hidden"
+            );
+
+
+            window.scrollTo(
+                {
+                    top: 0,
+                    behavior: "smooth"
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           CANCEL EDIT
+           ========================================= */
+
+        cancelEditBtn.addEventListener(
+            "click",
+            function() {
+
+                resetDesignForm();
+
+            }
+        );
+
+
+        function resetDesignForm() {
+
+            designForm.reset();
+
+            editingId.value = "";
+
+            formTitle.textContent =
+                "Add New Design";
+
+            saveDesignBtn.textContent =
+                "Add Design";
+
+            cancelEditBtn.classList.add(
+                "hidden"
+            );
+
+            imagePreview.style.display =
+                "none";
+
+            previewImage.src = "";
+
+        }
+
+
+        /* =========================================
+           HIDE / SHOW DESIGN
+           ========================================= */
+
+        async function toggleHidden(design) {
+
+            const newValue =
+                design.hidden !== true;
+
+
+            try {
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("designs")
+                    .update(
+                        {
+                            hidden:
+                                newValue
+                        }
+                    )
+                    .eq(
+                        "id",
+                        design.id
+                    );
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                showMessage(
+                    adminMessage,
+                    newValue
+                        ? "Design hidden from the website."
+                        : "Design is visible again.",
+                    "success"
+                );
+
+
+                await loadDesigns();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    adminMessage,
+                    "Could not change visibility: " +
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           DELETE DESIGN
+           ========================================= */
+
+        async function deleteDesign(design) {
+
+            const confirmed =
+                window.confirm(
+                    "Delete \"" +
+                    (design.name || "this design") +
+                    "\"?\n\nThis will remove the design record. Make sure you really want to continue."
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("designs")
+                    .delete()
+                    .eq(
+                        "id",
+                        design.id
+                    );
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                showMessage(
+                    adminMessage,
+                    "Design deleted successfully.",
+                    "success"
+                );
+
+
+                await loadDesigns();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    adminMessage,
+                    "Could not delete design: " +
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           START
+           ========================================= */
+
+        checkLogin();
+
+    </script>
+
+</body>
+</html>
     </style>
 </head>
 
