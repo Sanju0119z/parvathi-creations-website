@@ -461,38 +461,287 @@
 
     <div class="gallery-item">
       <img src="images/bridal.jpg" alt="Bridal Wear">
+<!-- Gallery Section -->
+<section id="gallery" class="gallery-section">
+
+  <div class="section-title">
+    <span>Our Collection</span>
+    <h2>Design Gallery</h2>
+    <p>Explore our latest tailoring and embroidery designs.</p>
+  </div>
+
+  <!-- Gallery Filters -->
+  <div class="gallery-filters">
+    <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+    <button class="filter-btn" onclick="filterGallery('sarees', this)">Sarees</button>
+    <button class="filter-btn" onclick="filterGallery('blouses', this)">Blouses</button>
+    <button class="filter-btn" onclick="filterGallery('maggam', this)">Maggam</button>
+    <button class="filter-btn" onclick="filterGallery('bridal', this)">Bridal</button>
+    <button class="filter-btn" onclick="filterGallery('frocks', this)">Frocks</button>
+    <button class="filter-btn" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div id="gallery-grid" class="gallery-grid">
+
+    <!-- Existing Static Designs -->
+
+    <div class="gallery-item" data-category="maggam">
+      <img src="images/maggam.jpg" alt="Maggam Work">
       <div class="gallery-overlay">
-        <h3>Bridal Wear</h3>
+        <h3>Maggam Work</h3>
+        <p>Beautiful traditional Maggam embroidery.</p>
+        <button onclick="showDesignDetails('Maggam Work', 'Beautiful traditional Maggam embroidery.')">
+          View Details
+        </button>
       </div>
     </div>
 
-
-    <div class="gallery-item">
-      <img src="images/tassels.jpg" alt="Saree Tassels">
+    <div class="gallery-item" data-category="blouses">
+      <img src="images/blouse.jpg" alt="Designer Blouse">
       <div class="gallery-overlay">
-        <h3>Saree Tassels</h3>
+        <h3>Designer Blouse</h3>
+        <p>Elegant custom blouse designs.</p>
+        <button onclick="showDesignDetails('Designer Blouse', 'Elegant custom blouse designs.')">
+          View Details
+        </button>
       </div>
     </div>
 
-
-    <div class="gallery-item">
-      <img src="images/frocks.jpg" alt="Frocks">
+    <div class="gallery-item" data-category="bridal">
+      <img src="images/wedding.jpg" alt="Wedding Design">
       <div class="gallery-overlay">
-        <h3>Frocks</h3>
+        <h3>Wedding Design</h3>
+        <p>Beautiful designs for special occasions.</p>
+        <button onclick="showDesignDetails('Wedding Design', 'Beautiful designs for special occasions.')">
+          View Details
+        </button>
       </div>
     </div>
 
-
-    <div class="gallery-item">
-      <img src="images/lehenga.jpg" alt="Lehenga">
+    <div class="gallery-item" data-category="sarees">
+      <img src="images/sareejpg.jpg" alt="Saree Design">
       <div class="gallery-overlay">
-        <h3>Lehengas</h3>
+        <h3>Saree Design</h3>
+        <p>Elegant saree styling and tassel work.</p>
+        <button onclick="showDesignDetails('Saree Design', 'Elegant saree styling and tassel work.')">
+          View Details
+        </button>
       </div>
     </div>
 
   </div>
 
-</section> 
+  <!-- Loading message for Supabase designs -->
+  <p id="gallery-loading" style="text-align:center; margin:20px 0;">
+    Loading latest designs...
+  </p>
+
+  <p id="gallery-empty" style="display:none; text-align:center; margin:20px 0;">
+    No designs found.
+  </p>
+
+</section>
+
+<script>
+/* =========================================
+   SUPABASE GALLERY
+   ========================================= */
+
+const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =========================================
+   LOAD DESIGNS FROM SUPABASE
+   ========================================= */
+
+async function loadGalleryDesigns() {
+
+  const gallery = document.getElementById("gallery-grid");
+  const loading = document.getElementById("gallery-loading");
+  const empty = document.getElementById("gallery-empty");
+
+  if (!gallery) return;
+
+  try {
+
+    const { data, error } = await supabaseClient
+      .from("designs")
+      .select("*")
+      .eq("hidden", false)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase gallery error:", error);
+
+      loading.textContent = "Unable to load latest designs.";
+      return;
+    }
+
+    loading.style.display = "none";
+
+    if (!data || data.length === 0) {
+      empty.style.display = "block";
+      return;
+    }
+
+    data.forEach(function(design) {
+
+      const item = document.createElement("div");
+
+      item.className = "gallery-item uploaded-design";
+
+      item.dataset.category =
+        String(design.category || "all").toLowerCase().trim();
+
+      const image = document.createElement("img");
+
+      image.src = design.image_url;
+      image.alt = design.name || "Parvathi Creations Design";
+
+      const overlay = document.createElement("div");
+      overlay.className = "gallery-overlay";
+
+      const title = document.createElement("h3");
+      title.textContent =
+        design.name || "Parvathi Creations Design";
+
+      const category = document.createElement("p");
+      category.textContent =
+        design.category || "";
+
+      const code = document.createElement("small");
+
+      if (design.design_code) {
+        code.textContent =
+          "Design Code: " + design.design_code;
+      }
+
+      const price = document.createElement("p");
+
+      if (design.price) {
+        price.textContent =
+          "₹" + design.price;
+      }
+
+      const button = document.createElement("button");
+
+      button.textContent = "View Details";
+
+      button.addEventListener("click", function() {
+
+        const description =
+          design.description || "Beautiful Parvathi Creations design.";
+
+        showDesignDetails(
+          design.name || "Parvathi Creations Design",
+          description
+        );
+
+      });
+
+      overlay.appendChild(title);
+      overlay.appendChild(category);
+
+      if (design.design_code) {
+        overlay.appendChild(code);
+      }
+
+      if (design.price) {
+        overlay.appendChild(price);
+      }
+
+      overlay.appendChild(button);
+
+      item.appendChild(image);
+      item.appendChild(overlay);
+
+      gallery.appendChild(item);
+
+    });
+
+  } catch (error) {
+
+    console.error("Gallery loading error:", error);
+
+    loading.textContent =
+      "Unable to load gallery.";
+
+  }
+}
+
+
+/* =========================================
+   GALLERY FILTER
+   ========================================= */
+
+function filterGallery(category, button) {
+
+  const items =
+    document.querySelectorAll(".gallery-item");
+
+  const buttons =
+    document.querySelectorAll(".filter-btn");
+
+  buttons.forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+  let visibleCount = 0;
+
+  items.forEach(function(item) {
+
+    const itemCategory =
+      String(item.dataset.category || "")
+        .toLowerCase()
+        .trim();
+
+    if (
+      category === "all" ||
+      itemCategory === category
+    ) {
+
+      item.style.display = "";
+
+      visibleCount++;
+
+    } else {
+
+      item.style.display = "none";
+
+    }
+
+  });
+
+  const empty =
+    document.getElementById("gallery-empty");
+
+  if (empty) {
+    empty.style.display =
+      visibleCount === 0 ? "block" : "none";
+  }
+
+}
+
+
+/* =========================================
+   START GALLERY
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+  loadGalleryDesigns();
+});
+</script>
   <!-- Reviews Section -->
 <section id="reviews" class="reviews-section">
 
