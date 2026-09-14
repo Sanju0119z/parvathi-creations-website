@@ -150,3 +150,86 @@ document.addEventListener(
 
     }
 );
+/* =================================
+   SUPABASE GALLERY
+================================= */
+
+const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+async function loadGallery() {
+    const gallery = document.getElementById("gallery");
+
+    if (!gallery) {
+        console.log("Gallery element not found.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/designs?select=*&order=created_at.desc`,
+            {
+                headers: {
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not load designs from Supabase.");
+        }
+
+        const designs = await response.json();
+
+        gallery.innerHTML = "";
+
+        if (!designs.length) {
+            gallery.innerHTML =
+                "<p>No designs available yet.</p>";
+            return;
+        }
+
+        designs.forEach((design) => {
+
+            const card = document.createElement("div");
+            card.className = "gallery-item";
+
+            card.innerHTML = `
+                <img 
+                    src="${design.image_url}" 
+                    alt="${design.name || "Parvathi Creations design"}"
+                    loading="lazy"
+                >
+
+                <div class="gallery-info">
+                    <h3>${design.name || ""}</h3>
+
+                    <p>
+                        ${design.description || ""}
+                    </p>
+
+                    <button
+                        onclick="showDesignDetails(
+                            '${(design.name || "").replace(/'/g, "\\'")}',
+                            '${(design.description || "").replace(/'/g, "\\'")}'
+                        )"
+                    >
+                        ♡ I Like This
+                    </button>
+                </div>
+            `;
+
+            gallery.appendChild(card);
+        });
+
+    } catch (error) {
+
+        console.error("Gallery error:", error);
+
+        gallery.innerHTML =
+            "<p>Unable to load designs right now.</p>";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadGallery);
