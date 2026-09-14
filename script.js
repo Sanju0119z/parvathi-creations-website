@@ -150,86 +150,154 @@ document.addEventListener(
 
     }
 );
-/* =================================
+
+/* =========================================
    SUPABASE GALLERY
-================================= */
+========================================= */
 
-const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+async function loadGalleryDesigns() {
 
-async function loadGallery() {
-    const gallery = document.getElementById("gallery");
+    const gallery = document.getElementById("gallery-grid");
+    const loading = document.getElementById("gallery-loading");
+    const empty = document.getElementById("gallery-empty");
 
     if (!gallery) {
-        console.log("Gallery element not found.");
+        console.log("Gallery grid not found.");
         return;
     }
 
     try {
-        const response = await fetch(
-            `${SUPABASE_URL}/rest/v1/designs?select=*&order=created_at.desc`,
-            {
-                headers: {
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                }
+
+        const { data, error } = await supabaseClient
+            .from("designs")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error("Supabase gallery error:", error);
+
+            if (loading) {
+                loading.textContent =
+                    "Unable to load latest designs.";
             }
-        );
 
-        if (!response.ok) {
-            throw new Error("Could not load designs from Supabase.");
-        }
-
-        const designs = await response.json();
-
-        gallery.innerHTML = "";
-
-        if (!designs.length) {
-            gallery.innerHTML =
-                "<p>No designs available yet.</p>";
             return;
         }
 
-        designs.forEach((design) => {
+        if (loading) {
+            loading.style.display = "none";
+        }
 
-            const card = document.createElement("div");
-            card.className = "gallery-item";
+        if (!data || data.length === 0) {
 
-            card.innerHTML = `
-                <img 
-                    src="${design.image_url}" 
-                    alt="${design.name || "Parvathi Creations design"}"
-                    loading="lazy"
-                >
+            if (empty) {
+                empty.style.display = "block";
+            }
 
-                <div class="gallery-info">
-                    <h3>${design.name || ""}</h3>
+            return;
+        }
 
-                    <p>
-                        ${design.description || ""}
-                    </p>
+        gallery.innerHTML = "";
 
-                    <button
-                        onclick="showDesignDetails(
-                            '${(design.name || "").replace(/'/g, "\\'")}',
-                            '${(design.description || "").replace(/'/g, "\\'")}'
-                        )"
-                    >
-                        ♡ I Like This
-                    </button>
-                </div>
-            `;
+        data.forEach(function(design) {
 
-            gallery.appendChild(card);
+            const item = document.createElement("div");
+
+            item.className =
+                "gallery-item uploaded-design";
+
+            item.dataset.category =
+                String(design.category || "all")
+                    .toLowerCase()
+                    .trim();
+
+            const image =
+                document.createElement("img");
+
+            image.src = design.image_url;
+
+            image.alt =
+                design.name ||
+                "Parvathi Creations Design";
+
+            image.loading = "lazy";
+
+            const overlay =
+                document.createElement("div");
+
+            overlay.className =
+                "gallery-overlay";
+
+            const title =
+                document.createElement("h3");
+
+            title.textContent =
+                design.name ||
+                "Parvathi Creations Design";
+
+            const category =
+                document.createElement("p");
+
+            category.textContent =
+                design.category || "";
+
+            const button =
+                document.createElement("button");
+
+            button.textContent =
+                "View Details";
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    showDesignDetails(
+                        design.name ||
+                        "Parvathi Creations Design",
+
+                        design.description ||
+                        "Beautiful Parvathi Creations design."
+                    );
+
+                }
+            );
+
+            overlay.appendChild(title);
+            overlay.appendChild(category);
+            overlay.appendChild(button);
+
+            item.appendChild(image);
+            item.appendChild(overlay);
+
+            gallery.appendChild(item);
+
         });
 
     } catch (error) {
 
-        console.error("Gallery error:", error);
+        console.error(
+            "Gallery loading error:",
+            error
+        );
 
-        gallery.innerHTML =
-            "<p>Unable to load designs right now.</p>";
+        if (loading) {
+            loading.textContent =
+                "Unable to load gallery.";
+        }
+
     }
 }
 
-document.addEventListener("DOMContentLoaded", loadGallery);
+
+/* =========================================
+   START GALLERY
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadGalleryDesigns();
+
+    }
+);
