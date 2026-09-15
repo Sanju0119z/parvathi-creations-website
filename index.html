@@ -1116,9 +1116,7 @@ async function loadUploadedDesigns() {
 item.dataset.category = design.category || "Other";
 
 
-     const item = document.createElement("div");
-item.className = "gallery-item uploaded-design";
-item.dataset.category = design.category || "all";
+     
 
 item.innerHTML = `
   <img src="${design.image_url}" alt="${design.name || "Parvathi Creations design"}">
