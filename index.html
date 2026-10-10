@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="data:,">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Parvathi Creations</title>
@@ -668,8 +669,24 @@ async function loadGalleryDesigns() {
       item.appendChild(overlay);
       gallery.appendChild(item);
 
+      // These five legacy Storage objects were confirmed missing in a live read-only browser check.
+      // Use a local repository image for these exact broken objects; future errors use the handler above.
+      const knownMissingStorageFiles = [
+        "1791610399288-0h3s32-file-0000000025fc820896ddc50928d556a8.png",
+        "1789392675815-u9euug-screenshot-20260812-135030.jpg",
+        "1788960147035-g7tp0x-screenshot-2026-0909-184315.png",
+        "1788878816491-1ish5csm37yi.jpg",
+        "1788875566731-yszp5cohp3g.jpg"
+      ];
+      const originalImageUrl = String(design.image_url || "");
+      const knownMissingImage = knownMissingStorageFiles.some(function (file) {
+        return originalImageUrl.includes(file);
+      });
+
       // Assign the remote URL only after the element and its error handler are in the DOM.
-      image.src = design.image_url || "sareejpg.jpg";
+      image.src = knownMissingImage
+        ? new URL("sareejpg.jpg", document.baseURI).href
+        : (design.image_url || "sareejpg.jpg");
       // Some storage/CDN failures do not reliably dispatch an error event in embedded browsers.
       // Recheck completed failures once and fall back to a repository-owned image.
       window.setTimeout(function () {
