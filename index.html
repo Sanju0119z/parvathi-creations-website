@@ -1310,12 +1310,12 @@ function applyLanguage(language) {
       if (timer) window.clearInterval(timer);
       timer = null;
       if (master && context) master.gain.setTargetAtTime(0, context.currentTime, 0.04);
-      toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicOff;
+      toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicOff;
       toggle.setAttribute("aria-pressed", "false");
       try { localStorage.setItem("parvathiMusicChoice", "off"); } catch (error) { /* storage may be disabled */ }
       return;
     }
-    toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicOn;
+    toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicOn;
     toggle.setAttribute("aria-pressed", "true");
     try { localStorage.setItem("parvathiMusicChoice", "on"); } catch (error) { /* storage may be disabled */ }
     try {
@@ -1333,7 +1333,7 @@ function applyLanguage(language) {
       timer = window.setInterval(playNote, 1250);
     } catch (error) {
       playing = false;
-      toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicUnavailable;
+      toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicUnavailable;
       toggle.setAttribute("aria-pressed", "false");
       localStorage.setItem("parvathiMusicChoice", "off");
     }
