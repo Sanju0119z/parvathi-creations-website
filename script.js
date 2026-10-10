@@ -1,345 +1,39 @@
-
-// Smooth reveal animation
-
-const reveals = document.querySelectorAll(".reveal");
-
-function revealOnScroll() {
-  reveals.forEach((item) => {
-    const windowHeight = window.innerHeight;
-    const elementTop = item.getBoundingClientRect().top;
-
-    if (elementTop < windowHeight - 100) {
-      item.classList.add("active");
+(() => {
+  "use strict";
+  const aliases = {all:"all",saree:"saree",blouse:"blouse",maggam:"maggam",bridal:"bridal",kids:"kids",lehenga:"lehenga",computer:"computer",custom:"custom"};
+  function initFilters() {
+    const group=document.querySelector(".gallery-filters"), grid=document.querySelector(".collection-grid");
+    if(!group||!grid)return;
+    const buttons=[...group.querySelectorAll("button[data-filter]")], cards=[...grid.querySelectorAll(".collection-card[data-category]")];
+    if(!buttons.length||!cards.length)return;
+    function apply(category,selected){
+      category=aliases[category]||"all";
+      cards.forEach(card=>{const visible=category==="all"||card.dataset.category===category;card.hidden=!visible;card.setAttribute("aria-hidden",String(!visible));if(visible)card.removeAttribute("tabindex");else card.setAttribute("tabindex","-1");});
+      buttons.forEach(button=>{const active=button===selected;button.classList.toggle("active",active);button.setAttribute("aria-pressed",String(active));});
     }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-
-revealOnScroll();
-// Smooth scrolling for navigation links (handles the Home link href="#")
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener("click", function (e) {
-    const href = this.getAttribute("href");
-
-    if (!href || href === "#") {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
-    const target = document.querySelector(href);
-
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-// Highlight active navigation link while scrolling
-
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 120;
-
-    if (window.scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("active");
-    }
-  });
-});
-/* =================================
-   FEATURED DESIGNS JAVASCRIPT
-================================= */
-
-let selectedDesign = "";
-
-
-/* LIKE BUTTON */
-
-function likeDesign(button) {
-
-    button.classList.toggle("liked");
-
-    if (button.classList.contains("liked")) {
-
-        button.innerHTML = "♥ Liked";
-
-    } else {
-
-        button.innerHTML = "♡ I Like This";
-
-    }
-
-}
-
-
-/* OPEN DESIGN DETAILS */
-
-function showDesignDetails(title, description) {
-
-    selectedDesign = title;
-
-    document.getElementById("modalDesignTitle")
-        .textContent = title;
-
-    document.getElementById("modalDesignDescription")
-        .textContent = description;
-
-    document.getElementById("designModal")
-        .classList.add("active");
-
-}
-
-
-/* CLOSE MODAL */
-
-function closeDesignDetails() {
-
-    document.getElementById("designModal")
-        .classList.remove("active");
-
-}
-
-
-/* ENQUIRY */
-
-function sendDesignEnquiry() {
-
-    const message =
-        "Hello Parvathi Creations! " +
-        "I am interested in the design: " +
-        selectedDesign +
-        ". Please share more details.";
-
-    const whatsappNumber = "919550766784";
-
-    const url =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        encodeURIComponent(message);
-
-    window.open(url, "_blank");
-
-}
-
-
-/* CLOSE WHEN CLICKING OUTSIDE */
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        const modal =
-            document.getElementById("designModal");
-
-        if (
-            event.target === modal
-        ) {
-            closeDesignDetails();
-        }
-
-    }
-);
-
-/* =========================================
-   SUPABASE GALLERY
-========================================= */
-
-async function loadGalleryDesigns() {
-
-    const gallery = document.getElementById("gallery-grid");
-    const loading = document.getElementById("gallery-loading");
-    const empty = document.getElementById("gallery-empty");
-
-    if (!gallery) {
-        console.log("Gallery grid not found.");
-        return;
-    }
-
-    try {
-
-        const { data, error } = await supabaseClient
-            .from("designs")
-            .select("*")
-            .order("created_at", { ascending: false });
-
-        if (error) {
-            console.error("Supabase gallery error:", error);
-
-            if (loading) {
-                loading.textContent =
-                    "Unable to load latest designs.";
-            }
-
-            return;
-        }
-
-        if (loading) {
-            loading.style.display = "none";
-        }
-
-        if (!data || data.length === 0) {
-
-            if (empty) {
-                empty.style.display = "block";
-            }
-
-            return;
-        }
-
-        gallery.innerHTML = "";
-
-        data.forEach(function(design) {
-
-            const item = document.createElement("div");
-
-            item.className =
-                "gallery-item uploaded-design";
-
-            item.dataset.category =
-                String(design.category || "all")
-                    .toLowerCase()
-                    .trim();
-
-            const image =
-                document.createElement("img");
-
-            image.src = design.image_url;
-
-            image.alt =
-                design.name ||
-                "Parvathi Creations Design";
-
-            image.loading = "lazy";
-
-            const overlay =
-                document.createElement("div");
-
-            overlay.className =
-                "gallery-overlay";
-
-            const title =
-                document.createElement("h3");
-
-            title.textContent =
-                design.name ||
-                "Parvathi Creations Design";
-
-            const category =
-                document.createElement("p");
-
-            category.textContent =
-                design.category || "";
-
-            const button =
-                document.createElement("button");
-
-            button.textContent =
-                "View Details";
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    showDesignDetails(
-                        design.name ||
-                        "Parvathi Creations Design",
-
-                        design.description ||
-                        "Beautiful Parvathi Creations design."
-                    );
-
-                }
-            );
-
-            overlay.appendChild(title);
-            overlay.appendChild(category);
-            overlay.appendChild(button);
-
-            item.appendChild(image);
-            item.appendChild(overlay);
-
-            gallery.appendChild(item);
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Gallery loading error:",
-            error
-        );
-
-        if (loading) {
-            loading.textContent =
-                "Unable to load gallery.";
-        }
-
-    }
-}
-
-
-/* =========================================
-   START GALLERY
-========================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadGalleryDesigns();
-
-    }
-);
-
-
-/* =========================================
-   COLLECTION PHOTO CATEGORY FILTERS
-========================================= */
-(function initCollectionFilters() {
-  function normalizeCategory(value) {
-    const text = String(value || "").toLowerCase().trim();
-    if (text.includes("saree") || text.includes("tassel")) return "saree";
-    if (text.includes("blouse")) return "blouse";
-    if (text.includes("bridal") || text.includes("wedding")) return "bridal";
-    if (text.includes("lehenga")) return "lehenga";
-    if (text.includes("frock") || text.includes("kids") || text.includes("child")) return "kids";
-    if (text.includes("computer") || text.includes("machine")) return "computer";
-    if (text.includes("maggam") || text.includes("embroidery") || text.includes("threadwork")) return "maggam";
-    if (text.includes("custom") || text.includes("design")) return "custom";
-    return text || "all";
+    buttons.forEach(button=>button.addEventListener("click",event=>{event.preventDefault();apply(button.dataset.filter,button);}));
+    const initial=buttons.find(button=>button.dataset.filter==="all")||buttons[0];apply(initial.dataset.filter,initial);
   }
-
-  function applyFilter(category, selectedButton) {
-    const cards = document.querySelectorAll(".collection-grid .collection-card");
-    cards.forEach((card) => {
-      const actual = normalizeCategory(card.dataset.category || card.querySelector("h3")?.textContent || "");
-      const visible = category === "all" || actual === category;
-      card.hidden = !visible;
-    });
-    document.querySelectorAll(".gallery-filters .filter-btn").forEach((button) => {
-      const active = button === selectedButton;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", String(active));
+  function initSmoothScrolling(){
+    document.addEventListener("click",event=>{
+      const link=event.target.closest("a[href^='#']");if(!link)return;
+      const href=link.getAttribute("href");
+      if(!href||href==="#"){event.preventDefault();window.scrollTo({top:0,behavior:"smooth"});return;}
+      const target=document.getElementById(href.slice(1));if(!target)return;
+      event.preventDefault();target.scrollIntoView({behavior:"smooth",block:"start"});
+      if(window.history&&window.history.replaceState)window.history.replaceState(null,"",href);
     });
   }
-
-  document.querySelectorAll(".gallery-filters .filter-btn").forEach((button) => {
-    button.addEventListener("click", () => applyFilter(button.dataset.filter || "all", button));
-  });
+  function initNavigationState(){
+    const sections=[...document.querySelectorAll("main section[id]")],links=[...document.querySelectorAll(".main-nav a[href^='#']")];if(!sections.length||!links.length)return;
+    function update(){let current=sections[0].id;const threshold=window.scrollY+Math.min(180,window.innerHeight*.25);sections.forEach(section=>{if(section.offsetTop<=threshold)current=section.id;});links.forEach(link=>{const active=link.getAttribute("href")==="#"+current;link.classList.toggle("active",active);if(active)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current");});}
+    window.addEventListener("scroll",update,{passive:true});window.addEventListener("resize",update,{passive:true});update();
+  }
+  function initReveal(){
+    const items=document.querySelectorAll(".reveal");if(!items.length)return;
+    if("IntersectionObserver"in window){const observer=new IntersectionObserver((entries,observerInstance)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("active");observerInstance.unobserve(entry.target);}}),{threshold:.08});items.forEach(item=>observer.observe(item));}
+    else items.forEach(item=>item.classList.add("active"));
+  }
+  function init(){initFilters();initSmoothScrolling();initNavigationState();initReveal();const year=document.getElementById("year");if(year)year.textContent=String(new Date().getFullYear());}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
