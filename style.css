@@ -124,10 +124,9 @@ header {
   justify-content: center;
   text-align: center;
   padding: 40px 8%;
-  background: linear-gradient(
-    rgba(255,250,245,0.85),
-    rgba(255,250,245,0.95)
-  );
+  background:
+    linear-gradient(90deg, rgba(255,250,245,0.96) 0%, rgba(255,250,245,0.88) 52%, rgba(255,250,245,0.45) 100%),
+    url("https://images.pexels.com/photos/37396069/pexels-photo-37396069.jpeg?auto=compress&cs=tinysrgb&w=1600") center 35% / cover no-repeat;
 }
 
 .hero-content {
