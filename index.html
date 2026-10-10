@@ -1218,8 +1218,10 @@ function applyLanguage(language) {
             return entry[0] === trimmed || entry[1] === trimmed || entry[2] === trimmed;
         });
         if (phrase) {
-            const leading = (current.match(/^\\s*/) || [""])[0];
-            const trailing = (current.match(/\\s*$/) || [""])[0];
+            const leadingLength = current.length - current.trimStart().length;
+            const trailingLength = current.length - current.trimEnd().length;
+            const leading = current.slice(0, leadingLength);
+            const trailing = trailingLength ? current.slice(current.length - trailingLength) : "";
             textNode.nodeValue = leading + phrase[activeLanguage === "te" ? 1 : activeLanguage === "hi" ? 2 : 0] + trailing;
         }
     }
