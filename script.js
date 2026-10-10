@@ -329,9 +329,7 @@ document.addEventListener(
     const cards = document.querySelectorAll(".collection-grid .collection-card");
     cards.forEach((card) => {
       const actual = normalizeCategory(card.dataset.category || card.querySelector("h3")?.textContent || "");
-      const visible = category === "all" || actual === category ||
-        (category === "computer" && actual === "maggam") ||
-        (category === "custom" && actual === "blouse");
+      const visible = category === "all" || actual === category;
       card.hidden = !visible;
     });
     document.querySelectorAll(".gallery-filters .filter-btn").forEach((button) => {
