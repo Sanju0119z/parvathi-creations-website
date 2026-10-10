@@ -1629,3 +1629,24 @@ img, video, iframe {
 @media (min-width: 769px) {
   #menu-toggle { display: flex; }
 }
+
+/* Final overflow guards for narrow phones */
+@media (max-width: 768px) {
+  .service-container, .featured-grid, .gallery-container, .gallery-grid,
+  .review-container, .reviews-container, .contact-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .service-container > *, .featured-grid > *, .gallery-container > *,
+  .gallery-grid > *, .review-container > *, .reviews-container > *,
+  .contact-container > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  body, section, .hero, .hero-content, .section-heading {
+    overflow-wrap: anywhere;
+  }
+  .design-info, .gallery-overlay, .service-card, .review-card {
+    overflow-wrap: anywhere;
+  }
+}

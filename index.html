@@ -1077,11 +1077,25 @@ function applyLanguage(language) {
     document.body.classList.toggle("menu-open", open);
     if (openButton) openButton.setAttribute("aria-expanded", String(open));
   }
-  if (openButton) openButton.addEventListener("click", () => setMenu(true));
+  if (openButton) openButton.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
   if (closeButton) closeButton.addEventListener("click", () => setMenu(false));
   if (overlay) overlay.addEventListener("click", () => setMenu(false));
   if (menu) menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
   document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+  // The historical repository contains only one real fashion photo; use it as a fallback
+  // rather than leaving broken-image icons for older referenced filenames.
+  document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("error", function () {
+      if (!this.dataset.fallbackTried && !this.src.endsWith("/sareejpg.jpg")) {
+        this.dataset.fallbackTried = "true";
+        this.src = new URL("sareejpg.jpg", document.baseURI).href;
+      } else {
+        this.style.visibility = "hidden";
+        this.setAttribute("aria-hidden", "true");
+      }
+    });
+  });
 
   const toggle = document.getElementById("music-toggle");
   const slider = document.getElementById("music-volume");
@@ -1093,10 +1107,8 @@ function applyLanguage(language) {
   slider.value = String(volume);
   const sequence = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
   function playNote() {
-    if (!playing || !context || !master) return;
-    const osc = context.createOscillator();
-    const gain = context.createGain();
-    const now = context.currentTime;
+    if (!playing || !context || !master || volume === 0) return;
+    const osc = context.createOscillator(), gain = context.createGain(), now = context.currentTime;
     osc.type = "sine";
     osc.frequency.value = sequence[noteIndex++ % sequence.length];
     gain.gain.setValueAtTime(0.0001, now);
@@ -1107,29 +1119,33 @@ function applyLanguage(language) {
   }
   function setPlaying(next) {
     playing = next;
-    if (playing) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) {
-        toggle.textContent = "Music unavailable";
-        toggle.setAttribute("aria-pressed", "false");
-        playing = false;
-        return;
-      }
-      context = context || new AudioContextClass();
-      if (context.state === "suspended") context.resume();
-      master = master || context.createGain();
-      master.gain.value = 1;
-      master.connect(context.destination);
-      playNote();
-      timer = window.setInterval(playNote, 1250);
-      toggle.textContent = "♫ Music: On";
-      toggle.setAttribute("aria-pressed", "true");
-      localStorage.setItem("parvathiMusicChoice", "on");
-    } else {
+    if (!playing) {
       if (timer) window.clearInterval(timer);
       timer = null;
       if (master && context) master.gain.setTargetAtTime(0, context.currentTime, 0.04);
       toggle.textContent = "♫ Music: Off";
+      toggle.setAttribute("aria-pressed", "false");
+      localStorage.setItem("parvathiMusicChoice", "off");
+      return;
+    }
+    toggle.textContent = "♫ Music: On";
+    toggle.setAttribute("aria-pressed", "true");
+    localStorage.setItem("parvathiMusicChoice", "on");
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) throw new Error("Web Audio is unavailable");
+      context = context || new AudioContextClass();
+      master = master || context.createGain();
+      master.gain.value = 1;
+      if (master.numberOfOutputs === 0) master.connect(context.destination);
+      else if (master.context !== context) master.connect(context.destination);
+      if (context.state === "suspended") context.resume();
+      if (timer) window.clearInterval(timer);
+      playNote();
+      timer = window.setInterval(playNote, 1250);
+    } catch (error) {
+      playing = false;
+      toggle.textContent = "Music unavailable";
       toggle.setAttribute("aria-pressed", "false");
       localStorage.setItem("parvathiMusicChoice", "off");
     }
