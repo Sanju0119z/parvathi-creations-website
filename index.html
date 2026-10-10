@@ -608,7 +608,7 @@ async function loadGalleryDesigns() {
         this.setAttribute("aria-hidden", "true");
         item.classList.add("image-unavailable");
       });
-      image.src = design.image_url || "sareejpg.jpg";
+
 
       const overlay = document.createElement("div");
       overlay.className = "gallery-overlay";
@@ -666,8 +666,10 @@ async function loadGalleryDesigns() {
 
       item.appendChild(image);
       item.appendChild(overlay);
-
       gallery.appendChild(item);
+
+      // Assign the remote URL only after the element and its error handler are in the DOM.
+      image.src = design.image_url || "sareejpg.jpg";
 
     });
 
