@@ -1,177 +1,299 @@
 (() => {
   "use strict";
+
+  /* ---------- Configuration ---------- */
   const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
-  const categoryAliases = {
-    "frock":"frocks","frocks":"frocks",
-    "lehenga":"lehenga","lehengas":"lehenga","designer lehengas":"lehenga",
-    "designer":"designer","designer wear":"designer","designerwear":"designer","designer outfit":"designer","designer outfits":"designer",
-    "blouse":"blouse","blouses":"blouse","blouse designs":"blouse",
-    "maggam":"maggam","maggam work":"maggam","thread work":"maggam","hand embroidery":"maggam",
-    "computer":"computer","computer work":"computer","computer embroidery":"computer","computerized embroidery":"computer","computerised embroidery":"computer","computerized work":"computer","computerised work":"computer","machine embroidery":"computer",
-    "bridal":"bridal","bridal wear":"bridal","wedding":"bridal","wedding wear":"bridal","wedding dresses":"bridal","occasionwear":"bridal","occasion wear":"bridal",
-    "kids":"kids","kid wear":"kids","kids wear":"kids","children":"kids","children wear":"kids",
-    "saree":"saree","sarees":"saree","saree tassels":"saree","sarees & tassels":"saree","tassel":"saree",
-    "custom":"custom","custom design":"custom","custom designs":"custom","tailoring":"custom","salwar":"custom"
-  };
-  const categoryMap = [
-    {key:"frocks", words:["frock", "frocks"]},
-    {key:"lehenga", words:["lehenga", "lehengas"]},
-    {key:"designer", words:["designer wear", "designerwear", "designer outfit", "designer outfits"]},
-    {key:"blouse", words:["blouse", "blouses"]},
-    {key:"maggam", words:["maggam", "thread work", "hand embroidery"]},
-    {key:"computer", words:["computer work", "computer embroidery", "computerized embroidery", "computerised embroidery", "computerized work", "computerised work", "machine embroidery"]},
-    {key:"bridal", words:["bridal", "wedding", "occasionwear", "occasion wear"]},
-    {key:"kids", words:["kids wear", "kid wear", "children wear", "kids", "children"]},
-    {key:"saree", words:["saree", "tassel", "sarees"]},
-    {key:"custom", words:["custom", "tailoring", "salwar"]}
-  ];
-  let activeCategory = "all";
-  let activeButton = null;
-
-  function normalizeCategory(value, designName) {
-    const text = String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
-    const name = String(designName || "").trim().toLowerCase().replace(/\s+/g, " ");
-    // A design explicitly named as a frock belongs in Frocks even if an old saved category is wrong.
-    if (/\bfrocks?\b/.test(name)) return "frocks";
-    if (categoryAliases[text]) return categoryAliases[text];
-    const match = categoryMap.find(item => item.words.some(word => text.includes(word)));
-    // Keep unknown legacy categories visible in All Designs without mislabeling them as Custom.
-    return match ? match.key : "uncategorized";
-  }
-
-  function applyFilter(category, selected) {
-    activeCategory = category || "all";
-    activeButton = selected || activeButton;
-    const cards = [...document.querySelectorAll(".collection-grid .collection-card[data-category]")];
-    cards.forEach(card => {
-      const visible = activeCategory === "all" || card.dataset.category === activeCategory;
-      card.hidden = !visible;
-      card.setAttribute("aria-hidden", String(!visible));
-    });
-    document.querySelectorAll(".gallery-filters button[data-filter]").forEach(button => {
-      const active = button === activeButton;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-  }
-
-  
-  function initFilters() {
-    const group = document.querySelector(".gallery-filters");
-    if (!group) return;
-
-    if (group.dataset.filterEventsBound === "true") return;
-    group.dataset.filterEventsBound = "true";
-
-    group.addEventListener("click", function (event) {
-      const button = event.target.closest("button[data-filter]");
-      if (!button || !group.contains(button)) return;
-
-      event.preventDefault();
-      applyFilter(button.dataset.filter || "all", button);
-    });
-
-    const buttons = Array.from(
-      group.querySelectorAll("button[data-filter]")
-    );
-
-    const initial =
-      buttons.find(button => button.dataset.filter === "all") ||
-      buttons[0];
-
-    if (initial) {
-      applyFilter(initial.dataset.filter, initial);
-    }
-  }
-
-
-  const LIKES_KEY = "parvathi-creations-liked-designs";
+  const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs"; // public (publishable) key by design; access is controlled by RLS
   const WHATSAPP_NUMBER = "919550766784";
+  const LIKES_KEY = "parvathi-creations-liked-designs";
+
+  /* Customer-facing text lives in one place so it can be translated later. */
+  const TEXT = {
+    all: "All Designs",
+    loading: "Loading designs\u2026",
+    errorTitle: "We couldn\u2019t load the designs right now.",
+    errorHelp: "Please check your connection and try again.",
+    retry: "Try again",
+    emptyTitle: "Our design gallery is being updated.",
+    emptyHelp: "New designs will appear here soon. In the meantime, message us on WhatsApp to see our latest work.",
+    noMatchTitle: "No designs match your choices.",
+    noMatchHelp: "Try another category or search, or clear the filters.",
+    clearFilters: "Clear filters",
+    featured: "\u2605 Featured",
+    featuredOnly: "\u2605 Featured only",
+    searchLabel: "Search designs",
+    searchPlaceholder: "Search designs\u2026",
+    sortLabel: "Sort designs",
+    sortNewest: "Newest first",
+    sortOldest: "Oldest first",
+    sortName: "Name A\u2013Z",
+    photoUnavailable: "Photo unavailable",
+    like: "\u2661 I Like This Design",
+    liked: "\u2665 Liked",
+    enquire: "Enquire on WhatsApp",
+    contactUnavailable: "The WhatsApp contact number is not available right now.",
+    showing: (n, total) => "Showing " + n + " of " + total + " design" + (total === 1 ? "" : "s")
+  };
+
+  const cats = window.PCCategories;
+  const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, status: "loading" };
+  let loading = false;
+  const el = {};
+
+  /* ---------- Data preparation ---------- */
+  function cleanText(value) { return typeof value === "string" ? value.trim() : ""; }
+
+  function toDesign(row) {
+    const imageUrl = cleanText(row && row.image_url);
+    const name = cleanText(row && row.name);
+    const categoryRaw = cleanText(row && row.category);
+    const key = cats.keyFor(categoryRaw);
+    return {
+      id: row && row.id != null ? String(row.id) : imageUrl,
+      name: name,
+      categoryRaw: categoryRaw,
+      categoryKey: key,
+      categoryLabel: key === cats.UNCATEGORIZED ? (categoryRaw || "Other") : cats.labelFor(key),
+      description: cleanText(row && row.description),
+      code: cleanText(row && row.design_code),
+      imageUrl: /^https?:\/\//i.test(imageUrl) ? imageUrl : "",
+      featured: !!row && row.featured === true,
+      hidden: !!row && row.hidden === true,
+      created: row && row.created_at ? (Date.parse(row.created_at) || 0) : 0,
+      numericId: row && Number.isFinite(Number(row.id)) ? Number(row.id) : 0
+    };
+  }
+
+  /* ---------- Filtering, searching and sorting (all combine) ---------- */
+  function visibleDesigns() {
+    const q = cats.normalizeText(state.query);
+    const list = state.designs.filter(d => {
+      if (state.category !== "all" && d.categoryKey !== state.category) return false;
+      if (state.featuredOnly && !d.featured) return false;
+      if (q) {
+        const hay = cats.normalizeText([d.name, d.description, d.categoryLabel, d.code].join(" "));
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    const byNewest = (a, b) => (b.created - a.created) || (b.numericId - a.numericId);
+    if (state.sort === "oldest") list.sort((a, b) => -byNewest(a, b));
+    else if (state.sort === "name") list.sort((a, b) => (a.name || "\uffff").localeCompare(b.name || "\uffff", undefined, { sensitivity: "base" }) || byNewest(a, b));
+    else list.sort(byNewest);
+    return list;
+  }
+
+  /* ---------- Favourites (stored only on this device) ---------- */
   function readLikedDesigns() {
     try {
       const value = JSON.parse(localStorage.getItem(LIKES_KEY) || "[]");
       return Array.isArray(value) ? value : [];
     } catch (_) { return []; }
   }
-  function decorateDesignCard(card, identity, title, imageUrl) {
-    if (card.dataset.actionsAdded === "true") return;
-    card.dataset.actionsAdded = "true";
-    const key = String(identity || imageUrl || title);
+  function writeLikedDesigns(list) {
+    try { localStorage.setItem(LIKES_KEY, JSON.stringify(list)); } catch (_) {}
+  }
+
+  function openWhatsApp(design) {
+    if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
+    const parts = ["Hello Parvathi Creations! I\u2019m interested in this design: " + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
+    if (design.code) parts.push("Design code: " + design.code + ".");
+    parts.push("Image: " + design.imageUrl);
+    parts.push("Please share details.");
+    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" ")), "_blank", "noopener,noreferrer");
+  }
+
+  /* ---------- Rendering ---------- */
+  function buildCard(design) {
+    const card = document.createElement("article");
+    card.className = "collection-card uploaded-design";
+    card.dataset.category = design.categoryKey;
+    card.dataset.designId = design.id;
+
+    const media = document.createElement("div");
+    media.className = "card-media";
+    const img = document.createElement("img");
+    img.src = design.imageUrl;
+    img.alt = design.name || design.categoryLabel + " design";
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.addEventListener("error", () => {
+      const fallback = document.createElement("div");
+      fallback.className = "card-fallback";
+      fallback.textContent = TEXT.photoUnavailable;
+      img.replaceWith(fallback);
+    }, { once: true });
+    media.append(img);
+    card.append(media);
+
+    if (design.featured) {
+      const badge = document.createElement("span");
+      badge.className = "card-number";
+      badge.textContent = TEXT.featured;
+      card.append(badge);
+    }
+
+    const label = document.createElement("div");
+    label.className = "card-label";
+    const textWrap = document.createElement("div");
+    const heading = document.createElement("h3");
+    heading.textContent = design.name || design.categoryLabel;
+    const sub = document.createElement("p");
+    sub.className = "card-category";
+    sub.textContent = design.categoryLabel;
+    textWrap.append(heading, sub);
+    label.append(textWrap);
+    card.append(label);
+
     const actions = document.createElement("div");
     actions.className = "design-actions";
     const like = document.createElement("button");
     like.type = "button";
     like.className = "design-action design-like";
-    function renderLike() {
-      const liked = readLikedDesigns().includes(key);
+    const renderLike = () => {
+      const liked = readLikedDesigns().includes(design.id);
       like.classList.toggle("is-liked", liked);
       like.setAttribute("aria-pressed", String(liked));
-      like.textContent = liked ? "♥ Liked" : "♡ I Like This Design";
-    }
+      like.textContent = liked ? TEXT.liked : TEXT.like;
+    };
     renderLike();
-    like.addEventListener("click", event => {
-      event.preventDefault(); event.stopPropagation();
+    like.addEventListener("click", () => {
       const liked = readLikedDesigns();
-      const index = liked.indexOf(key);
-      if (index >= 0) liked.splice(index, 1); else liked.push(key);
-      try { localStorage.setItem(LIKES_KEY, JSON.stringify(liked)); } catch (_) {}
+      const index = liked.indexOf(design.id);
+      if (index >= 0) liked.splice(index, 1); else liked.push(design.id);
+      writeLikedDesigns(liked);
       renderLike();
     });
     const enquire = document.createElement("button");
     enquire.type = "button";
     enquire.className = "design-action design-enquire";
-    enquire.textContent = "Enquire on WhatsApp";
-    enquire.addEventListener("click", event => {
-      event.preventDefault(); event.stopPropagation();
-      const message = "Hello Parvathi Creations! I like this design: " + title + ". Image: " + imageUrl + ". Please share details.";
-      window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
-    });
+    enquire.textContent = TEXT.enquire;
+    enquire.addEventListener("click", () => openWhatsApp(design));
     actions.append(like, enquire);
     card.append(actions);
-  }
-  function createUploadedCard(design) {
-    if (!design.image_url) return null;
-    const category = normalizeCategory(design.category, design.name);
-    const card = document.createElement("div");
-    card.className = "collection-card uploaded-design";
-    card.dataset.category = category;
-    if (category === "uncategorized") {
-      card.dataset.originalCategory = String(design.category || "");
-      card.title = "Unrecognized saved category: " + String(design.category || "(empty)");
-    }
-    const img = document.createElement("img");
-    img.src = design.image_url;
-    img.alt = design.name || (design.category || "Parvathi Creations") + " design";
-    img.loading = "lazy"; img.decoding = "async";
-    img.onerror = () => { card.remove(); applyFilter(activeCategory, activeButton); };
-    const number = document.createElement("span");
-    number.className = "card-number"; number.textContent = "NEW";
-    const label = document.createElement("div"); label.className = "card-label";
-    const heading = document.createElement("h3"); heading.textContent = design.name || design.category || "New Design";
-    const arrow = document.createElement("span"); arrow.textContent = "↗";
-    label.append(heading, arrow); card.append(img, number, label);
-    decorateDesignCard(card, design.id || design.image_url, heading.textContent, design.image_url);
     return card;
   }
-  async function loadUploadedDesigns() {
-    const grid = document.querySelector(".collection-grid");
-    if (!grid || !window.supabase) return;
-    try {
-      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { data, error } = await client.from("designs").select("*").order("created_at", { ascending: false });
-      if (error) throw error;
-      // Preserve the database's newest-first order and keep static cards first.
-      (data || []).filter(design => design.hidden !== true).forEach(design => {
-        const card = createUploadedCard(design);
-        if (card) grid.append(card);
-      });
-      applyFilter(activeCategory, activeButton);
-    } catch (error) {
-      console.error("Parvathi Creations: could not load uploaded designs.", error);
+
+  function setStatus(kind, title, help, buttonLabel, onClick) {
+    el.status.replaceChildren();
+    el.status.hidden = !kind;
+    el.status.className = "gallery-status" + (kind ? " is-" + kind : "");
+    if (!kind) return;
+    const strong = document.createElement("strong");
+    strong.textContent = title;
+    el.status.append(strong);
+    if (help) { const p = document.createElement("p"); p.textContent = help; el.status.append(p); }
+    if (buttonLabel) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "design-action status-action"; b.textContent = buttonLabel;
+      b.addEventListener("click", onClick);
+      el.status.append(b);
     }
   }
 
+  function syncControls() {
+    el.filters.querySelectorAll("button[data-filter]").forEach(b => {
+      const active = b.dataset.filter === state.category;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    el.featured.setAttribute("aria-pressed", String(state.featuredOnly));
+    el.featured.classList.toggle("active", state.featuredOnly);
+  }
+
+  function clearFilters() {
+    state.category = "all"; state.query = ""; state.sort = "newest"; state.featuredOnly = false;
+    el.search.value = ""; el.sort.value = "newest";
+    render();
+  }
+
+  function render() {
+    syncControls();
+    el.grid.replaceChildren();
+    el.grid.setAttribute("aria-busy", String(state.status === "loading"));
+    if (state.status === "loading") { setStatus("loading", TEXT.loading); el.count.textContent = ""; return; }
+    if (state.status === "error") { setStatus("error", TEXT.errorTitle, TEXT.errorHelp, TEXT.retry, loadDesigns); el.count.textContent = ""; return; }
+    if (!state.designs.length) { setStatus("empty", TEXT.emptyTitle, TEXT.emptyHelp); el.count.textContent = ""; return; }
+    const list = visibleDesigns();
+    el.count.textContent = TEXT.showing(list.length, state.designs.length);
+    if (!list.length) { setStatus("empty", TEXT.noMatchTitle, TEXT.noMatchHelp, TEXT.clearFilters, clearFilters); return; }
+    setStatus(null);
+    const frag = document.createDocumentFragment();
+    list.forEach(d => frag.append(buildCard(d)));
+    el.grid.append(frag);
+  }
+
+  /* ---------- Loading from Supabase ---------- */
+  async function loadDesigns() {
+    if (loading) return;
+    loading = true;
+    state.status = "loading";
+    render();
+    try {
+      if (!window.supabase || typeof window.supabase.createClient !== "function") throw new Error("Supabase library not available");
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const { data, error } = await client.from("designs").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      const all = (Array.isArray(data) ? data : []).map(toDesign);
+      const noImage = all.filter(d => !d.hidden && !d.imageUrl).map(d => d.id);
+      const odd = all.filter(d => !d.hidden && d.imageUrl && d.categoryKey === cats.UNCATEGORIZED).map(d => d.id + " (" + JSON.stringify(d.categoryRaw) + ")");
+      if (noImage.length) console.warn("Parvathi Creations: designs skipped (no valid image URL), ids:", noImage.join(", "));
+      if (odd.length) console.warn("Parvathi Creations: designs with an unrecognised category are shown only under All Designs, ids:", odd.join(", "));
+      state.designs = all.filter(d => !d.hidden && d.imageUrl);
+      state.status = "ready";
+    } catch (error) {
+      console.error("Parvathi Creations: could not load designs.", error);
+      state.status = "error";
+    } finally {
+      loading = false;
+    }
+    render();
+  }
+
+  /* ---------- Controls ---------- */
+  function initGalleryControls() {
+    el.grid = document.querySelector(".collection-grid");
+    el.filters = document.querySelector(".gallery-filters");
+    el.status = document.getElementById("galleryStatus");
+    el.search = document.getElementById("gallerySearch");
+    el.sort = document.getElementById("gallerySort");
+    el.featured = document.getElementById("galleryFeatured");
+    el.count = document.getElementById("galleryCount");
+    if (!el.grid || !el.filters || !el.status || !el.search || !el.sort || !el.featured || !el.count) return false;
+
+    const makeButton = (key, label) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "filter-btn"; b.dataset.filter = key; b.textContent = label;
+      b.setAttribute("aria-pressed", "false");
+      return b;
+    };
+    el.filters.replaceChildren(makeButton("all", TEXT.all), ...cats.list.map(c => makeButton(c.key, c.label)));
+    el.filters.addEventListener("click", event => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button || !el.filters.contains(button)) return;
+      const key = button.dataset.filter;
+      if (key !== "all" && !cats.isKnownKey(key)) return;
+      state.category = key;
+      render();
+    });
+
+    let timer = null;
+    el.search.placeholder = TEXT.searchPlaceholder;
+    el.search.setAttribute("aria-label", TEXT.searchLabel);
+    el.search.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { state.query = el.search.value; render(); }, 120);
+    });
+    el.sort.setAttribute("aria-label", TEXT.sortLabel);
+    el.sort.replaceChildren(
+      new Option(TEXT.sortNewest, "newest"), new Option(TEXT.sortOldest, "oldest"), new Option(TEXT.sortName, "name"));
+    el.sort.addEventListener("change", () => { state.sort = el.sort.value; render(); });
+    el.featured.textContent = TEXT.featuredOnly;
+    el.featured.addEventListener("click", () => { state.featuredOnly = !state.featuredOnly; render(); });
+    return true;
+  }
+
+  /* ---------- Page behaviour (unchanged from the previous version) ---------- */
   function initSmoothScrolling() {
     document.addEventListener("click", event => {
       const link = event.target.closest("a[href^='#']");
@@ -222,18 +344,12 @@
   }
 
   function init() {
-    initFilters();
     initSmoothScrolling();
     initNavigationState();
     initReveal();
     const year = document.getElementById("year");
     if (year) year.textContent = String(new Date().getFullYear());
-    document.querySelectorAll(".collection-grid .collection-card").forEach(card => {
-      const heading = card.querySelector(".card-label h3");
-      const img = card.querySelector("img");
-      if (heading && img) decorateDesignCard(card, img.currentSrc || img.src, heading.textContent.trim(), img.currentSrc || img.src);
-    });
-    loadUploadedDesigns();
+    if (initGalleryControls()) loadDesigns();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
