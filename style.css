@@ -98,13 +98,14 @@ header {
   transform: translateY(-5px);
 }
 
-/* /* Animation */
+/* Animation */
 
 .fade-in {
   animation: fadeIn 1.2s ease-in-out;
 }
- @keyframes fadeIn {
-  ffrom {
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
     transform: translateY(30px);
   }
@@ -112,8 +113,8 @@ header {
   to {
     opacity: 1;
     transform: translateY(0);
-  }}
-}}   }
+  }
+}
 /* Hero Section */
 
 .hero {
