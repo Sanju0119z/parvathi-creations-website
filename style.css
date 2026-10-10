@@ -1650,3 +1650,37 @@ img, video, iframe {
     overflow-wrap: anywhere;
   }
 }
+
+
+/* About section */
+.about-section {
+  padding: clamp(48px, 7vw, 88px) 20px;
+  background: linear-gradient(135deg, #fffaf5, #f8edf0);
+}
+.about-inner {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+.about-eyebrow {
+  margin-bottom: 12px;
+  color: #8b5a46;
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.about-inner h2 {
+  margin-bottom: 18px;
+  color: #6b1f2b;
+  font-size: clamp(28px, 5vw, 42px);
+}
+.about-inner > p:not(.about-eyebrow) {
+  max-width: 760px;
+  margin: 0 auto 24px;
+  color: #55474a;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+.about-inner .btn { display: inline-block; text-decoration: none; }
+.contact-box a { color: inherit; overflow-wrap: anywhere; }

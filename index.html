@@ -191,7 +191,7 @@
      FEATURED DESIGNS
 ================================ -->
 
-<section class="featured-designs" id="featured">
+<section class="featured-designs" id="designs">
 
     <div class="section-heading">
         <span class="section-subtitle">Our Collection</span>
@@ -354,7 +354,7 @@
 </div>
 <!-- Gallery Section -->
 
-<section class="gallery" id="gallery">
+<section class="gallery" id="gallery-featured">
 
   <h2 class="section-title">
     Our <span>Gallery</span>
@@ -561,7 +561,6 @@ async function loadGalleryDesigns() {
     const { data, error } = await supabaseClient
       .from("designs")
       .select("*")
-      .eq("hidden", false)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -574,12 +573,16 @@ async function loadGalleryDesigns() {
 
     if (loading) loading.style.display = "none";
 
-    if (!data || data.length === 0) {
+    const visibleDesigns = (data || []).filter(function (design) {
+      return design.hidden !== true;
+    });
+
+    if (visibleDesigns.length === 0) {
       if (empty) empty.style.display = "block";
       return;
     }
 
-    data.forEach(function(design) {
+    visibleDesigns.forEach(function(design) {
 
       const item = document.createElement("div");
 
@@ -819,6 +822,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
+<!-- About Section -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="about-eyebrow">Made with care in Yamjal</p>
+    <h2 data-translate="aboutTitle">About Parvathi Creations</h2>
+    <p data-translate="aboutDescription">Parvathi Creations offers custom blouse stitching, Maggam work, computer embroidery, bridal wear, saree tassels, frocks, lehengas and made-to-order designs. Share your idea with us and we will discuss the design, fitting and finishing details with you.</p>
+    <a class="btn" href="#contact" data-translate="contactUs">Contact Us</a>
+  </div>
+</section>
+
 <!-- Contact Section -->
 
 <section class="contact" id="contact">
@@ -830,13 +844,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <div class="contact-box">
       <h3>📞 Phone</h3>
-      <p>9550766784</p>
+      <p><a href="tel:+919550766784">9550766784</a></p>
     </div>
 
 
     <div class="contact-box">
       <h3>📧 Email</h3>
-      <p>parvathicreations@gmail.com</p>
+      <p><a href="mailto:parvathicreations@gmail.com">parvathicreations@gmail.com</a></p>
     </div>
 
 
@@ -1011,7 +1025,10 @@ const translations = {
         whatsapp: "Chat on WhatsApp",
         musicOff: "♫ Music: Off",
         musicOn: "♫ Music: On",
-        musicUnavailable: "Music unavailable"
+        musicUnavailable: "Music unavailable",
+        aboutTitle: "About Parvathi Creations",
+        aboutDescription: "Parvathi Creations offers custom blouse stitching, Maggam work, computer embroidery, bridal wear, saree tassels, frocks, lehengas and made-to-order designs. Share your idea with us and we will discuss the design, fitting and finishing details with you.",
+        contactUs: "Contact Us"
     },
 
     te: {
@@ -1032,7 +1049,10 @@ const translations = {
         whatsapp: "వాట్సాప్‌లో చాట్ చేయండి",
         musicOff: "♫ సంగీతం: ఆఫ్",
         musicOn: "♫ సంగీతం: ఆన్",
-        musicUnavailable: "సంగీతం అందుబాటులో లేదు"
+        musicUnavailable: "సంగీతం అందుబాటులో లేదు",
+        aboutTitle: "పార్వతి క్రియేషన్స్ గురించి",
+        aboutDescription: "పార్వతి క్రియేషన్స్‌లో కస్టమ్ బ్లౌజ్ స్టిచింగ్, మగ్గం వర్క్, కంప్యూటర్ ఎంబ్రాయిడరీ, పెళ్లి దుస్తులు, చీర టాసెల్స్, ఫ్రాక్స్, లెహంగాలు మరియు మీకు నచ్చిన డిజైన్లు అందుబాటులో ఉన్నాయి. మీ ఆలోచనను మాతో పంచుకోండి; డిజైన్, ఫిట్టింగ్, ఫినిషింగ్ వివరాలను చర్చిద్దాం.",
+        contactUs: "మమ్మల్ని సంప్రదించండి"
     },
 
     hi: {
@@ -1053,7 +1073,10 @@ const translations = {
         whatsapp: "व्हाट्सऐप पर चैट करें",
         musicOff: "♫ संगीत: बंद",
         musicOn: "♫ संगीत: चालू",
-        musicUnavailable: "संगीत उपलब्ध नहीं है"
+        musicUnavailable: "संगीत उपलब्ध नहीं है",
+        aboutTitle: "पार्वती क्रिएशन्स के बारे में",
+        aboutDescription: "पार्वती क्रिएशन्स में कस्टम ब्लाउज़ सिलाई, मग्गम वर्क, कंप्यूटर एम्ब्रॉयडरी, ब्राइडल वियर, साड़ी टैसल्स, फ्रॉक, लहंगे और आपकी पसंद के डिज़ाइन उपलब्ध हैं। अपना विचार साझा करें; हम डिज़ाइन, फिटिंग और फिनिशिंग पर चर्चा करेंगे।",
+        contactUs: "संपर्क करें"
     }
 };
 
