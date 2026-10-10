@@ -1135,10 +1135,11 @@ function applyLanguage(language) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) throw new Error("Web Audio is unavailable");
       context = context || new AudioContextClass();
-      master = master || context.createGain();
-      master.gain.value = 1;
-      if (master.numberOfOutputs === 0) master.connect(context.destination);
-      else if (master.context !== context) master.connect(context.destination);
+      if (!master) {
+        master = context.createGain();
+        master.connect(context.destination);
+      }
+      master.gain.setTargetAtTime(1, context.currentTime, 0.04);
       if (context.state === "suspended") context.resume();
       if (timer) window.clearInterval(timer);
       playNote();
