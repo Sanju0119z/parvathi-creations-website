@@ -29,8 +29,11 @@
   let activeCategory = "all";
   let activeButton = null;
 
-  function normalizeCategory(value) {
+  function normalizeCategory(value, designName) {
     const text = String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+    const name = String(designName || "").trim().toLowerCase().replace(/\s+/g, " ");
+    // A design explicitly named as a frock belongs in Frocks even if an old saved category is wrong.
+    if (/\bfrocks?\b/.test(name)) return "frocks";
     if (categoryAliases[text]) return categoryAliases[text];
     const match = categoryMap.find(item => item.words.some(word => text.includes(word)));
     // Keep unknown legacy categories visible in All Designs without mislabeling them as Custom.
@@ -111,7 +114,7 @@
   }
   function createUploadedCard(design) {
     if (!design.image_url) return null;
-    const category = normalizeCategory(design.category);
+    const category = normalizeCategory(design.category, design.name);
     const card = document.createElement("div");
     card.className = "collection-card uploaded-design";
     card.dataset.category = category;
