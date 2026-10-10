@@ -43,6 +43,11 @@
   /* ---------- Data preparation ---------- */
   function cleanText(value) { return typeof value === "string" ? value.trim() : ""; }
 
+  /* The database stores "featured" as text ("true"/"false"), so accept both a real boolean and that text. */
+  function isFeatured(value) {
+    return value === true || (typeof value === "string" && value.trim().toLowerCase() === "true");
+  }
+
   function toDesign(row) {
     const imageUrl = cleanText(row && row.image_url);
     const name = cleanText(row && row.name);
@@ -57,7 +62,7 @@
       description: cleanText(row && row.description),
       code: cleanText(row && row.design_code),
       imageUrl: /^https?:\/\//i.test(imageUrl) ? imageUrl : "",
-      featured: !!row && row.featured === true,
+      featured: !!row && isFeatured(row.featured),
       hidden: !!row && row.hidden === true,
       created: row && row.created_at ? (Date.parse(row.created_at) || 0) : 0,
       numericId: row && Number.isFinite(Number(row.id)) ? Number(row.id) : 0
