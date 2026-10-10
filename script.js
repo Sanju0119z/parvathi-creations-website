@@ -51,37 +51,68 @@
     if (initial) applyFilter(initial.dataset.filter, initial);
   }
 
+  const LIKES_KEY = "parvathi-creations-liked-designs";
+  const WHATSAPP_NUMBER = "919550766784";
+  function readLikedDesigns() {
+    try { return JSON.parse(localStorage.getItem(LIKES_KEY) || "[]"); }
+    catch (_) { return []; }
+  }
+  function decorateDesignCard(card, identity, title, imageUrl) {
+    if (card.dataset.actionsAdded === "true") return;
+    card.dataset.actionsAdded = "true";
+    const key = String(identity || imageUrl || title);
+    const actions = document.createElement("div");
+    actions.className = "design-actions";
+    const like = document.createElement("button");
+    like.type = "button";
+    like.className = "design-action design-like";
+    function renderLike() {
+      const liked = readLikedDesigns().includes(key);
+      like.classList.toggle("is-liked", liked);
+      like.setAttribute("aria-pressed", String(liked));
+      like.textContent = liked ? "♥ Liked" : "♡ I Like This Design";
+    }
+    renderLike();
+    like.addEventListener("click", event => {
+      event.preventDefault(); event.stopPropagation();
+      const liked = readLikedDesigns();
+      const index = liked.indexOf(key);
+      if (index >= 0) liked.splice(index, 1); else liked.push(key);
+      try { localStorage.setItem(LIKES_KEY, JSON.stringify(liked)); } catch (_) {}
+      renderLike();
+    });
+    const enquire = document.createElement("button");
+    enquire.type = "button";
+    enquire.className = "design-action design-enquire";
+    enquire.textContent = "Enquire on WhatsApp";
+    enquire.addEventListener("click", event => {
+      event.preventDefault(); event.stopPropagation();
+      const message = "Hello Parvathi Creations! I like this design: " + title + ". Image: " + imageUrl + ". Please share details.";
+      window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
+    });
+    actions.append(like, enquire);
+    card.append(actions);
+  }
   function createUploadedCard(design) {
     if (!design.image_url) return null;
     const category = normalizeCategory(design.category);
-    const card = document.createElement("a");
+    const card = document.createElement("div");
     card.className = "collection-card uploaded-design";
     card.dataset.category = category;
-    card.href = "#contact";
-    card.setAttribute("aria-label", (design.name || design.category || "Design") + " â ask about this design");
-
     const img = document.createElement("img");
     img.src = design.image_url;
     img.alt = design.name || (design.category || "Parvathi Creations") + " design";
-    img.loading = "lazy";
-    img.decoding = "async";
+    img.loading = "lazy"; img.decoding = "async";
     img.onerror = () => { card.remove(); applyFilter(activeCategory, activeButton); };
-
     const number = document.createElement("span");
-    number.className = "card-number";
-    number.textContent = "NEW";
-
-    const label = document.createElement("div");
-    label.className = "card-label";
-    const heading = document.createElement("h3");
-    heading.textContent = design.name || design.category || "New Design";
-    const arrow = document.createElement("span");
-    arrow.textContent = "â";
-    label.append(heading, arrow);
-    card.append(img, number, label);
+    number.className = "card-number"; number.textContent = "NEW";
+    const label = document.createElement("div"); label.className = "card-label";
+    const heading = document.createElement("h3"); heading.textContent = design.name || design.category || "New Design";
+    const arrow = document.createElement("span"); arrow.textContent = "↗";
+    label.append(heading, arrow); card.append(img, number, label);
+    decorateDesignCard(card, design.id || design.image_url, heading.textContent, design.image_url);
     return card;
   }
-
   async function loadUploadedDesigns() {
     const grid = document.querySelector(".collection-grid");
     if (!grid || !window.supabase) return;
@@ -156,7 +187,7 @@
     initReveal();
     const year = document.getElementById("year");
     if (year) year.textContent = String(new Date().getFullYear());
-    loadUploadedDesigns();
+    document.querySelectorAll(".collection-grid .collection-card").forEach(card => {\n      const heading = card.querySelector(".card-label h3");\n      const img = card.querySelector("img");\n      if (heading && img) decorateDesignCard(card, img.currentSrc || img.src, heading.textContent.trim(), img.currentSrc || img.src);\n    });\n    loadUploadedDesigns();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
