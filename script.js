@@ -191,7 +191,8 @@
       const heading = card.querySelector(".card-label h3");
       const img = card.querySelector("img");
       if (heading && img) decorateDesignCard(card, img.currentSrc || img.src, heading.textContent.trim(), img.currentSrc || img.src);
-    });\n    loadUploadedDesigns();
+    });
+    loadUploadedDesigns();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
