@@ -896,7 +896,7 @@
                         <div class="form-group">
 
                             <label for="designPrice">
-                                Price (â¹)
+                                Price (₹)
                             </label>
 
                             <input
@@ -1647,21 +1647,21 @@
 
                     codeCell.textContent =
                         design.design_code ||
-                        "â";
+                        "—";
 
 
                     const nameCell =
                         document.createElement("td");
 
                     nameCell.textContent =
-                        design.name || "â";
+                        design.name || "—";
 
 
                     const categoryCell =
                         document.createElement("td");
 
                     categoryCell.textContent =
-                        design.category || "â";
+                        design.category || "—";
 
 
                     const priceCell =
@@ -1842,11 +1842,11 @@
 
             if (Number.isNaN(number)) {
 
-                return "â¹" + price;
+                return "₹" + price;
 
             }
 
-            return "â¹" +
+            return "₹" +
                 number.toLocaleString(
                     "en-IN",
                     {
@@ -2178,8 +2178,30 @@
             designName.value =
                 design.name || "";
 
-            designCategory.value =
-                design.category || "";
+                        const savedCategory = String(design.category || "").trim().toLowerCase();
+            const categoryAliases = {
+                "computer embroidery": "Computer Work",
+                "computerized embroidery": "Computer Work",
+                "computerised embroidery": "Computer Work",
+                "designer lehengas": "Lehengas",
+                "lehenga": "Lehengas",
+                "wedding wear": "Wedding Dresses",
+                "bridal wear": "Wedding Dresses",
+                "bridal": "Wedding Dresses",
+                "sarees & tassels": "Saree Tassels",
+                "saree tassels": "Saree Tassels",
+                "custom": "Custom Designs",
+                "custom design": "Custom Designs",
+                "salwar": "Tailoring"
+            };
+            const matchedCategory = categoryAliases[savedCategory] || design.category || "";
+            designCategory.value = matchedCategory;
+            if (!designCategory.value) {
+                const matchingOption = [...designCategory.options].find(option =>
+                    option.textContent.trim().toLowerCase() === savedCategory
+                );
+                if (matchingOption) designCategory.value = matchingOption.value;
+            }
 
             designPrice.value =
                 design.price ?? "";
