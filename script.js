@@ -3,15 +3,16 @@
   const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
   const categoryMap = [
-    {key:"saree", words:["saree", "tassel"]},
-    {key:"blouse", words:["blouse"]},
-    {key:"maggam", words:["maggam", "thread work"]},
-    {key:"bridal", words:["bridal", "wedding"]},
-    {key:"frocks", words:["frock"]},
+    {key:"frocks", words:["frock", "frocks"]},
+    {key:"lehenga", words:["lehenga", "lehengas"]},
+    {key:"designer", words:["designer wear", "designerwear", "designer outfit", "designer outfits"]},
+    {key:"blouse", words:["blouse", "blouses"]},
+    {key:"maggam", words:["maggam", "thread work", "hand embroidery"]},
+    {key:"computer", words:["computer embroidery", "computerized embroidery", "computerised embroidery", "machine embroidery"]},
+    {key:"bridal", words:["bridal", "wedding", "occasionwear", "occasion wear"]},
     {key:"kids", words:["kids wear", "kid wear", "children wear", "kids", "children"]},
-    {key:"lehenga", words:["lehenga"]},
-    {key:"computer", words:["computer", "embroidery"]},
-    {key:"custom", words:["custom", "tailoring"]}
+    {key:"saree", words:["saree", "tassel", "sarees"]},
+    {key:"custom", words:["custom", "tailoring", "salwar"]}
   ];
   let activeCategory = "all";
   let activeButton = null;
@@ -88,9 +89,10 @@
       const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       const { data, error } = await client.from("designs").select("*").order("created_at", { ascending: false });
       if (error) throw error;
+      // Preserve the database's newest-first order and keep static cards first.
       (data || []).filter(design => design.hidden !== true).forEach(design => {
         const card = createUploadedCard(design);
-        if (card) grid.prepend(card);
+        if (card) grid.append(card);
       });
       applyFilter(activeCategory, activeButton);
     } catch (error) {
