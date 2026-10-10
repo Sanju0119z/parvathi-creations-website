@@ -17,18 +17,23 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 
 revealOnScroll();
-// Smooth scrolling for navigation links
+// Smooth scrolling for navigation links (handles the Home link href="#")
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", function (e) {
-    e.preventDefault();
+    const href = this.getAttribute("href");
 
-    const target = document.querySelector(this.getAttribute("href"));
+    if (!href || href === "#") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const target = document.querySelector(href);
 
     if (target) {
-      target.scrollIntoView({
-        behavior: "smooth"
-      });
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
     }
   });
 });
