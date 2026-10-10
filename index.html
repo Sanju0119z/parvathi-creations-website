@@ -1,81 +1,1313 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8f5ef">
-  <meta name="description" content="Parvathi Creations — custom blouses, maggam work, embroidery, bridal wear, frocks and handcrafted tailoring in Telangana.">
-  <title>Parvathi Creations | Thoughtfully Made, Beautifully Yours</title>
-  <link rel="preconnect" href="https://images.pexels.com">
+  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Parvathi Creations</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="Parvathi Creations home">
-      <img src="IMG_20260731_155520.jpg" alt="Parvathi Creations logo">
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#collection">Collection</a><a href="#craft">Our Craft</a><a href="#services">Services</a><a href="#contact">Contact</a>
-    </nav>
-    <a class="header-cta" href="https://wa.me/919550766784?text=Hello%20Parvathi%20Creations%2C%20I%27d%20like%20to%20enquire%20about%20a%20design.">Enquire <span>↗</span></a>
-  </header>
+  <!-- Loading Screen -->
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">PARVATHI CREATIONS · TELANGANA</p>
-        <h1>Tradition, tailored<br>to <em>you.</em></h1>
-        <p class="hero-description">Thoughtful stitching, intricate embroidery and occasionwear made with care — for the moments you want to remember.</p>
-        <a class="button button-dark" href="#collection">Explore the collection <span>→</span></a>
-        <p class="hero-note"><span class="tiny-star">✳</span> Made with care. Finished with love.</p>
+<!-- Traditional Tailor Loading Screen -->
+<div id="loading-screen">
+  <div class="loading-logo">P</div>
+
+  <h1>PARVATHI</h1>
+  <p>CREATIONS</p>
+
+  <div class="tailor-animation">
+    <div class="needle">✦</div>
+    <div class="thread"></div>
+    <div class="dress">✿</div>
+</div>
+
+  <div class="loading-bar">
+    <div id="loading-progress"></div>
+  </div>
+
+  <div id="loading-percent">0%</div>
+
+  <p class="loading-text">
+    Crafting elegance, one stitch at a time...
+  </p>
+</div>  
+  <!-- Left Hamburger Menu -->
+<button id="menu-toggle" aria-label="Open menu">☰</button>
+
+<nav id="side-menu">
+  <button id="menu-close" aria-label="Close menu">×</button>
+
+  <h2>Parvathi Creations</h2>
+
+  <a href="#home" data-translate="home">Home</a>
+  <a href="#designs" data-translate="designs">Designs</a>
+  <a href="#services" data-translate="services">Services</a>
+  <a href="#gallery" data-translate="gallery">Gallery</a>
+  <a href="#about" data-translate="about">About Us</a>
+  <a href="#contact" data-translate="contact">Contact</a>
+
+  <div class="menu-language">
+    <span data-translate="language">Language</span>
+
+    <button onclick="selectLanguage('en')">🇬🇧 English</button>
+    <button onclick="selectLanguage('te')">🇮🇳 తెలుగు</button>
+    <button onclick="selectLanguage('hi')">🇮🇳 हिन्दी</button>
+  </div>
+</nav>
+
+<div id="menu-overlay"></div>
+  <!-- Language Selection -->
+<div id="language-screen">
+  <div class="language-box">
+    <div class="language-icon">🌸</div>
+
+    <h1>Welcome to Parvathi Creations</h1>
+    <p>Choose your language</p>
+
+    <button onclick="selectLanguage('en')">
+      🇬🇧 English
+    </button>
+
+    <button onclick="selectLanguage('te')">
+      🇮🇳 తెలుగు
+    </button>
+
+    <button onclick="selectLanguage('hi')">
+      🇮🇳 हिन्दी
+    </button>
+  </div>
+</div>
+  <!-- Navigation Bar -->
+
+<header>
+  <nav class="navbar">
+
+    <div class="logo">
+  <img src="IMG_20260731_155520.jpg" alt="Parvathi Creations Logo" height="70">
+</div>
+
+    <ul class="nav-links">
+      <li><a href="#home" data-translate="home">Home</a></li>
+      <li><a href="#services" data-translate="services">Services</a></li>
+      <li><a href="#gallery" data-translate="gallery">Gallery</a></li>
+      <li><a href="#contact" data-translate="contact">Contact</a></li>
+    </ul>
+
+  </nav>
+</header>
+
+
+<!-- Hero Section -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <h1 data-translate="heroTitle">Welcome to Parvathi Creations</h1>
+
+    <p data-translate="heroDescription">Where every stitch tells a story. Beautiful designs, elegant embroidery and perfect finishing.</p>
+
+    <a href="#contact" class="btn" data-translate="bookNow">Book Now</a>
+
+    <a href="#gallery" class="btn" data-translate="viewGallery">View Gallery</a>
+
+  </div>
+
+</section>
+  <!-- Services Section -->
+
+<section class="services" id="services">
+
+  <h2 class="section-title" data-translate="servicesTitle">Our Services</h2>
+
+  <p class="section-description" data-translate="servicesDescription">Premium tailoring and beautiful handmade designs crafted with care and creativity.</p>
+
+
+  <div class="service-container">
+
+    <div class="service-card">
+      <div class="service-icon">🧵</div>
+      <h3>Maggam Work</h3>
+      <p>Elegant traditional embroidery designs for special occasions.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">👗</div>
+      <h3>Designer Blouses</h3>
+      <p>Unique blouse designs with perfect fitting and finishing.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">👰</div>
+      <h3>Bridal Wear</h3>
+      <p>Beautiful bridal outfits designed for your memorable day.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">🥻</div>
+      <h3>Saree Tassels</h3>
+      <p>Handcrafted saree tassels with stylish patterns.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">👧</div>
+      <h3>Frocks</h3>
+      <p>Lovely long and short frocks for every occasion.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">💃</div>
+      <h3>Lehengas</h3>
+      <p>Traditional and modern lehenga designs.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <h3>Computer Embroidery</h3>
+      <p>Precise embroidery work with modern technology.</p>
+    </div>
+
+
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <h3>Custom Designs</h3>
+      <p>Special designs made according to your ideas.</p>
+    </div>
+
+  </div>
+</section>
+  <!-- ==============================
+     FEATURED DESIGNS
+================================ -->
+
+<section class="featured-designs" id="designs">
+
+    <div class="section-heading">
+        <span class="section-subtitle">Our Collection</span>
+        <h2>Featured Designs</h2>
+        <p>Explore some of our beautiful handcrafted designs.</p>
+    </div>
+
+    <div class="featured-grid">
+
+        <!-- Design 1 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="IMG_20260731_155520.jpg"
+                     alt="Elegant Maggam Work Design">
+                <span class="design-badge">Featured</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Elegant Maggam Work</h3>
+                <p>Beautiful traditional handwork designed for special occasions.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Elegant Maggam Work',
+                        'Beautiful traditional Maggam work created with detailed craftsmanship.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 2 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="sareejpg.jpg"
+                     alt="Designer Blouse">
+                <span class="design-badge">Popular</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Designer Blouse</h3>
+                <p>Stylish blouse designs customized to match your saree.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Designer Blouse',
+                        'Custom blouse designs with elegant finishing and personalized details.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 3 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="sareejpg.jpg"
+                     alt="Wedding Lehenga">
+                <span class="design-badge">New</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Wedding Lehenga</h3>
+                <p>Traditional and modern designs for weddings and celebrations.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Wedding Lehenga',
+                        'A beautiful festive design suitable for weddings and special occasions.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Design 4 -->
+        <div class="design-card">
+            <div class="design-image">
+                <img src="IMG_20260731_155520.jpg"
+                     alt="Saree Tassels">
+                <span class="design-badge">Handmade</span>
+            </div>
+
+            <div class="design-info">
+                <h3>Saree Tassels</h3>
+                <p>Handcrafted tassels that add a beautiful finishing touch.</p>
+
+                <button class="like-btn"
+                        onclick="likeDesign(this)">
+                    ♡ I Like This
+                </button>
+
+                <button class="details-btn"
+                        onclick="showDesignDetails(
+                        'Saree Tassels',
+                        'Handcrafted saree tassels available in different colours and styles.'
+                        )">
+                    View Details
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="featured-footer">
+        <a href="#gallery" class="view-all-btn">
+            View All Designs →
+        </a>
+    </div>
+
+</section>
+
+
+<!-- DESIGN DETAILS POPUP -->
+
+<div class="design-modal" id="designModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close"
+                onclick="closeDesignDetails()">
+            ×
+        </button>
+
+        <span class="modal-label">Parvathi Creations</span>
+
+        <h2 id="modalDesignTitle">
+            Design Name
+        </h2>
+
+        <p id="modalDesignDescription">
+            Design description
+        </p>
+
+        <button class="enquiry-btn"
+                onclick="sendDesignEnquiry()">
+            💬 Enquire About This Design
+        </button>
+
+    </div>
+
+</div>
+<!-- Gallery Section -->
+
+<section class="gallery" id="gallery-featured">
+
+  <h2 class="section-title">
+    Our <span>Gallery</span>
+  </h2>
+
+  <p class="section-description">
+    Explore our latest designs and handmade creations.
+  </p>
+
+<div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
+</div><div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
+</div>
+  <div class="gallery-container">
+    <div class="gallery-item">
+    <img src="sareejpg.jpg">
+    <div class="gallery-overlay">
+        <h3>Sarees</h3>
+    </div>
+</div>
+
+    <div class="gallery-item">
+      <img src="IMG_20260731_155520.jpg" alt="Maggam Work">
+      <div class="gallery-overlay">
+        <h3>Maggam Work</h3>
       </div>
-      <div class="hero-image" role="img" aria-label="Elegant Indian occasionwear and textile inspiration">
-        <div class="image-caption"><span>THE ART OF DETAIL</span><span>01 / 03</span></div>
+    </div>
+
+
+    <div class="gallery-item">
+      <img src="sareejpg.jpg" alt="Designer Blouse">
+      <div class="gallery-overlay">
+        <h3>Designer Blouses</h3>
       </div>
-    </section>
+    </div>
 
-    <section class="collection section-wrap" id="collection">
-      <div class="section-topline"><p class="eyebrow">A LITTLE SOMETHING FOR EVERY OCCASION</p><p class="section-index">01 — THE COLLECTION</p></div>
-      <div class="section-heading-row"><h2>Find your <em>favourite.</em></h2><p>From everyday elegance to wedding-day details, explore pieces inspired by your style.</p></div>
-      <div class="collection-grid">
-        <a class="collection-card" href="#services"><img src="https://images.pexels.com/photos/13623433/pexels-photo-13623433.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Designer blouse and traditional outfit inspiration" loading="lazy"><span class="card-number">01</span><div class="card-label"><h3>Blouse Designs</h3><span>↗</span></div></a>
-        <a class="collection-card" href="#services"><img src="https://images.pexels.com/photos/12642966/pexels-photo-12642966.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Bridal occasionwear inspiration" loading="lazy"><span class="card-number">02</span><div class="card-label"><h3>Bridal Wear</h3><span>↗</span></div></a>
-        <a class="collection-card" href="#services"><img src="https://images.pexels.com/photos/37396069/pexels-photo-37396069.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Embellished lehenga inspiration" loading="lazy"><span class="card-number">03</span><div class="card-label"><h3>Lehengas</h3><span>↗</span></div></a>
-        <a class="collection-card" href="#services"><img src="https://images.pexels.com/photos/33508436/pexels-photo-33508436.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Festive frock inspiration" loading="lazy"><span class="card-number">04</span><div class="card-label"><h3>Frocks & Kids Wear</h3><span>↗</span></div></a>
-        <a class="collection-card" href="#craft"><img src="https://images.pexels.com/photos/37975932/pexels-photo-37975932.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Detailed threadwork and embroidery inspiration" loading="lazy"><span class="card-number">05</span><div class="card-label"><h3>Maggam & Embroidery</h3><span>↗</span></div></a>
-        <a class="collection-card" href="#services"><img src="https://images.pexels.com/photos/35108767/pexels-photo-35108767.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Traditional saree styling inspiration" loading="lazy"><span class="card-number">06</span><div class="card-label"><h3>Saree Tassels</h3><span>↗</span></div></a>
+
+    <div class="gallery-item">
+      <img src="sareejpg.jpg" alt="Bridal Wear">
+<!-- Gallery Section -->
+<section id="gallery" class="gallery-section">
+
+  <div class="section-title">
+    <span>Our Collection</span>
+    <h2>Design Gallery</h2>
+    <p>Explore our latest tailoring and embroidery designs.</p>
+  </div>
+
+  <!-- Gallery Filters -->
+  <div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
+</div>
+
+  <!-- Gallery Grid -->
+  <div id="gallery-grid" class="gallery-grid">
+
+    <!-- Existing Static Designs -->
+
+    <div class="gallery-item" data-category="maggam">
+      <img src="IMG_20260731_155520.jpg" alt="Maggam Work">
+      <div class="gallery-overlay">
+        <h3>Maggam Work</h3>
+        <p>Beautiful traditional Maggam embroidery.</p>
+        <button onclick="showDesignDetails('Maggam Work', 'Beautiful traditional Maggam embroidery.')">
+          View Details
+        </button>
       </div>
-      <p class="photo-disclaimer">Fashion photographs are illustrative references. Each custom order is discussed with you before stitching.</p>
-    </section>
+    </div>
 
-    <section class="craft-feature" id="craft">
-      <div class="craft-image" role="img" aria-label="Close-up embroidery and textile craft"></div>
-      <div class="craft-copy"><p class="eyebrow">THE BEAUTY IS IN THE DETAILS</p><h2>Made by hand.<br>Made for <em>you.</em></h2><p>From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.</p><a class="text-link" href="https://wa.me/919550766784?text=Hello%20Parvathi%20Creations%2C%20I%27d%20like%20to%20discuss%20a%20custom%20design.">Let’s create something together <span>→</span></a></div>
-    </section>
-
-    <section class="services section-wrap" id="services">
-      <div class="section-topline"><p class="eyebrow">WHAT WE DO</p><p class="section-index">02 — OUR SERVICES</p></div>
-      <div class="services-heading"><h2>Every detail,<br><em>considered.</em></h2><p>Tell us what you have in mind. We’ll help you find the right finish, fit and details for your occasion.</p></div>
-      <div class="service-list">
-        <div><span>01</span><h3>Maggam work & hand embroidery</h3><span>↗</span></div>
-        <div><span>02</span><h3>Computer embroidery</h3><span>↗</span></div>
-        <div><span>03</span><h3>Blouse stitching & custom designs</h3><span>↗</span></div>
-        <div><span>04</span><h3>Bridal wear, lehengas & occasionwear</h3><span>↗</span></div>
-        <div><span>05</span><h3>Frocks, kids wear & salwar stitching</h3><span>↗</span></div>
-        <div><span>06</span><h3>Saree tassels & finishing</h3><span>↗</span></div>
+    <div class="gallery-item" data-category="blouses">
+      <img src="sareejpg.jpg" alt="Designer Blouse">
+      <div class="gallery-overlay">
+        <h3>Designer Blouse</h3>
+        <p>Elegant custom blouse designs.</p>
+        <button onclick="showDesignDetails('Designer Blouse', 'Elegant custom blouse designs.')">
+          View Details
+        </button>
       </div>
-    </section>
+    </div>
 
-    <section class="contact-band" id="contact"><p class="eyebrow">YOUR IDEA, OUR CRAFT</p><h2>Have something<br><em>in mind?</em></h2><p>Share your inspiration with us. Let’s talk about your design.</p><a class="button button-light" href="https://wa.me/919550766784?text=Hello%20Parvathi%20Creations%2C%20I%27d%20like%20to%20enquire%20about%20a%20custom%20order.">Chat with us on WhatsApp <span>↗</span></a></section>
-  </main>
+    <div class="gallery-item" data-category="bridal">
+      <img src="IMG_20260731_155520.jpg" alt="Wedding Design">
+      <div class="gallery-overlay">
+        <h3>Wedding Design</h3>
+        <p>Beautiful designs for special occasions.</p>
+        <button onclick="showDesignDetails('Wedding Design', 'Beautiful designs for special occasions.')">
+          View Details
+        </button>
+      </div>
+    </div>
 
-  <footer class="site-footer">
-    <a class="footer-brand" href="#home"><img src="IMG_20260731_155520.jpg" alt="Parvathi Creations logo"></a>
-    <p>Where every stitch tells a story.</p>
-    <div class="footer-links"><a href="#collection">Collection</a><a href="#services">Services</a><a href="#contact">Contact</a><a href="https://www.instagram.com/parvathicreations8/">Instagram ↗</a></div>
-    <small>© <span id="year">2026</span> Parvathi Creations. Made with care.</small>
-  </footer>
-  <script src="script.js"></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <div class="gallery-item" data-category="sarees">
+      <img src="sareejpg.jpg" alt="Saree Design">
+      <div class="gallery-overlay">
+        <h3>Saree Design</h3>
+        <p>Elegant saree styling and tassel work.</p>
+        <button onclick="showDesignDetails('Saree Design', 'Elegant saree styling and tassel work.')">
+          View Details
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loading message for Supabase designs -->
+  <p id="gallery-loading" style="text-align:center; margin:20px 0;">
+    Loading latest designs...
+  </p>
+
+  <p id="gallery-empty" style="display:none; text-align:center; margin:20px 0;">
+    No designs found.
+  </p>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =========================================
+   SUPABASE GALLERY
+   ========================================= */
+
+const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* =========================================
+   LOAD DESIGNS FROM SUPABASE
+   ========================================= */
+
+async function loadGalleryDesigns() {
+
+  const gallery = document.getElementById("gallery-grid");
+  const loading = document.getElementById("gallery-loading");
+  const empty = document.getElementById("gallery-empty");
+
+  if (!gallery) return;
+
+  try {
+
+    const { data, error } = await supabaseClient
+      .from("designs")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase gallery error:", error);
+
+      if (loading) loading.textContent = "Unable to load latest designs.";
+      if (empty) { empty.style.display = "block"; empty.textContent = "The latest designs could not be loaded. Please try again later."; }
+      return;
+    }
+
+    if (loading) loading.style.display = "none";
+
+    const visibleDesigns = (data || []).filter(function (design) {
+      return design.hidden !== true;
+    });
+
+    if (visibleDesigns.length === 0) {
+      if (empty) empty.style.display = "block";
+      return;
+    }
+
+    visibleDesigns.forEach(function(design) {
+
+      const item = document.createElement("div");
+
+      item.className = "gallery-item uploaded-design";
+
+      item.dataset.category =
+        String(design.category || "all").toLowerCase().trim();
+
+      const image = document.createElement("img");
+
+      image.alt = design.name || "Parvathi Creations Design";
+      image.loading = "lazy";
+      // Register the failure handler before assigning src to avoid cached-error races.
+      image.addEventListener("error", function () {
+        const failedPath = new URL(this.src, document.baseURI).pathname;
+        if (!this.dataset.fallbackTried && !failedPath.endsWith("/sareejpg.jpg")) {
+          this.dataset.fallbackTried = "true";
+          this.src = new URL("sareejpg.jpg", document.baseURI).href;
+          return;
+        }
+        // Never leave a broken-image glyph in the gallery if the source and fallback both fail.
+        this.style.display = "none";
+        this.setAttribute("aria-hidden", "true");
+        item.classList.add("image-unavailable");
+      });
+
+
+      const overlay = document.createElement("div");
+      overlay.className = "gallery-overlay";
+
+      const title = document.createElement("h3");
+      title.textContent =
+        design.name || "Parvathi Creations Design";
+
+      const category = document.createElement("p");
+      category.textContent =
+        design.category || "";
+
+      const code = document.createElement("small");
+
+      if (design.design_code) {
+        code.textContent =
+          "Design Code: " + design.design_code;
+      }
+
+      const price = document.createElement("p");
+
+      if (design.price) {
+        price.textContent =
+          "₹" + design.price;
+      }
+
+      const button = document.createElement("button");
+
+      button.textContent = "View Details";
+
+      button.addEventListener("click", function() {
+
+        const description =
+          design.description || "Beautiful Parvathi Creations design.";
+
+        showDesignDetails(
+          design.name || "Parvathi Creations Design",
+          description
+        );
+
+      });
+
+      overlay.appendChild(title);
+      overlay.appendChild(category);
+
+      if (design.design_code) {
+        overlay.appendChild(code);
+      }
+
+      if (design.price) {
+        overlay.appendChild(price);
+      }
+
+      overlay.appendChild(button);
+
+      item.appendChild(image);
+      item.appendChild(overlay);
+      gallery.appendChild(item);
+
+      // These five legacy Storage objects were confirmed missing in a live read-only browser check.
+      // Use a local repository image for these exact broken objects; future errors use the handler above.
+      const knownMissingStorageFiles = [
+        "1791610399288-0h3s32-file-0000000025fc820896ddc50928d556a8.png",
+        "1789392675815-u9euug-screenshot-20260812-135030.jpg",
+        "1788960147035-g7tp0x-screenshot-2026-0909-184315.png",
+        "1788878816491-1ish5csm37yi.jpg",
+        "1788875566731-yszp5cohp3g.jpg"
+      ];
+      const originalImageUrl = String(design.image_url || "");
+      const knownMissingImage = knownMissingStorageFiles.some(function (file) {
+        return originalImageUrl.includes(file);
+      });
+
+      // Assign the remote URL only after the element and its error handler are in the DOM.
+      image.src = knownMissingImage
+        ? new URL("sareejpg.jpg", document.baseURI).href
+        : (design.image_url || "sareejpg.jpg");
+      // Some storage/CDN failures do not reliably dispatch an error event in embedded browsers.
+      // Recheck completed failures once and fall back to a repository-owned image.
+      window.setTimeout(function () {
+        if (image.isConnected && image.complete && image.naturalWidth === 0) {
+          if (!image.dataset.fallbackTried) {
+            image.dataset.fallbackTried = "true";
+            image.src = new URL("sareejpg.jpg", document.baseURI).href;
+          } else {
+            image.style.display = "none";
+            image.setAttribute("aria-hidden", "true");
+            item.classList.add("image-unavailable");
+          }
+        }
+      }, 5000);
+
+    });
+
+    let currentLanguage = "en";
+    try { currentLanguage = localStorage.getItem("parvathiLanguage") || "en"; } catch (error) {}
+    if (typeof applyLanguage === "function") applyLanguage(currentLanguage);
+
+  } catch (error) {
+
+    console.error("Gallery loading error:", error);
+
+    if (loading) loading.textContent = "Unable to load gallery.";
+    if (empty) { empty.style.display = "block"; empty.textContent = "The gallery is temporarily unavailable. Please try again later."; }
+
+  }
+}
+
+
+/* =========================================
+   GALLERY FILTER
+   ========================================= */
+
+function normalizeGalleryCategory(value) {
+  const raw = String(value || "").toLowerCase().trim();
+  const compact = raw.replace(/[^a-z0-9]/g, "");
+  if (!compact || compact === "all" || compact === "alldesigns") return "all";
+  if (/(saree|tassel|latkan)/.test(compact)) return "sarees";
+  if (/(blouse)/.test(compact)) return "blouses";
+  if (/(computerembroidery|machineembroidery)/.test(compact)) return "computer-embroidery";
+  if (/(maggam|embroidery|handwork)/.test(compact)) return "maggam";
+  if (/(bridal|wedding|marriage)/.test(compact)) return "bridal";
+  if (/(frock|kidswear|kidsdress)/.test(compact)) return "frocks";
+  if (/(lehenga|ghagra)/.test(compact)) return "lehengas";
+  if (/(custom|personalized)/.test(compact)) return "custom";
+  return raw;
+}
+
+function filterGallery(category, button) {
+  const selected = normalizeGalleryCategory(category);
+  const items = document.querySelectorAll(".gallery-item");
+  let visibleCount = 0;
+
+  items.forEach(function(item) {
+    const heading = item.querySelector("h3");
+    const image = item.querySelector("img");
+    const itemCategory = normalizeGalleryCategory(item.dataset.category || (heading && heading.textContent) || (image && image.alt) || "");
+    const matches = selected === "all" || itemCategory === selected;
+    item.hidden = !matches;
+    item.style.display = matches ? "" : "none";
+    if (matches) visibleCount++;
+  });
+
+  const filterBar = button && button.closest(".gallery-filters");
+  if (filterBar) {
+    filterBar.querySelectorAll(".filter-btn").forEach(function(btn) {
+      const active = btn === button;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
+  }
+
+  document.querySelectorAll(".gallery-empty").forEach(function(empty) {
+    empty.style.display = visibleCount === 0 ? "block" : "none";
+  });
+  const empty = document.getElementById("gallery-empty");
+  if (empty) {
+    empty.style.display = visibleCount === 0 ? "block" : "none";
+    if (visibleCount === 0) empty.textContent = "No designs in this category yet.";
+  }
+}
+
+/* =========================================
+   START GALLERY
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+  loadGalleryDesigns();
+});
+</script>
+  <!-- Reviews Section -->
+<section id="reviews" class="reviews-section">
+
+    <div class="section-title">
+        <span>What Our Customers Say</span>
+        <h2>Customer Reviews</h2>
+        <p>We are happy to create beautiful designs for every special occasion.</p>
+    </div>
+
+    <div class="reviews-container">
+
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+                "The blouse design and maggam work were beautiful.
+                The finishing was excellent and exactly what I wanted."
+            </p>
+            <h3>— Happy Customer</h3>
+        </div>
+
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+                "Very creative designs and amazing stitching.
+                I loved the final look!"
+            </p>
+            <h3>— Happy Customer</h3>
+        </div>
+
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+                "Beautiful work, good quality and friendly service.
+                Highly recommended!"
+            </p>
+            <h3>— Happy Customer</h3>
+        </div>
+
+    </div>
+
+</section>
+<section class="reviews">
+
+  <h2 class="section-title">
+    Customer <span>Reviews</span>
+  </h2>
+
+  <div class="review-container">
+
+    <div class="review-card">
+      <h3>Priya</h3>
+      <div class="stars">★★★★★</div>
+      <p>
+        Beautiful designs and excellent finishing.
+        Highly recommended!
+      </p>
+    </div>
+
+
+    <div class="review-card">
+      <h3>Lakshmi</h3>
+      <div class="stars">★★★★★</div>
+      <p>
+        Amazing Maggam work and perfect stitching.
+      </p>
+    </div>
+
+
+    <div class="review-card">
+      <h3>Anitha</h3>
+      <div class="stars">★★★★★</div>
+      <p>
+        Loved the bridal designs and quality.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+
+<!-- About Section -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="about-eyebrow">Made with care in Yamjal</p>
+    <h2 data-translate="aboutTitle">About Parvathi Creations</h2>
+    <p data-translate="aboutDescription">Parvathi Creations offers custom blouse stitching, Maggam work, computer embroidery, bridal wear, saree tassels, frocks, lehengas and made-to-order designs. Share your idea with us and we will discuss the design, fitting and finishing details with you.</p>
+    <a class="btn" href="#contact" data-translate="contactUs">Contact Us</a>
+  </div>
+</section>
+
+<!-- Contact Section -->
+
+<section class="contact" id="contact">
+
+  <h2 class="section-title" data-translate="contactTitle">Contact Us</h2>
+
+
+  <div class="contact-container">
+
+    <div class="contact-box">
+      <h3>📞 Phone</h3>
+      <p><a href="tel:+919550766784">9550766784</a></p>
+    </div>
+
+
+    <div class="contact-box">
+      <h3>📧 Email</h3>
+      <p><a href="mailto:parvathicreations@gmail.com">parvathicreations@gmail.com</a></p>
+    </div>
+
+
+    <div class="contact-box">
+      <h3>📍 Location</h3>
+      <p>Yamjal, Telangana</p>
+    </div>
+
+  </div>
+
+
+  <a class="whatsapp-btn" href="https://wa.me/919550766784" target="_blank" rel="noopener noreferrer" data-translate="whatsapp">
+  Chat on WhatsApp
+</a>
+</section>
+
+
+
+
+<!-- Optional boutique ambience controls; starts OFF and requires a user tap. -->
+<div id="music-controls" aria-label="Optional background music">
+  <button id="music-toggle" type="button" aria-pressed="false" data-translate="musicOff">♫ Music: Off</button>
+  <label for="music-volume">Volume</label>
+  <input id="music-volume" type="range" min="0" max="100" value="18" aria-label="Music volume">
+</div>
+
+<!-- Footer -->
+
+<footer>
+
+  <p>
+    © 2026 <span>Parvathi Creations</span>.
+    All Rights Reserved.
+  </p>
+
+</footer>
+<!-- =========================
+     WEBSITE JAVASCRIPT
+========================= -->
+
+<script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================
+       LOADING SCREEN
+    ========================= */
+
+    const loadingScreen =
+        document.getElementById("loading-screen");
+
+    const progressBar =
+        document.getElementById("loading-progress");
+
+    const percentText =
+        document.getElementById("loading-percent");
+
+    if (loadingScreen) {
+
+        let progress = 0;
+
+        const loadingTimer = setInterval(function () {
+
+            progress += 2;
+
+            if (progressBar) {
+                progressBar.style.width =
+                    progress + "%";
+            }
+
+            if (percentText) {
+                percentText.textContent =
+                    progress + "%";
+            }
+
+            if (progress >= 100) {
+
+                clearInterval(loadingTimer);
+
+                setTimeout(function () {
+
+                    loadingScreen.style.transition =
+                        "opacity 0.6s ease";
+
+                    loadingScreen.style.opacity = "0";
+
+                    setTimeout(function () {
+
+                        loadingScreen.style.display =
+                            "none";
+
+                    }, 600);
+
+                }, 300);
+            }
+
+        }, 30);
+    }
+
+
+    /* =========================
+       SAVED LANGUAGE
+    ========================= */
+
+    let savedLanguage = null;
+    try { savedLanguage = localStorage.getItem("parvathiLanguage"); } catch (error) { /* storage may be disabled */ }
+
+    const languageScreen =
+        document.getElementById("language-screen");
+
+    if (savedLanguage && languageScreen) {
+
+        languageScreen.style.display = "none";
+
+        applyLanguage(savedLanguage);
+    }
+
+});
+
+
+/* =========================
+   LANGUAGE SELECTION
+========================= */
+
+function selectLanguage(language) {
+
+    try { localStorage.setItem("parvathiLanguage", language); } catch (error) { /* storage may be disabled */ }
+
+    const languageScreen =
+        document.getElementById("language-screen");
+
+    if (languageScreen) {
+
+        languageScreen.style.opacity = "0";
+
+        languageScreen.style.transition =
+            "opacity 0.5s ease";
+
+        setTimeout(function () {
+
+            languageScreen.style.display = "none";
+
+            applyLanguage(language);
+
+        }, 500);
+    }
+}
+
+
+/* =========================
+   TRANSLATIONS
+========================= */
+
+const translations = {
+
+    en: {
+        home: "Home",
+        designs: "Designs",
+        services: "Services",
+        gallery: "Gallery",
+        about: "About Us",
+        contact: "Contact",
+        language: "Language",
+        heroTitle: "Welcome to Parvathi Creations",
+        heroDescription: "Where every stitch tells a story. Beautiful designs, elegant embroidery and perfect finishing.",
+        bookNow: "Book Now",
+        viewGallery: "View Gallery",
+        servicesTitle: "Our Services",
+        servicesDescription: "Premium tailoring and beautiful handmade designs crafted with care and creativity.",
+        contactTitle: "Contact Us",
+        whatsapp: "Chat on WhatsApp",
+        musicOff: "♫ Music: Off",
+        musicOn: "♫ Music: On",
+        musicUnavailable: "Music unavailable",
+        aboutTitle: "About Parvathi Creations",
+        aboutDescription: "Parvathi Creations offers custom blouse stitching, Maggam work, computer embroidery, bridal wear, saree tassels, frocks, lehengas and made-to-order designs. Share your idea with us and we will discuss the design, fitting and finishing details with you.",
+        contactUs: "Contact Us"
+    },
+
+    te: {
+        home: "హోమ్",
+        designs: "డిజైన్స్",
+        services: "సేవలు",
+        gallery: "గ్యాలరీ",
+        about: "మా గురించి",
+        contact: "సంప్రదించండి",
+        language: "భాష",
+        heroTitle: "పార్వతి క్రియేషన్స్‌కు స్వాగతం",
+        heroDescription: "ప్రతి కుట్టులో ఒక కథ ఉంది. అందమైన డిజైన్లు, సొగసైన ఎంబ్రాయిడరీ, చక్కని ఫినిషింగ్.",
+        bookNow: "ఇప్పుడే బుక్ చేయండి",
+        viewGallery: "గ్యాలరీ చూడండి",
+        servicesTitle: "మా సేవలు",
+        servicesDescription: "శ్రద్ధతో, సృజనాత్మకతతో రూపొందించిన నాణ్యమైన టైలరింగ్ మరియు చేతిపని డిజైన్లు.",
+        contactTitle: "మమ్మల్ని సంప్రదించండి",
+        whatsapp: "వాట్సాప్‌లో చాట్ చేయండి",
+        musicOff: "♫ సంగీతం: ఆఫ్",
+        musicOn: "♫ సంగీతం: ఆన్",
+        musicUnavailable: "సంగీతం అందుబాటులో లేదు",
+        aboutTitle: "పార్వతి క్రియేషన్స్ గురించి",
+        aboutDescription: "పార్వతి క్రియేషన్స్‌లో కస్టమ్ బ్లౌజ్ స్టిచింగ్, మగ్గం వర్క్, కంప్యూటర్ ఎంబ్రాయిడరీ, పెళ్లి దుస్తులు, చీర టాసెల్స్, ఫ్రాక్స్, లెహంగాలు మరియు మీకు నచ్చిన డిజైన్లు అందుబాటులో ఉన్నాయి. మీ ఆలోచనను మాతో పంచుకోండి; డిజైన్, ఫిట్టింగ్, ఫినిషింగ్ వివరాలను చర్చిద్దాం.",
+        contactUs: "మమ్మల్ని సంప్రదించండి"
+    },
+
+    hi: {
+        home: "होम",
+        designs: "डिज़ाइन्स",
+        services: "सेवाएँ",
+        gallery: "गैलरी",
+        about: "हमारे बारे में",
+        contact: "संपर्क करें",
+        language: "भाषा",
+        heroTitle: "पार्वती क्रिएशन्स में आपका स्वागत है",
+        heroDescription: "हर सिलाई एक कहानी कहती है। सुंदर डिज़ाइन, शानदार कढ़ाई और बेहतरीन फिनिशिंग।",
+        bookNow: "अभी बुक करें",
+        viewGallery: "गैलरी देखें",
+        servicesTitle: "हमारी सेवाएँ",
+        servicesDescription: "देखभाल और रचनात्मकता के साथ तैयार की गई प्रीमियम सिलाई और सुंदर हस्तनिर्मित डिज़ाइन।",
+        contactTitle: "संपर्क करें",
+        whatsapp: "व्हाट्सऐप पर चैट करें",
+        musicOff: "♫ संगीत: बंद",
+        musicOn: "♫ संगीत: चालू",
+        musicUnavailable: "संगीत उपलब्ध नहीं है",
+        aboutTitle: "पार्वती क्रिएशन्स के बारे में",
+        aboutDescription: "पार्वती क्रिएशन्स में कस्टम ब्लाउज़ सिलाई, मग्गम वर्क, कंप्यूटर एम्ब्रॉयडरी, ब्राइडल वियर, साड़ी टैसल्स, फ्रॉक, लहंगे और आपकी पसंद के डिज़ाइन उपलब्ध हैं। अपना विचार साझा करें; हम डिज़ाइन, फिटिंग और फिनिशिंग पर चर्चा करेंगे।",
+        contactUs: "संपर्क करें"
+    }
+};
+
+
+/* =========================
+   APPLY LANGUAGE
+========================= */
+
+
+/* Reusable customer-facing phrases, ordered as English / Telugu / Hindi. */
+const phraseTranslations = [
+["Choose your language","మీ భాషను ఎంచుకోండి","अपनी भाषा चुनें"],
+["Crafting elegance, one stitch at a time...","ప్రతి కుట్టులో సొగసును అల్లుతున్నాం...","हर सिलाई में नज़ाकत बुनते हुए..."],
+["Maggam Work","మగ్గం వర్క్","मग्गम वर्क"],
+["Designer Blouses","డిజైనర్ బ్లౌజులు","डिज़ाइनर ब्लाउज़"],
+["Designer Blouse","డిజైనర్ బ్లౌజ్","डिज़ाइनर ब्लाउज़"],
+["Bridal Wear","పెళ్లి దుస్తులు","दुल्हन के परिधान"],
+["Saree Tassels","చీర కుచ్చులు","साड़ी के टैसल्स"],
+["Frocks","ఫ్రాక్స్","फ्रॉक"],
+["Lehengas","లెహంగాలు","लहंगे"],
+["Computer Embroidery","కంప్యూటర్ ఎంబ్రాయిడరీ","कंप्यूटर एम्ब्रॉयडरी"],
+["Custom Designs","కస్టమ్ డిజైన్లు","कस्टम डिज़ाइन"],
+["Elegant traditional embroidery designs for special occasions.","ప్రత్యేక సందర్భాల కోసం సొగసైన సంప్రదాయ ఎంబ్రాయిడరీ డిజైన్లు.","खास अवसरों के लिए सुंदर पारंपरिक कढ़ाई डिज़ाइन।"],
+["Unique blouse designs with perfect fitting and finishing.","చక్కని ఫిట్టింగ్, ఫినిషింగ్‌తో ప్రత్యేక బ్లౌజ్ డిజైన్లు.","बेहतरीन फिटिंग और फिनिशिंग वाले अनोखे ब्लाउज़ डिज़ाइन।"],
+["Beautiful bridal outfits designed for your memorable day.","మీ ప్రత్యేక రోజుకు అందమైన పెళ్లి దుస్తులు.","आपके खास दिन के लिए सुंदर दुल्हन के परिधान।"],
+["Handcrafted saree tassels with stylish patterns.","స్టైలిష్ నమూనాలతో చేతితో తయారు చేసిన చీర కుచ్చులు.","स्टाइलिश पैटर्न वाले हाथ से बने साड़ी टैसल्स।"],
+["Lovely long and short frocks for every occasion.","ప్రతి సందర్భానికి అందమైన పొడవైన, పొట్టి ఫ్రాక్స్.","हर अवसर के लिए सुंदर लंबी और छोटी फ्रॉक।"],
+["Traditional and modern lehenga designs.","సంప్రదాయ, ఆధునిక లెహంగా డిజైన్లు.","पारंपरिक और आधुनिक लहंगा डिज़ाइन।"],
+["Precise embroidery work with modern technology.","ఆధునిక సాంకేతికతతో ఖచ్చితమైన ఎంబ్రాయిడరీ పని.","आधुनिक तकनीक से सटीक कढ़ाई का काम।"],
+["Special designs made according to your ideas.","మీ ఆలోచనలకు అనుగుణంగా ప్రత్యేక డిజైన్లు.","आपके विचारों के अनुसार विशेष डिज़ाइन।"],
+["Our Collection","మా కలెక్షన్","हमारा कलेक्शन"],
+["Featured Designs","ప్రత్యేక డిజైన్లు","खास डिज़ाइन"],
+["Explore some of our beautiful handcrafted designs.","మా అందమైన చేతిపని డిజైన్లను చూడండి.","हमारे सुंदर हस्तनिर्मित डिज़ाइन देखें।"],
+["Featured","ప్రత్యేకం","विशेष"],
+["Popular","ప్రసిద్ధం","लोकप्रिय"],
+["New","కొత్తది","नया"],
+["Handmade","చేతితో తయారు చేసినది","हस्तनिर्मित"],
+["Elegant Maggam Work","సొగసైన మగ్గం వర్క్","सुंदर मग्गम वर्क"],
+["Beautiful traditional handwork designed for special occasions.","ప్రత్యేక సందర్భాల కోసం అందమైన సంప్రదాయ చేతిపని.","खास अवसरों के लिए सुंदर पारंपरिक हस्तकला।"],
+["♡ I Like This","♡ ఇది నాకు నచ్చింది","♡ मुझे यह पसंद है"],
+["View Details","వివరాలు చూడండి","विवरण देखें"],
+["Stylish blouse designs customized to match your saree.","మీ చీరకు సరిపోయే స్టైలిష్ బ్లౌజ్ డిజైన్లు.","आपकी साड़ी से मेल खाते स्टाइलिश ब्लाउज़ डिज़ाइन।"],
+["Traditional and modern designs for weddings and celebrations.","వివాహాలు, వేడుకల కోసం సంప్రదాయ మరియు ఆధునిక డిజైన్లు.","शादियों और समारोहों के लिए पारंपरिक और आधुनिक डिज़ाइन।"],
+["Handcrafted tassels that add a beautiful finishing touch.","అందమైన ఫినిషింగ్ ఇచ్చే చేతితో చేసిన కుచ్చులు.","खूबसूरत फिनिशिंग देने वाले हस्तनिर्मित टैसल्स।"],
+["View All Designs →","అన్ని డిజైన్లు చూడండి →","सभी डिज़ाइन देखें →"],
+["Design Name","డిజైన్ పేరు","डिज़ाइन का नाम"],
+["Design description","డిజైన్ వివరణ","डिज़ाइन का विवरण"],
+["💬 Enquire About This Design","💬 ఈ డిజైన్ గురించి అడగండి","💬 इस डिज़ाइन के बारे में पूछें"],
+["Our Gallery","మా గ్యాలరీ","हमारी गैलरी"],
+["Explore our latest designs and handmade creations.","మా తాజా డిజైన్లు, చేతితో చేసిన కళాకృతులను చూడండి.","हमारे नए डिज़ाइन और हस्तनिर्मित रचनाएँ देखें।"],
+["Explore our latest tailoring and embroidery designs.","మా తాజా టైలరింగ్, ఎంబ్రాయిడరీ డిజైన్లను చూడండి.","हमारे नए सिलाई और कढ़ाई डिज़ाइन देखें।"],
+["All","అన్నీ","सभी"],
+["Sarees","చీరలు","साड़ियाँ"],
+["Blouses","బ్లౌజులు","ब्लाउज़"],
+["Maggam","మగ్గం","मग्गम"],
+["Bridal","పెళ్లి","दुल्हन"],
+["Saree Design","చీర డిజైన్","साड़ी डिज़ाइन"],
+["Wedding Design","వెడ్డింగ్ డిజైన్","शादी का डिज़ाइन"],
+["Beautiful traditional Maggam embroidery.","అందమైన సంప్రదాయ మగ్గం ఎంబ్రాయిడరీ.","सुंदर पारंपरिक मग्गम कढ़ाई।"],
+["Elegant custom blouse designs.","సొగసైన కస్టమ్ బ్లౌజ్ డిజైన్లు.","सुंदर कस्टम ब्लाउज़ डिज़ाइन।"],
+["Beautiful designs for special occasions.","ప్రత్యేక సందర్భాల కోసం అందమైన డిజైన్లు.","खास अवसरों के लिए सुंदर डिज़ाइन।"],
+["Elegant saree styling and tassel work.","సొగసైన చీర స్టైలింగ్, కుచ్చుల పని.","सुंदर साड़ी स्टाइलिंग और टैसल का काम।"],
+["Loading latest designs...","తాజా డిజైన్లు లోడ్ అవుతున్నాయి...","नए डिज़ाइन लोड हो रहे हैं..."],
+["No designs found.","డిజైన్లు కనబడలేదు.","कोई डिज़ाइन नहीं मिला।"],
+["What Our Customers Say","మా కస్టమర్లు ఏమంటున్నారు","हमारे ग्राहक क्या कहते हैं"],
+["Customer Reviews","కస్టమర్ అభిప్రాయాలు","ग्राहक समीक्षाएँ"],
+["We are happy to create beautiful designs for every special occasion.","ప్రతి ప్రత్యేక సందర్భానికి అందమైన డిజైన్లు రూపొందించడం మాకు ఆనందం.","हर खास अवसर के लिए सुंदर डिज़ाइन बनाना हमें खुशी देता है।"],
+["— Happy Customer","— సంతోషించిన కస్టమర్","— संतुष्ट ग्राहक"],
+["Made with care in Yamjal","యంజాల్‌లో శ్రద్ధతో తయారు చేయబడింది","यमजल में प्यार और देखभाल से बनाया गया"],
+["Phone","ఫోన్","फ़ोन"],
+["Email","ఈమెయిల్","ईमेल"],
+["Location","ప్రాంతం","स्थान"],
+["Volume","వాల్యూమ్","आवाज़"],
+["© 2026 Parvathi Creations. All Rights Reserved.","© 2026 పార్వతి క్రియేషన్స్. అన్ని హక్కులు ప్రత్యేకించబడ్డాయి.","© 2026 पार्वती क्रिएशन्स। सर्वाधिकार सुरक्षित।"]
+];
+
+function applyLanguage(language) {
+    const activeLanguage = ["en", "te", "hi"].includes(language) ? language : "en";
+
+    document.querySelectorAll("[data-translate]").forEach(function (element) {
+        const key = element.getAttribute("data-translate");
+        if (translations[activeLanguage] && translations[activeLanguage][key]) {
+            element.textContent = translations[activeLanguage][key];
+        }
+    });
+
+    // Translate matching static text nodes without replacing their parent HTML or styles.
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let textNode;
+    while ((textNode = walker.nextNode())) {
+        const current = textNode.nodeValue;
+        const trimmed = current.trim();
+        if (!trimmed) continue;
+        const phrase = phraseTranslations.find(function (entry) {
+            return entry[0] === trimmed || entry[1] === trimmed || entry[2] === trimmed;
+        });
+        if (phrase) {
+            const leadingLength = current.length - current.trimStart().length;
+            const trailingLength = current.length - current.trimEnd().length;
+            const leading = current.slice(0, leadingLength);
+            const trailing = trailingLength ? current.slice(current.length - trailingLength) : "";
+            textNode.nodeValue = leading + phrase[activeLanguage === "te" ? 1 : activeLanguage === "hi" ? 2 : 0] + trailing;
+        }
+    }
+}
+
+</script>
+
+<script>
+/* Accessible menu + optional generated ambient tones (no external audio or autoplay). */
+(function () {
+  const menu = document.getElementById("side-menu");
+  const overlay = document.getElementById("menu-overlay");
+  const openButton = document.getElementById("menu-toggle");
+  const closeButton = document.getElementById("menu-close");
+  function setMenu(open) {
+    if (!menu || !overlay) return;
+    menu.classList.toggle("open", open);
+    overlay.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    if (openButton) openButton.setAttribute("aria-expanded", String(open));
+  }
+  if (openButton) openButton.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
+  if (closeButton) closeButton.addEventListener("click", () => setMenu(false));
+  if (overlay) overlay.addEventListener("click", () => setMenu(false));
+  if (menu) menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+  // The historical repository contains only one real fashion photo; use it as a fallback
+  // rather than leaving broken-image icons for older referenced filenames.
+  function useFashionPhotoFallback(img) {
+    if (!img || img.dataset.fallbackTried) return;
+    if (new URL(img.src, document.baseURI).pathname.endsWith("/sareejpg.jpg")) {
+      img.style.visibility = "hidden";
+      img.setAttribute("aria-hidden", "true");
+      return;
+    }
+    img.dataset.fallbackTried = "true";
+    img.src = new URL("sareejpg.jpg", document.baseURI).href;
+  }
+  function repairBrokenImages() {
+    document.querySelectorAll("img").forEach(img => {
+      if (img.complete && img.naturalWidth === 0) useFashionPhotoFallback(img);
+    });
+  }
+  document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("error", function () {
+      useFashionPhotoFallback(this);
+      if (this.dataset.fallbackTried && new URL(this.src, document.baseURI).pathname.endsWith("/sareejpg.jpg")) {
+        // If the fallback also fails, hide the broken icon rather than showing a broken image.
+        this.addEventListener("error", function hideFailedFallback() {
+          this.style.display = "none";
+          this.setAttribute("aria-hidden", "true");
+          this.removeEventListener("error", hideFailedFallback);
+        }, { once: true });
+      }
+    });
+  });
+  // A legacy image may fail before this script executes; re-check after the browser finishes loading.
+  window.addEventListener("load", repairBrokenImages, { once: true });
+  window.setTimeout(repairBrokenImages, 1800);
+
+  const toggle = document.getElementById("music-toggle");
+  const slider = document.getElementById("music-volume");
+  if (!toggle || !slider) return;
+  let context = null, master = null, timer = null, noteIndex = 0, playing = false;
+  let volume = 18;
+  try { const savedVolume = Number(localStorage.getItem("parvathiMusicVolume")); if (Number.isFinite(savedVolume)) volume = savedVolume; } catch (error) { /* storage may be disabled */ }
+  if (!Number.isFinite(volume)) volume = 18;
+  volume = Math.max(0, Math.min(100, volume));
+  slider.value = String(volume);
+  const sequence = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
+  function playNote() {
+    if (!playing || !context || !master || volume === 0) return;
+    const osc = context.createOscillator(), gain = context.createGain(), now = context.currentTime;
+    osc.type = "sine";
+    osc.frequency.value = sequence[noteIndex++ % sequence.length];
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, volume / 100 * 0.025), now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
+    osc.connect(gain); gain.connect(master);
+    osc.start(now); osc.stop(now + 1.2);
+  }
+  function setPlaying(next) {
+    playing = next;
+    if (!playing) {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      if (master && context) master.gain.setTargetAtTime(0, context.currentTime, 0.04);
+      toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicOff;
+      toggle.setAttribute("aria-pressed", "false");
+      try { localStorage.setItem("parvathiMusicChoice", "off"); } catch (error) { /* storage may be disabled */ }
+      return;
+    }
+    toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicOn;
+    toggle.setAttribute("aria-pressed", "true");
+    try { localStorage.setItem("parvathiMusicChoice", "on"); } catch (error) { /* storage may be disabled */ }
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) throw new Error("Web Audio is unavailable");
+      context = context || new AudioContextClass();
+      if (!master) {
+        master = context.createGain();
+        master.connect(context.destination);
+      }
+      master.gain.setTargetAtTime(1, context.currentTime, 0.04);
+      if (context.state === "suspended") context.resume();
+      if (timer) window.clearInterval(timer);
+      playNote();
+      timer = window.setInterval(playNote, 1250);
+    } catch (error) {
+      playing = false;
+      toggle.textContent = (function () { try { return translations[localStorage.getItem("parvathiLanguage")] || translations.en; } catch (error) { return translations.en; } })().musicUnavailable;
+      toggle.setAttribute("aria-pressed", "false");
+      localStorage.setItem("parvathiMusicChoice", "off");
+    }
+  }
+  slider.addEventListener("input", () => {
+    volume = Number(slider.value);
+    try { localStorage.setItem("parvathiMusicVolume", String(volume)); } catch (error) { /* storage may be disabled */ }
+  });
+  toggle.addEventListener("click", () => setPlaying(!playing));
+  // Music intentionally starts OFF on every visit; saved volume is retained.
+})();
+</script>
+
 </body>
 </html>
