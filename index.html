@@ -54,9 +54,9 @@
   <div class="menu-language">
     <span data-translate="language">Language</span>
 
-    <button onclick="applyLanguage('en')">🇬🇧 English</button>
-    <button onclick="applyLanguage('te')">🇮🇳 తెలుగు</button>
-    <button onclick="applyLanguage('hi')">🇮🇳 हिन्दी</button>
+    <button onclick="selectLanguage('en')">🇬🇧 English</button>
+    <button onclick="selectLanguage('te')">🇮🇳 తెలుగు</button>
+    <button onclick="selectLanguage('hi')">🇮🇳 हिन्दी</button>
   </div>
 </nav>
 
@@ -92,10 +92,10 @@
 </div>
 
     <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#home" data-translate="home">Home</a></li>
+      <li><a href="#services" data-translate="services">Services</a></li>
+      <li><a href="#gallery" data-translate="gallery">Gallery</a></li>
+      <li><a href="#contact" data-translate="contact">Contact</a></li>
     </ul>
 
   </nav>
@@ -104,26 +104,17 @@
 
 <!-- Hero Section -->
 
-<section class="hero">
+<section class="hero" id="home">
 
   <div class="hero-content">
 
-    <h1>
-      Welcome to <span>Parvathi Creations</span>
-    </h1>
+    <h1 data-translate="heroTitle">Welcome to Parvathi Creations</h1>
 
-    <p>
-      Where every stitch tells a story.
-      Beautiful designs, elegant embroidery and perfect finishing.
-    </p>
+    <p data-translate="heroDescription">Where every stitch tells a story. Beautiful designs, elegant embroidery and perfect finishing.</p>
 
-    <a href="#contact" class="btn">
-      Book Now
-    </a>
+    <a href="#contact" class="btn" data-translate="bookNow">Book Now</a>
 
-    <a href="#gallery" class="btn">
-      View Gallery
-    </a>
+    <a href="#gallery" class="btn" data-translate="viewGallery">View Gallery</a>
 
   </div>
 
@@ -132,14 +123,9 @@
 
 <section class="services" id="services">
 
-  <h2 class="section-title">
-    Our <span>Services</span>
-  </h2>
+  <h2 class="section-title" data-translate="servicesTitle">Our Services</h2>
 
-  <p class="section-description">
-    Premium tailoring and beautiful handmade designs
-    crafted with care and creativity.
-  </p>
+  <p class="section-description" data-translate="servicesDescription">Premium tailoring and beautiful handmade designs crafted with care and creativity.</p>
 
 
   <div class="service-container">
@@ -218,7 +204,7 @@
         <!-- Design 1 -->
         <div class="design-card">
             <div class="design-image">
-                <img src="images/featured1.jpg"
+                <img src="IMG_20260731_155520.jpg"
                      alt="Elegant Maggam Work Design">
                 <span class="design-badge">Featured</span>
             </div>
@@ -246,7 +232,7 @@
         <!-- Design 2 -->
         <div class="design-card">
             <div class="design-image">
-                <img src="images/featured2.jpg"
+                <img src="sareejpg.jpg"
                      alt="Designer Blouse">
                 <span class="design-badge">Popular</span>
             </div>
@@ -274,7 +260,7 @@
         <!-- Design 3 -->
         <div class="design-card">
             <div class="design-image">
-                <img src="images/featured3.jpg"
+                <img src="sareejpg.jpg"
                      alt="Wedding Lehenga">
                 <span class="design-badge">New</span>
             </div>
@@ -302,7 +288,7 @@
         <!-- Design 4 -->
         <div class="design-card">
             <div class="design-image">
-                <img src="images/featured4.jpg"
+                <img src="IMG_20260731_155520.jpg"
                      alt="Saree Tassels">
                 <span class="design-badge">Handmade</span>
             </div>
@@ -437,14 +423,14 @@
 </div>
   <div class="gallery-container">
     <div class="gallery-item">
-    <img src="images/saree.jpg">
+    <img src="sareejpg.jpg">
     <div class="gallery-overlay">
         <h3>Sarees</h3>
     </div>
 </div>
 
     <div class="gallery-item">
-      <img src="images/maggam.jpg" alt="Maggam Work">
+      <img src="IMG_20260731_155520.jpg" alt="Maggam Work">
       <div class="gallery-overlay">
         <h3>Maggam Work</h3>
       </div>
@@ -452,7 +438,7 @@
 
 
     <div class="gallery-item">
-      <img src="images/blouse.jpg" alt="Designer Blouse">
+      <img src="sareejpg.jpg" alt="Designer Blouse">
       <div class="gallery-overlay">
         <h3>Designer Blouses</h3>
       </div>
@@ -460,7 +446,7 @@
 
 
     <div class="gallery-item">
-      <img src="images/bridal.jpg" alt="Bridal Wear">
+      <img src="sareejpg.jpg" alt="Bridal Wear">
 <!-- Gallery Section -->
 <section id="gallery" class="gallery-section">
 
@@ -487,7 +473,7 @@
     <!-- Existing Static Designs -->
 
     <div class="gallery-item" data-category="maggam">
-      <img src="images/maggam.jpg" alt="Maggam Work">
+      <img src="IMG_20260731_155520.jpg" alt="Maggam Work">
       <div class="gallery-overlay">
         <h3>Maggam Work</h3>
         <p>Beautiful traditional Maggam embroidery.</p>
@@ -498,7 +484,7 @@
     </div>
 
     <div class="gallery-item" data-category="blouses">
-      <img src="images/blouse.jpg" alt="Designer Blouse">
+      <img src="sareejpg.jpg" alt="Designer Blouse">
       <div class="gallery-overlay">
         <h3>Designer Blouse</h3>
         <p>Elegant custom blouse designs.</p>
@@ -509,7 +495,7 @@
     </div>
 
     <div class="gallery-item" data-category="bridal">
-      <img src="images/wedding.jpg" alt="Wedding Design">
+      <img src="IMG_20260731_155520.jpg" alt="Wedding Design">
       <div class="gallery-overlay">
         <h3>Wedding Design</h3>
         <p>Beautiful designs for special occasions.</p>
@@ -520,7 +506,7 @@
     </div>
 
     <div class="gallery-item" data-category="sarees">
-      <img src="images/sareejpg.jpg" alt="Saree Design">
+      <img src="sareejpg.jpg" alt="Saree Design">
       <div class="gallery-overlay">
         <h3>Saree Design</h3>
         <p>Elegant saree styling and tassel work.</p>
@@ -581,14 +567,15 @@ async function loadGalleryDesigns() {
     if (error) {
       console.error("Supabase gallery error:", error);
 
-      loading.textContent = "Unable to load latest designs.";
+      if (loading) loading.textContent = "Unable to load latest designs.";
+      if (empty) { empty.style.display = "block"; empty.textContent = "The latest designs could not be loaded. Please try again later."; }
       return;
     }
 
-    loading.style.display = "none";
+    if (loading) loading.style.display = "none";
 
     if (!data || data.length === 0) {
-      empty.style.display = "block";
+      if (empty) empty.style.display = "block";
       return;
     }
 
@@ -603,8 +590,15 @@ async function loadGalleryDesigns() {
 
       const image = document.createElement("img");
 
-      image.src = design.image_url;
+      image.src = design.image_url || "sareejpg.jpg";
       image.alt = design.name || "Parvathi Creations Design";
+      image.loading = "lazy";
+      image.addEventListener("error", function () {
+        if (!this.dataset.fallbackTried && !this.src.endsWith("/sareejpg.jpg")) {
+          this.dataset.fallbackTried = "true";
+          this.src = new URL("sareejpg.jpg", document.baseURI).href;
+        }
+      });
 
       const overlay = document.createElement("div");
       overlay.className = "gallery-overlay";
@@ -671,8 +665,8 @@ async function loadGalleryDesigns() {
 
     console.error("Gallery loading error:", error);
 
-    loading.textContent =
-      "Unable to load gallery.";
+    if (loading) loading.textContent = "Unable to load gallery.";
+    if (empty) { empty.style.display = "block"; empty.textContent = "The gallery is temporarily unavailable. Please try again later."; }
 
   }
 }
@@ -829,9 +823,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <section class="contact" id="contact">
 
-  <h2 class="section-title">
-    Contact <span>Us</span>
-  </h2>
+  <h2 class="section-title" data-translate="contactTitle">Contact Us</h2>
 
 
   <div class="contact-container">
@@ -856,7 +848,7 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
 
 
-  <a class="whatsapp-btn" href="https://wa.me/919550766784" target="_blank">
+  <a class="whatsapp-btn" href="https://wa.me/919550766784" target="_blank" rel="noopener noreferrer" data-translate="whatsapp">
   Chat on WhatsApp
 </a>
 </section>
@@ -866,7 +858,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <!-- Optional boutique ambience controls; starts OFF and requires a user tap. -->
 <div id="music-controls" aria-label="Optional background music">
-  <button id="music-toggle" type="button" aria-pressed="false">♫ Music: Off</button>
+  <button id="music-toggle" type="button" aria-pressed="false" data-translate="musicOff">♫ Music: Off</button>
   <label for="music-volume">Volume</label>
   <input id="music-volume" type="range" min="0" max="100" value="18" aria-label="Music volume">
 </div>
@@ -950,8 +942,8 @@ document.addEventListener("DOMContentLoaded", function () {
        SAVED LANGUAGE
     ========================= */
 
-    const savedLanguage =
-        localStorage.getItem("parvathiLanguage");
+    let savedLanguage = null;
+    try { savedLanguage = localStorage.getItem("parvathiLanguage"); } catch (error) { /* storage may be disabled */ }
 
     const languageScreen =
         document.getElementById("language-screen");
@@ -972,10 +964,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function selectLanguage(language) {
 
-    localStorage.setItem(
-        "parvathiLanguage",
-        language
-    );
+    try { localStorage.setItem("parvathiLanguage", language); } catch (error) { /* storage may be disabled */ }
 
     const languageScreen =
         document.getElementById("language-screen");
@@ -1011,7 +1000,18 @@ const translations = {
         gallery: "Gallery",
         about: "About Us",
         contact: "Contact",
-        language: "Language"
+        language: "Language",
+        heroTitle: "Welcome to Parvathi Creations",
+        heroDescription: "Where every stitch tells a story. Beautiful designs, elegant embroidery and perfect finishing.",
+        bookNow: "Book Now",
+        viewGallery: "View Gallery",
+        servicesTitle: "Our Services",
+        servicesDescription: "Premium tailoring and beautiful handmade designs crafted with care and creativity.",
+        contactTitle: "Contact Us",
+        whatsapp: "Chat on WhatsApp",
+        musicOff: "♫ Music: Off",
+        musicOn: "♫ Music: On",
+        musicUnavailable: "Music unavailable"
     },
 
     te: {
@@ -1021,7 +1021,18 @@ const translations = {
         gallery: "గ్యాలరీ",
         about: "మా గురించి",
         contact: "సంప్రదించండి",
-        language: "భాష"
+        language: "భాష",
+        heroTitle: "పార్వతి క్రియేషన్స్‌కు స్వాగతం",
+        heroDescription: "ప్రతి కుట్టులో ఒక కథ ఉంది. అందమైన డిజైన్లు, సొగసైన ఎంబ్రాయిడరీ, చక్కని ఫినిషింగ్.",
+        bookNow: "ఇప్పుడే బుక్ చేయండి",
+        viewGallery: "గ్యాలరీ చూడండి",
+        servicesTitle: "మా సేవలు",
+        servicesDescription: "శ్రద్ధతో, సృజనాత్మకతతో రూపొందించిన నాణ్యమైన టైలరింగ్ మరియు చేతిపని డిజైన్లు.",
+        contactTitle: "మమ్మల్ని సంప్రదించండి",
+        whatsapp: "వాట్సాప్‌లో చాట్ చేయండి",
+        musicOff: "♫ సంగీతం: ఆఫ్",
+        musicOn: "♫ సంగీతం: ఆన్",
+        musicUnavailable: "సంగీతం అందుబాటులో లేదు"
     },
 
     hi: {
@@ -1031,7 +1042,18 @@ const translations = {
         gallery: "गैलरी",
         about: "हमारे बारे में",
         contact: "संपर्क करें",
-        language: "भाषा"
+        language: "भाषा",
+        heroTitle: "पार्वती क्रिएशन्स में आपका स्वागत है",
+        heroDescription: "हर सिलाई एक कहानी कहती है। सुंदर डिज़ाइन, शानदार कढ़ाई और बेहतरीन फिनिशिंग।",
+        bookNow: "अभी बुक करें",
+        viewGallery: "गैलरी देखें",
+        servicesTitle: "हमारी सेवाएँ",
+        servicesDescription: "देखभाल और रचनात्मकता के साथ तैयार की गई प्रीमियम सिलाई और सुंदर हस्तनिर्मित डिज़ाइन।",
+        contactTitle: "संपर्क करें",
+        whatsapp: "व्हाट्सऐप पर चैट करें",
+        musicOff: "♫ संगीत: बंद",
+        musicOn: "♫ संगीत: चालू",
+        musicUnavailable: "संगीत उपलब्ध नहीं है"
     }
 };
 
@@ -1111,7 +1133,8 @@ function applyLanguage(language) {
   const slider = document.getElementById("music-volume");
   if (!toggle || !slider) return;
   let context = null, master = null, timer = null, noteIndex = 0, playing = false;
-  let volume = Number(localStorage.getItem("parvathiMusicVolume"));
+  let volume = 18;
+  try { const savedVolume = Number(localStorage.getItem("parvathiMusicVolume")); if (Number.isFinite(savedVolume)) volume = savedVolume; } catch (error) { /* storage may be disabled */ }
   if (!Number.isFinite(volume)) volume = 18;
   volume = Math.max(0, Math.min(100, volume));
   slider.value = String(volume);
@@ -1133,14 +1156,14 @@ function applyLanguage(language) {
       if (timer) window.clearInterval(timer);
       timer = null;
       if (master && context) master.gain.setTargetAtTime(0, context.currentTime, 0.04);
-      toggle.textContent = "♫ Music: Off";
+      toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicOff;
       toggle.setAttribute("aria-pressed", "false");
-      localStorage.setItem("parvathiMusicChoice", "off");
+      try { localStorage.setItem("parvathiMusicChoice", "off"); } catch (error) { /* storage may be disabled */ }
       return;
     }
-    toggle.textContent = "♫ Music: On";
+    toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicOn;
     toggle.setAttribute("aria-pressed", "true");
-    localStorage.setItem("parvathiMusicChoice", "on");
+    try { localStorage.setItem("parvathiMusicChoice", "on"); } catch (error) { /* storage may be disabled */ }
     try {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) throw new Error("Web Audio is unavailable");
@@ -1156,14 +1179,14 @@ function applyLanguage(language) {
       timer = window.setInterval(playNote, 1250);
     } catch (error) {
       playing = false;
-      toggle.textContent = "Music unavailable";
+      toggle.textContent = (translations[localStorage.getItem("parvathiLanguage")] || translations.en).musicUnavailable;
       toggle.setAttribute("aria-pressed", "false");
       localStorage.setItem("parvathiMusicChoice", "off");
     }
   }
   slider.addEventListener("input", () => {
     volume = Number(slider.value);
-    localStorage.setItem("parvathiMusicVolume", String(volume));
+    try { localStorage.setItem("parvathiMusicVolume", String(volume)); } catch (error) { /* storage may be disabled */ }
   });
   toggle.addEventListener("click", () => setPlaying(!playing));
   // Music intentionally starts OFF on every visit; saved volume is retained.
