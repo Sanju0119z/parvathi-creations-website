@@ -30,7 +30,7 @@
   let activeButton = null;
 
   function normalizeCategory(value) {
-    const text = String(value || "").trim().toLowerCase().replace(/\\s+/g, " ");
+    const text = String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
     if (categoryAliases[text]) return categoryAliases[text];
     const match = categoryMap.find(item => item.words.some(word => text.includes(word)));
     // Keep unknown legacy categories visible in All Designs without mislabeling them as Custom.
