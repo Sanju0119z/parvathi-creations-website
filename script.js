@@ -306,3 +306,23 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================
+   GALLERY CATEGORY FILTERS
+========================================= */
+function filterGallery(category, button) {
+    const gallery = document.getElementById("gallery-grid");
+    if (!gallery) return;
+
+    document.querySelectorAll(".gallery-filters .filter-btn").forEach((item) => {
+        item.classList.toggle("active", item === button);
+    });
+
+    const selected = String(category || "all").toLowerCase().trim();
+    gallery.querySelectorAll(".gallery-item").forEach((item) => {
+        const itemCategory = String(item.dataset.category || "all").toLowerCase().trim();
+        const visible = selected === "all" || itemCategory === selected || itemCategory.includes(selected);
+        item.style.display = visible ? "" : "none";
+    });
+}
