@@ -187,7 +187,11 @@
     initReveal();
     const year = document.getElementById("year");
     if (year) year.textContent = String(new Date().getFullYear());
-    document.querySelectorAll(".collection-grid .collection-card").forEach(card => {\n      const heading = card.querySelector(".card-label h3");\n      const img = card.querySelector("img");\n      if (heading && img) decorateDesignCard(card, img.currentSrc || img.src, heading.textContent.trim(), img.currentSrc || img.src);\n    });\n    loadUploadedDesigns();
+    document.querySelectorAll(".collection-grid .collection-card").forEach(card => {
+      const heading = card.querySelector(".card-label h3");
+      const img = card.querySelector("img");
+      if (heading && img) decorateDesignCard(card, img.currentSrc || img.src, heading.textContent.trim(), img.currentSrc || img.src);
+    });\n    loadUploadedDesigns();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
