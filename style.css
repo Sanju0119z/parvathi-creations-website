@@ -8,7 +8,7 @@ a{color:inherit}
 .brand{display:flex;align-items:center;flex-shrink:0}.brand img{display:block;width:190px;height:64px;object-fit:contain}
 .main-nav{display:flex;align-items:center;gap:clamp(18px,3vw,42px)}.main-nav a,.header-cta{font-size:12px;text-decoration:none;letter-spacing:.02em;white-space:nowrap}.main-nav a{color:#4e4b47;transition:color .2s}.main-nav a:hover{color:var(--wine)}
 .header-cta{border:1px solid var(--wine);color:var(--wine);padding:12px 17px;display:flex;gap:18px;align-items:center}.header-cta:hover{background:var(--wine);color:white}
-.
+
 .hero{display:grid;grid-template-columns:1fr;padding:38px 6.3% 54px;gap:3.5%;align-items:stretch}
 
 .hero-copy{padding:clamp(30px,6vw,84px) 0 20px;align-self:center}.eyebrow{font-size:10px;letter-spacing:2.3px;line-height:1.7;text-transform:uppercase;color:var(--wine);margin:0 0 21px;font-weight:600}
