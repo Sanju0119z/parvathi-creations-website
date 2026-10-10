@@ -704,6 +704,10 @@ async function loadGalleryDesigns() {
 
     });
 
+    let currentLanguage = "en";
+    try { currentLanguage = localStorage.getItem("parvathiLanguage") || "en"; } catch (error) {}
+    if (typeof applyLanguage === "function") applyLanguage(currentLanguage);
+
   } catch (error) {
 
     console.error("Gallery loading error:", error);
@@ -1125,25 +1129,100 @@ const translations = {
    APPLY LANGUAGE
 ========================= */
 
+
+/* Reusable customer-facing phrases, ordered as English / Telugu / Hindi. */
+const phraseTranslations = [
+["Choose your language","మీ భాషను ఎంచుకోండి","अपनी भाषा चुनें"],
+["Crafting elegance, one stitch at a time...","ప్రతి కుట్టులో సొగసును అల్లుతున్నాం...","हर सिलाई में नज़ाकत बुनते हुए..."],
+["Maggam Work","మగ్గం వర్క్","मग्गम वर्क"],
+["Designer Blouses","డిజైనర్ బ్లౌజులు","डिज़ाइनर ब्लाउज़"],
+["Designer Blouse","డిజైనర్ బ్లౌజ్","डिज़ाइनर ब्लाउज़"],
+["Bridal Wear","పెళ్లి దుస్తులు","दुल्हन के परिधान"],
+["Saree Tassels","చీర కుచ్చులు","साड़ी के टैसल्स"],
+["Frocks","ఫ్రాక్స్","फ्रॉक"],
+["Lehengas","లెహంగాలు","लहंगे"],
+["Computer Embroidery","కంప్యూటర్ ఎంబ్రాయిడరీ","कंप्यूटर एम्ब्रॉयडरी"],
+["Custom Designs","కస్టమ్ డిజైన్లు","कस्टम डिज़ाइन"],
+["Elegant traditional embroidery designs for special occasions.","ప్రత్యేక సందర్భాల కోసం సొగసైన సంప్రదాయ ఎంబ్రాయిడరీ డిజైన్లు.","खास अवसरों के लिए सुंदर पारंपरिक कढ़ाई डिज़ाइन।"],
+["Unique blouse designs with perfect fitting and finishing.","చక్కని ఫిట్టింగ్, ఫినిషింగ్‌తో ప్రత్యేక బ్లౌజ్ డిజైన్లు.","बेहतरीन फिटिंग और फिनिशिंग वाले अनोखे ब्लाउज़ डिज़ाइन।"],
+["Beautiful bridal outfits designed for your memorable day.","మీ ప్రత్యేక రోజుకు అందమైన పెళ్లి దుస్తులు.","आपके खास दिन के लिए सुंदर दुल्हन के परिधान।"],
+["Handcrafted saree tassels with stylish patterns.","స్టైలిష్ నమూనాలతో చేతితో తయారు చేసిన చీర కుచ్చులు.","स्टाइलिश पैटर्न वाले हाथ से बने साड़ी टैसल्स।"],
+["Lovely long and short frocks for every occasion.","ప్రతి సందర్భానికి అందమైన పొడవైన, పొట్టి ఫ్రాక్స్.","हर अवसर के लिए सुंदर लंबी और छोटी फ्रॉक।"],
+["Traditional and modern lehenga designs.","సంప్రదాయ, ఆధునిక లెహంగా డిజైన్లు.","पारंपरिक और आधुनिक लहंगा डिज़ाइन।"],
+["Precise embroidery work with modern technology.","ఆధునిక సాంకేతికతతో ఖచ్చితమైన ఎంబ్రాయిడరీ పని.","आधुनिक तकनीक से सटीक कढ़ाई का काम।"],
+["Special designs made according to your ideas.","మీ ఆలోచనలకు అనుగుణంగా ప్రత్యేక డిజైన్లు.","आपके विचारों के अनुसार विशेष डिज़ाइन।"],
+["Our Collection","మా కలెక్షన్","हमारा कलेक्शन"],
+["Featured Designs","ప్రత్యేక డిజైన్లు","खास डिज़ाइन"],
+["Explore some of our beautiful handcrafted designs.","మా అందమైన చేతిపని డిజైన్లను చూడండి.","हमारे सुंदर हस्तनिर्मित डिज़ाइन देखें।"],
+["Featured","ప్రత్యేకం","विशेष"],
+["Popular","ప్రసిద్ధం","लोकप्रिय"],
+["New","కొత్తది","नया"],
+["Handmade","చేతితో తయారు చేసినది","हस्तनिर्मित"],
+["Elegant Maggam Work","సొగసైన మగ్గం వర్క్","सुंदर मग्गम वर्क"],
+["Beautiful traditional handwork designed for special occasions.","ప్రత్యేక సందర్భాల కోసం అందమైన సంప్రదాయ చేతిపని.","खास अवसरों के लिए सुंदर पारंपरिक हस्तकला।"],
+["♡ I Like This","♡ ఇది నాకు నచ్చింది","♡ मुझे यह पसंद है"],
+["View Details","వివరాలు చూడండి","विवरण देखें"],
+["Stylish blouse designs customized to match your saree.","మీ చీరకు సరిపోయే స్టైలిష్ బ్లౌజ్ డిజైన్లు.","आपकी साड़ी से मेल खाते स्टाइलिश ब्लाउज़ डिज़ाइन।"],
+["Traditional and modern designs for weddings and celebrations.","వివాహాలు, వేడుకల కోసం సంప్రదాయ మరియు ఆధునిక డిజైన్లు.","शादियों और समारोहों के लिए पारंपरिक और आधुनिक डिज़ाइन।"],
+["Handcrafted tassels that add a beautiful finishing touch.","అందమైన ఫినిషింగ్ ఇచ్చే చేతితో చేసిన కుచ్చులు.","खूबसूरत फिनिशिंग देने वाले हस्तनिर्मित टैसल्स।"],
+["View All Designs →","అన్ని డిజైన్లు చూడండి →","सभी डिज़ाइन देखें →"],
+["Design Name","డిజైన్ పేరు","डिज़ाइन का नाम"],
+["Design description","డిజైన్ వివరణ","डिज़ाइन का विवरण"],
+["💬 Enquire About This Design","💬 ఈ డిజైన్ గురించి అడగండి","💬 इस डिज़ाइन के बारे में पूछें"],
+["Our Gallery","మా గ్యాలరీ","हमारी गैलरी"],
+["Explore our latest designs and handmade creations.","మా తాజా డిజైన్లు, చేతితో చేసిన కళాకృతులను చూడండి.","हमारे नए डिज़ाइन और हस्तनिर्मित रचनाएँ देखें।"],
+["Explore our latest tailoring and embroidery designs.","మా తాజా టైలరింగ్, ఎంబ్రాయిడరీ డిజైన్లను చూడండి.","हमारे नए सिलाई और कढ़ाई डिज़ाइन देखें।"],
+["All","అన్నీ","सभी"],
+["Sarees","చీరలు","साड़ियाँ"],
+["Blouses","బ్లౌజులు","ब्लाउज़"],
+["Maggam","మగ్గం","मग्गम"],
+["Bridal","పెళ్లి","दुल्हन"],
+["Saree Design","చీర డిజైన్","साड़ी डिज़ाइन"],
+["Wedding Design","వెడ్డింగ్ డిజైన్","शादी का डिज़ाइन"],
+["Beautiful traditional Maggam embroidery.","అందమైన సంప్రదాయ మగ్గం ఎంబ్రాయిడరీ.","सुंदर पारंपरिक मग्गम कढ़ाई।"],
+["Elegant custom blouse designs.","సొగసైన కస్టమ్ బ్లౌజ్ డిజైన్లు.","सुंदर कस्टम ब्लाउज़ डिज़ाइन।"],
+["Beautiful designs for special occasions.","ప్రత్యేక సందర్భాల కోసం అందమైన డిజైన్లు.","खास अवसरों के लिए सुंदर डिज़ाइन।"],
+["Elegant saree styling and tassel work.","సొగసైన చీర స్టైలింగ్, కుచ్చుల పని.","सुंदर साड़ी स्टाइलिंग और टैसल का काम।"],
+["Loading latest designs...","తాజా డిజైన్లు లోడ్ అవుతున్నాయి...","नए डिज़ाइन लोड हो रहे हैं..."],
+["No designs found.","డిజైన్లు కనబడలేదు.","कोई डिज़ाइन नहीं मिला।"],
+["What Our Customers Say","మా కస్టమర్లు ఏమంటున్నారు","हमारे ग्राहक क्या कहते हैं"],
+["Customer Reviews","కస్టమర్ అభిప్రాయాలు","ग्राहक समीक्षाएँ"],
+["We are happy to create beautiful designs for every special occasion.","ప్రతి ప్రత్యేక సందర్భానికి అందమైన డిజైన్లు రూపొందించడం మాకు ఆనందం.","हर खास अवसर के लिए सुंदर डिज़ाइन बनाना हमें खुशी देता है।"],
+["— Happy Customer","— సంతోషించిన కస్టమర్","— संतुष्ट ग्राहक"],
+["Made with care in Yamjal","యంజాల్‌లో శ్రద్ధతో తయారు చేయబడింది","यमजल में प्यार और देखभाल से बनाया गया"],
+["Phone","ఫోన్","फ़ोन"],
+["Email","ఈమెయిల్","ईमेल"],
+["Location","ప్రాంతం","स्थान"],
+["Volume","వాల్యూమ్","आवाज़"],
+["© 2026 Parvathi Creations. All Rights Reserved.","© 2026 పార్వతి క్రియేషన్స్. అన్ని హక్కులు ప్రత్యేకించబడ్డాయి.","© 2026 पार्वती क्रिएशन्स। सर्वाधिकार सुरक्षित।"]
+];
+
 function applyLanguage(language) {
+    const activeLanguage = ["en", "te", "hi"].includes(language) ? language : "en";
 
-    document
-        .querySelectorAll("[data-translate]")
-        .forEach(function (element) {
+    document.querySelectorAll("[data-translate]").forEach(function (element) {
+        const key = element.getAttribute("data-translate");
+        if (translations[activeLanguage] && translations[activeLanguage][key]) {
+            element.textContent = translations[activeLanguage][key];
+        }
+    });
 
-            const key =
-                element.getAttribute("data-translate");
-
-            if (
-                translations[language] &&
-                translations[language][key]
-            ) {
-
-                element.textContent =
-                    translations[language][key];
-            }
-
+    // Translate matching static text nodes without replacing their parent HTML or styles.
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let textNode;
+    while ((textNode = walker.nextNode())) {
+        const current = textNode.nodeValue;
+        const trimmed = current.trim();
+        if (!trimmed) continue;
+        const phrase = phraseTranslations.find(function (entry) {
+            return entry[0] === trimmed || entry[1] === trimmed || entry[2] === trimmed;
         });
+        if (phrase) {
+            const leading = (current.match(/^\\s*/) || [""])[0];
+            const trailing = (current.match(/\\s*$/) || [""])[0];
+            textNode.nodeValue = leading + phrase[activeLanguage === "te" ? 1 : activeLanguage === "hi" ? 2 : 0] + trailing;
+        }
+    }
 }
 
 </script>
