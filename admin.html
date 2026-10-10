@@ -2180,19 +2180,16 @@
 
                         const savedCategory = String(design.category || "").trim().toLowerCase();
             const categoryAliases = {
-                "computer embroidery": "Computer Work",
-                "computerized embroidery": "Computer Work",
-                "computerised embroidery": "Computer Work",
-                "designer lehengas": "Lehengas",
-                "lehenga": "Lehengas",
-                "wedding wear": "Wedding Dresses",
-                "bridal wear": "Wedding Dresses",
-                "bridal": "Wedding Dresses",
-                "sarees & tassels": "Saree Tassels",
-                "saree tassels": "Saree Tassels",
-                "custom": "Custom Designs",
-                "custom design": "Custom Designs",
-                "salwar": "Tailoring"
+                "computer": "Computer Work", "computer work": "Computer Work",
+                "computer embroidery": "Computer Work", "computerized embroidery": "Computer Work", "computerised embroidery": "Computer Work",
+                "designer": "Designer Wear", "designer wear": "Designer Wear", "designerwear": "Designer Wear",
+                "designer lehengas": "Lehengas", "lehenga": "Lehengas", "lehengas": "Lehengas",
+                "frock": "Frocks", "frocks": "Frocks", "blouse": "Blouse Designs", "blouse designs": "Blouse Designs",
+                "wedding": "Wedding Dresses", "wedding wear": "Wedding Dresses", "bridal wear": "Wedding Dresses", "bridal": "Wedding Dresses",
+                "kids": "Kids Wear", "kids wear": "Kids Wear",
+                "saree": "Saree Tassels", "sarees & tassels": "Saree Tassels", "saree tassels": "Saree Tassels",
+                "custom": "Custom Designs", "custom design": "Custom Designs", "custom designs": "Custom Designs",
+                "tailoring": "Tailoring", "salwar": "Tailoring", "maggam": "Maggam Work", "maggam work": "Maggam Work"
             };
             const matchedCategory = categoryAliases[savedCategory] || design.category || "";
             designCategory.value = matchedCategory;

@@ -2,6 +2,18 @@
   "use strict";
   const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
+  const categoryAliases = {
+    "frock":"frocks","frocks":"frocks",
+    "lehenga":"lehenga","lehengas":"lehenga","designer lehengas":"lehenga",
+    "designer":"designer","designer wear":"designer","designerwear":"designer","designer outfit":"designer","designer outfits":"designer",
+    "blouse":"blouse","blouses":"blouse","blouse designs":"blouse",
+    "maggam":"maggam","maggam work":"maggam","thread work":"maggam","hand embroidery":"maggam",
+    "computer":"computer","computer work":"computer","computer embroidery":"computer","computerized embroidery":"computer","computerised embroidery":"computer","computerized work":"computer","computerised work":"computer","machine embroidery":"computer",
+    "bridal":"bridal","bridal wear":"bridal","wedding":"bridal","wedding wear":"bridal","wedding dresses":"bridal","occasionwear":"bridal","occasion wear":"bridal",
+    "kids":"kids","kid wear":"kids","kids wear":"kids","children":"kids","children wear":"kids",
+    "saree":"saree","sarees":"saree","saree tassels":"saree","sarees & tassels":"saree","tassel":"saree",
+    "custom":"custom","custom design":"custom","custom designs":"custom","tailoring":"custom","salwar":"custom"
+  };
   const categoryMap = [
     {key:"frocks", words:["frock", "frocks"]},
     {key:"lehenga", words:["lehenga", "lehengas"]},
@@ -18,9 +30,11 @@
   let activeButton = null;
 
   function normalizeCategory(value) {
-    const text = String(value || "").trim().toLowerCase();
+    const text = String(value || "").trim().toLowerCase().replace(/\\s+/g, " ");
+    if (categoryAliases[text]) return categoryAliases[text];
     const match = categoryMap.find(item => item.words.some(word => text.includes(word)));
-    return match ? match.key : "custom";
+    // Keep unknown legacy categories visible in All Designs without mislabeling them as Custom.
+    return match ? match.key : "uncategorized";
   }
 
   function applyFilter(category, selected) {
@@ -54,8 +68,10 @@
   const LIKES_KEY = "parvathi-creations-liked-designs";
   const WHATSAPP_NUMBER = "919550766784";
   function readLikedDesigns() {
-    try { return JSON.parse(localStorage.getItem(LIKES_KEY) || "[]"); }
-    catch (_) { return []; }
+    try {
+      const value = JSON.parse(localStorage.getItem(LIKES_KEY) || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch (_) { return []; }
   }
   function decorateDesignCard(card, identity, title, imageUrl) {
     if (card.dataset.actionsAdded === "true") return;
@@ -99,6 +115,10 @@
     const card = document.createElement("div");
     card.className = "collection-card uploaded-design";
     card.dataset.category = category;
+    if (category === "uncategorized") {
+      card.dataset.originalCategory = String(design.category || "");
+      card.title = "Unrecognized saved category: " + String(design.category || "(empty)");
+    }
     const img = document.createElement("img");
     img.src = design.image_url;
     img.alt = design.name || (design.category || "Parvathi Creations") + " design";
