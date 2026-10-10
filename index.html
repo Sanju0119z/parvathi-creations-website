@@ -1085,16 +1085,20 @@ function applyLanguage(language) {
 
   // The historical repository contains only one real fashion photo; use it as a fallback
   // rather than leaving broken-image icons for older referenced filenames.
+  function useFashionPhotoFallback(img) {
+    if (!img || img.dataset.fallbackTried) return;
+    if (new URL(img.src, document.baseURI).pathname.endsWith("/sareejpg.jpg")) {
+      img.style.visibility = "hidden";
+      img.setAttribute("aria-hidden", "true");
+      return;
+    }
+    img.dataset.fallbackTried = "true";
+    img.src = new URL("sareejpg.jpg", document.baseURI).href;
+  }
   document.querySelectorAll("img").forEach(img => {
-    img.addEventListener("error", function () {
-      if (!this.dataset.fallbackTried && !this.src.endsWith("/sareejpg.jpg")) {
-        this.dataset.fallbackTried = "true";
-        this.src = new URL("sareejpg.jpg", document.baseURI).href;
-      } else {
-        this.style.visibility = "hidden";
-        this.setAttribute("aria-hidden", "true");
-      }
-    });
+    img.addEventListener("error", function () { useFashionPhotoFallback(this); });
+    // Some older images fail before this script runs, so handle already-completed failures too.
+    if (img.complete && img.naturalWidth === 0) useFashionPhotoFallback(img);
   });
 
   const toggle = document.getElementById("music-toggle");
