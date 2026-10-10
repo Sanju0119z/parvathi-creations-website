@@ -56,17 +56,35 @@
     });
   }
 
+  
   function initFilters() {
     const group = document.querySelector(".gallery-filters");
     if (!group) return;
-    const buttons = [...group.querySelectorAll("button[data-filter]")];
-    buttons.forEach(button => button.addEventListener("click", event => {
+
+    if (group.dataset.filterEventsBound === "true") return;
+    group.dataset.filterEventsBound = "true";
+
+    group.addEventListener("click", function (event) {
+      const button = event.target.closest("button[data-filter]");
+      if (!button || !group.contains(button)) return;
+
       event.preventDefault();
-      applyFilter(button.dataset.filter, button);
-    }));
-    const initial = buttons.find(button => button.dataset.filter === "all") || buttons[0];
-    if (initial) applyFilter(initial.dataset.filter, initial);
+      applyFilter(button.dataset.filter || "all", button);
+    });
+
+    const buttons = Array.from(
+      group.querySelectorAll("button[data-filter]")
+    );
+
+    const initial =
+      buttons.find(button => button.dataset.filter === "all") ||
+      buttons[0];
+
+    if (initial) {
+      applyFilter(initial.dataset.filter, initial);
+    }
   }
+
 
   const LIKES_KEY = "parvathi-creations-liked-designs";
   const WHATSAPP_NUMBER = "919550766784";
