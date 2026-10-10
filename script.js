@@ -17,23 +17,18 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 
 revealOnScroll();
-// Smooth scrolling for navigation links (handles the Home link href="#")
+// Smooth scrolling for navigation links
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", function (e) {
-    const href = this.getAttribute("href");
+    e.preventDefault();
 
-    if (!href || href === "#") {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
-    const target = document.querySelector(href);
+    const target = document.querySelector(this.getAttribute("href"));
 
     if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
     }
   });
 });
@@ -155,174 +150,3 @@ document.addEventListener(
 
     }
 );
-
-/* =========================================
-   SUPABASE GALLERY
-========================================= */
-
-async function loadGalleryDesigns() {
-
-    const gallery = document.getElementById("gallery-grid");
-    const loading = document.getElementById("gallery-loading");
-    const empty = document.getElementById("gallery-empty");
-
-    if (!gallery) {
-        console.log("Gallery grid not found.");
-        return;
-    }
-
-    try {
-
-        const { data, error } = await supabaseClient
-            .from("designs")
-            .select("*")
-            .order("created_at", { ascending: false });
-
-        if (error) {
-            console.error("Supabase gallery error:", error);
-
-            if (loading) {
-                loading.textContent =
-                    "Unable to load latest designs.";
-            }
-
-            return;
-        }
-
-        if (loading) {
-            loading.style.display = "none";
-        }
-
-        if (!data || data.length === 0) {
-
-            if (empty) {
-                empty.style.display = "block";
-            }
-
-            return;
-        }
-
-        gallery.innerHTML = "";
-
-        data.forEach(function(design) {
-
-            const item = document.createElement("div");
-
-            item.className =
-                "gallery-item uploaded-design";
-
-            item.dataset.category =
-                String(design.category || "all")
-                    .toLowerCase()
-                    .trim();
-
-            const image =
-                document.createElement("img");
-
-            image.src = design.image_url;
-
-            image.alt =
-                design.name ||
-                "Parvathi Creations Design";
-
-            image.loading = "lazy";
-
-            const overlay =
-                document.createElement("div");
-
-            overlay.className =
-                "gallery-overlay";
-
-            const title =
-                document.createElement("h3");
-
-            title.textContent =
-                design.name ||
-                "Parvathi Creations Design";
-
-            const category =
-                document.createElement("p");
-
-            category.textContent =
-                design.category || "";
-
-            const button =
-                document.createElement("button");
-
-            button.textContent =
-                "View Details";
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    showDesignDetails(
-                        design.name ||
-                        "Parvathi Creations Design",
-
-                        design.description ||
-                        "Beautiful Parvathi Creations design."
-                    );
-
-                }
-            );
-
-            overlay.appendChild(title);
-            overlay.appendChild(category);
-            overlay.appendChild(button);
-
-            item.appendChild(image);
-            item.appendChild(overlay);
-
-            gallery.appendChild(item);
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Gallery loading error:",
-            error
-        );
-
-        if (loading) {
-            loading.textContent =
-                "Unable to load gallery.";
-        }
-
-    }
-}
-
-
-/* =========================================
-   START GALLERY
-========================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadGalleryDesigns();
-
-    }
-);
-
-
-/* =========================================
-   GALLERY CATEGORY FILTERS
-========================================= */
-function filterGallery(category, button) {
-    const gallery = document.getElementById("gallery-grid");
-    if (!gallery) return;
-
-    document.querySelectorAll(".gallery-filters .filter-btn").forEach((item) => {
-        item.classList.toggle("active", item === button);
-    });
-
-    const selected = String(category || "all").toLowerCase().trim();
-    gallery.querySelectorAll(".gallery-item").forEach((item) => {
-        const itemCategory = String(item.dataset.category || "all").toLowerCase().trim();
-        const visible = selected === "all" || itemCategory === selected || itemCategory.includes(selected);
-        item.style.display = visible ? "" : "none";
-    });
-}
