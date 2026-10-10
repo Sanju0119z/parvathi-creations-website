@@ -695,12 +695,12 @@ function normalizeGalleryCategory(value) {
   if (!compact || compact === "all" || compact === "alldesigns") return "all";
   if (/(saree|tassel|latkan)/.test(compact)) return "sarees";
   if (/(blouse)/.test(compact)) return "blouses";
+  if (/(computerembroidery|machineembroidery)/.test(compact)) return "computer-embroidery";
   if (/(maggam|embroidery|handwork)/.test(compact)) return "maggam";
   if (/(bridal|wedding|marriage)/.test(compact)) return "bridal";
   if (/(frock|kidswear|kidsdress)/.test(compact)) return "frocks";
   if (/(lehenga|ghagra)/.test(compact)) return "lehengas";
   if (/(custom|personalized)/.test(compact)) return "custom";
-  if (/(computerembroidery|machineembroidery)/.test(compact)) return "computer-embroidery";
   return raw;
 }
 
@@ -710,7 +710,9 @@ function filterGallery(category, button) {
   let visibleCount = 0;
 
   items.forEach(function(item) {
-    const itemCategory = normalizeGalleryCategory(item.dataset.category || "");
+    const heading = item.querySelector("h3");
+    const image = item.querySelector("img");
+    const itemCategory = normalizeGalleryCategory(item.dataset.category || (heading && heading.textContent) || (image && image.alt) || "");
     const matches = selected === "all" || itemCategory === selected;
     item.hidden = !matches;
     item.style.display = matches ? "" : "none";
