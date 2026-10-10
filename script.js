@@ -309,20 +309,39 @@ document.addEventListener(
 
 
 /* =========================================
-   GALLERY CATEGORY FILTERS
+   COLLECTION PHOTO CATEGORY FILTERS
 ========================================= */
-function filterGallery(category, button) {
-    const gallery = document.getElementById("gallery-grid");
-    if (!gallery) return;
+(function initCollectionFilters() {
+  function normalizeCategory(value) {
+    const text = String(value || "").toLowerCase().trim();
+    if (text.includes("saree") || text.includes("tassel")) return "saree";
+    if (text.includes("blouse")) return "blouse";
+    if (text.includes("bridal") || text.includes("wedding")) return "bridal";
+    if (text.includes("lehenga")) return "lehenga";
+    if (text.includes("frock") || text.includes("kids") || text.includes("child")) return "kids";
+    if (text.includes("computer") || text.includes("machine")) return "computer";
+    if (text.includes("maggam") || text.includes("embroidery") || text.includes("threadwork")) return "maggam";
+    if (text.includes("custom") || text.includes("design")) return "custom";
+    return text || "all";
+  }
 
-    document.querySelectorAll(".gallery-filters .filter-btn").forEach((item) => {
-        item.classList.toggle("active", item === button);
+  function applyFilter(category, selectedButton) {
+    const cards = document.querySelectorAll(".collection-grid .collection-card");
+    cards.forEach((card) => {
+      const actual = normalizeCategory(card.dataset.category || card.querySelector("h3")?.textContent || "");
+      const visible = category === "all" || actual === category ||
+        (category === "computer" && actual === "maggam") ||
+        (category === "custom" && actual === "blouse");
+      card.hidden = !visible;
     });
+    document.querySelectorAll(".gallery-filters .filter-btn").forEach((button) => {
+      const active = button === selectedButton;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  }
 
-    const selected = String(category || "all").toLowerCase().trim();
-    gallery.querySelectorAll(".gallery-item").forEach((item) => {
-        const itemCategory = String(item.dataset.category || "all").toLowerCase().trim();
-        const visible = selected === "all" || itemCategory === selected || itemCategory.includes(selected);
-        item.style.display = visible ? "" : "none";
-    });
-}
+  document.querySelectorAll(".gallery-filters .filter-btn").forEach((button) => {
+    button.addEventListener("click", () => applyFilter(button.dataset.filter || "all", button));
+  });
+})();
