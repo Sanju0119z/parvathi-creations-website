@@ -365,62 +365,26 @@
     Explore our latest designs and handmade creations.
   </p>
 
-<div class="gallery-filters">
-    <button class="filter-btn active" onclick="filterGallery('all', this)">
-        All
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Sarees', this)">
-        Sarees
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Blouse', this)">
-        Blouses
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Maggam Work', this)">
-        Maggam
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Bridal Wear', this)">
-        Bridal
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Frocks', this)">
-        Frocks
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Lehengas', this)">
-        Lehengas
-    </button>
-</div><div class="gallery-filters">
-    <button class="filter-btn active" onclick="filterGallery('all', this)">
-        All
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Sarees', this)">
-        Sarees
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Blouse', this)">
-        Blouses
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Maggam Work', this)">
-        Maggam
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Bridal Wear', this)">
-        Bridal
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Frocks', this)">
-        Frocks
-    </button>
-
-    <button class="filter-btn" onclick="filterGallery('Lehengas', this)">
-        Lehengas
-    </button>
+<div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
+</div><div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
 </div>
   <div class="gallery-container">
     <div class="gallery-item">
@@ -458,15 +422,17 @@
   </div>
 
   <!-- Gallery Filters -->
-  <div class="gallery-filters">
-    <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
-    <button class="filter-btn" onclick="filterGallery('sarees', this)">Sarees</button>
-    <button class="filter-btn" onclick="filterGallery('blouses', this)">Blouses</button>
-    <button class="filter-btn" onclick="filterGallery('maggam', this)">Maggam</button>
-    <button class="filter-btn" onclick="filterGallery('bridal', this)">Bridal</button>
-    <button class="filter-btn" onclick="filterGallery('frocks', this)">Frocks</button>
-    <button class="filter-btn" onclick="filterGallery('lehengas', this)">Lehengas</button>
-  </div>
+  <div class="gallery-filters" role="group" aria-label="Filter designs by category">
+  <button type="button" class="filter-btn active" aria-pressed="true" onclick="filterGallery('all', this)">All Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('sarees', this)">Sarees &amp; Tassels</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('blouses', this)">Blouse Designs</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('maggam', this)">Maggam Work</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('bridal', this)">Bridal Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('frocks', this)">Frocks &amp; Kids Wear</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('lehengas', this)">Lehengas</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('computer-embroidery', this)">Computer Embroidery</button>
+  <button type="button" class="filter-btn" aria-pressed="false" onclick="filterGallery('custom', this)">Custom Designs</button>
+</div>
 
   <!-- Gallery Grid -->
   <div id="gallery-grid" class="gallery-grid">
@@ -723,58 +689,52 @@ async function loadGalleryDesigns() {
    GALLERY FILTER
    ========================================= */
 
+function normalizeGalleryCategory(value) {
+  const raw = String(value || "").toLowerCase().trim();
+  const compact = raw.replace(/[^a-z0-9]/g, "");
+  if (!compact || compact === "all" || compact === "alldesigns") return "all";
+  if (/(saree|tassel|latkan)/.test(compact)) return "sarees";
+  if (/(blouse)/.test(compact)) return "blouses";
+  if (/(maggam|embroidery|handwork)/.test(compact)) return "maggam";
+  if (/(bridal|wedding|marriage)/.test(compact)) return "bridal";
+  if (/(frock|kidswear|kidsdress)/.test(compact)) return "frocks";
+  if (/(lehenga|ghagra)/.test(compact)) return "lehengas";
+  if (/(custom|personalized)/.test(compact)) return "custom";
+  if (/(computerembroidery|machineembroidery)/.test(compact)) return "computer-embroidery";
+  return raw;
+}
+
 function filterGallery(category, button) {
-
-  const items =
-    document.querySelectorAll(".gallery-item");
-
-  const buttons =
-    document.querySelectorAll(".filter-btn");
-
-  buttons.forEach(function(btn) {
-    btn.classList.remove("active");
-  });
-
-  if (button) {
-    button.classList.add("active");
-  }
-
+  const selected = normalizeGalleryCategory(category);
+  const items = document.querySelectorAll(".gallery-item");
   let visibleCount = 0;
 
   items.forEach(function(item) {
-
-    const itemCategory =
-      String(item.dataset.category || "")
-        .toLowerCase()
-        .trim();
-
-    if (
-      category === "all" ||
-      itemCategory === category
-    ) {
-
-      item.style.display = "";
-
-      visibleCount++;
-
-    } else {
-
-      item.style.display = "none";
-
-    }
-
+    const itemCategory = normalizeGalleryCategory(item.dataset.category || "");
+    const matches = selected === "all" || itemCategory === selected;
+    item.hidden = !matches;
+    item.style.display = matches ? "" : "none";
+    if (matches) visibleCount++;
   });
 
-  const empty =
-    document.getElementById("gallery-empty");
-
-  if (empty) {
-    empty.style.display =
-      visibleCount === 0 ? "block" : "none";
+  const filterBar = button && button.closest(".gallery-filters");
+  if (filterBar) {
+    filterBar.querySelectorAll(".filter-btn").forEach(function(btn) {
+      const active = btn === button;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
   }
 
+  document.querySelectorAll(".gallery-empty").forEach(function(empty) {
+    empty.style.display = visibleCount === 0 ? "block" : "none";
+  });
+  const empty = document.getElementById("gallery-empty");
+  if (empty) {
+    empty.style.display = visibleCount === 0 ? "block" : "none";
+    if (visibleCount === 0) empty.textContent = "No designs in this category yet.";
+  }
 }
-
 
 /* =========================================
    START GALLERY
