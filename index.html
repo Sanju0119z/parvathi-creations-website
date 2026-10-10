@@ -597,10 +597,15 @@ async function loadGalleryDesigns() {
       image.alt = design.name || "Parvathi Creations Design";
       image.loading = "lazy";
       image.addEventListener("error", function () {
-        if (!this.dataset.fallbackTried && !this.src.endsWith("/sareejpg.jpg")) {
+        if (!this.dataset.fallbackTried && !new URL(this.src, document.baseURI).pathname.endsWith("/sareejpg.jpg")) {
           this.dataset.fallbackTried = "true";
           this.src = new URL("sareejpg.jpg", document.baseURI).href;
+          return;
         }
+        // Never leave a broken-image glyph in the gallery if the source and fallback both fail.
+        this.style.display = "none";
+        this.setAttribute("aria-hidden", "true");
+        item.classList.add("image-unavailable");
       });
 
       const overlay = document.createElement("div");
@@ -1146,7 +1151,17 @@ function applyLanguage(language) {
     });
   }
   document.querySelectorAll("img").forEach(img => {
-    img.addEventListener("error", function () { useFashionPhotoFallback(this); });
+    img.addEventListener("error", function () {
+      useFashionPhotoFallback(this);
+      if (this.dataset.fallbackTried && new URL(this.src, document.baseURI).pathname.endsWith("/sareejpg.jpg")) {
+        // If the fallback also fails, hide the broken icon rather than showing a broken image.
+        this.addEventListener("error", function hideFailedFallback() {
+          this.style.display = "none";
+          this.setAttribute("aria-hidden", "true");
+          this.removeEventListener("error", hideFailedFallback);
+        }, { once: true });
+      }
+    });
   });
   // A legacy image may fail before this script executes; re-check after the browser finishes loading.
   window.addEventListener("load", repairBrokenImages, { once: true });
