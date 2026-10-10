@@ -3,14 +3,15 @@
   const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs";
   const categoryMap = [
-    {key:"saree", words:["saree","tassel"]},
+    {key:"saree", words:["saree", "tassel"]},
     {key:"blouse", words:["blouse"]},
-    {key:"maggam", words:["maggam","thread work"]},
-    {key:"bridal", words:["bridal","wedding"]},
-    {key:"kids", words:["frock","kid","children"]},
+    {key:"maggam", words:["maggam", "thread work"]},
+    {key:"bridal", words:["bridal", "wedding"]},
+    {key:"frocks", words:["frock"]},
+    {key:"kids", words:["kids wear", "kid wear", "children wear", "kids", "children"]},
     {key:"lehenga", words:["lehenga"]},
-    {key:"computer", words:["computer","embroidery"]},
-    {key:"custom", words:["custom","tailoring"]}
+    {key:"computer", words:["computer", "embroidery"]},
+    {key:"custom", words:["custom", "tailoring"]}
   ];
   let activeCategory = "all";
   let activeButton = null;
@@ -56,7 +57,7 @@
     card.className = "collection-card uploaded-design";
     card.dataset.category = category;
     card.href = "#contact";
-    card.setAttribute("aria-label", (design.name || design.category || "Design") + " — ask about this design");
+    card.setAttribute("aria-label", (design.name || design.category || "Design") + " â ask about this design");
 
     const img = document.createElement("img");
     img.src = design.image_url;
@@ -74,7 +75,7 @@
     const heading = document.createElement("h3");
     heading.textContent = design.name || design.category || "New Design";
     const arrow = document.createElement("span");
-    arrow.textContent = "↗";
+    arrow.textContent = "â";
     label.append(heading, arrow);
     card.append(img, number, label);
     return card;

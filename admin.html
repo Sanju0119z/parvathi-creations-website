@@ -872,6 +872,10 @@
                                     Frocks
                                 </option>
 
+                                <option value="Kids Wear">
+                                    Kids Wear
+                                </option>
+
                                 <option value="Lehengas">
                                     Lehengas
                                 </option>
@@ -888,7 +892,7 @@
                         <div class="form-group">
 
                             <label for="designPrice">
-                                Price (₹)
+                                Price (â¹)
                             </label>
 
                             <input
@@ -1639,21 +1643,21 @@
 
                     codeCell.textContent =
                         design.design_code ||
-                        "—";
+                        "â";
 
 
                     const nameCell =
                         document.createElement("td");
 
                     nameCell.textContent =
-                        design.name || "—";
+                        design.name || "â";
 
 
                     const categoryCell =
                         document.createElement("td");
 
                     categoryCell.textContent =
-                        design.category || "—";
+                        design.category || "â";
 
 
                     const priceCell =
@@ -1673,7 +1677,7 @@
                     if (design.featured) {
 
                         statusHTML +=
-                            '<span class="status status-featured">★ Featured</span> ';
+                            '<span class="status status-featured">â Featured</span> ';
 
                     }
 
@@ -1834,11 +1838,11 @@
 
             if (Number.isNaN(number)) {
 
-                return "₹" + price;
+                return "â¹" + price;
 
             }
 
-            return "₹" +
+            return "â¹" +
                 number.toLocaleString(
                     "en-IN",
                     {
