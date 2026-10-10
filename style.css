@@ -582,16 +582,7 @@ section {
         transform: rotate(360deg);
     }
 }
-  animation: spin 1s linear infinite;
-}
 
-@keyframes spin {
-
-  to {
-    transform: rotate(360deg);
-  }
-
-}
 .logo img {
   height: 70px;
   width: auto;
