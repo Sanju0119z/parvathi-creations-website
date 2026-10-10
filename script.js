@@ -8,7 +8,7 @@
     {key:"designer", words:["designer wear", "designerwear", "designer outfit", "designer outfits"]},
     {key:"blouse", words:["blouse", "blouses"]},
     {key:"maggam", words:["maggam", "thread work", "hand embroidery"]},
-    {key:"computer", words:["computer embroidery", "computerized embroidery", "computerised embroidery", "machine embroidery"]},
+    {key:"computer", words:["computer work", "computer embroidery", "computerized embroidery", "computerised embroidery", "computerized work", "computerised work", "machine embroidery"]},
     {key:"bridal", words:["bridal", "wedding", "occasionwear", "occasion wear"]},
     {key:"kids", words:["kids wear", "kid wear", "children wear", "kids", "children"]},
     {key:"saree", words:["saree", "tassel", "sarees"]},
