@@ -670,6 +670,20 @@ async function loadGalleryDesigns() {
 
       // Assign the remote URL only after the element and its error handler are in the DOM.
       image.src = design.image_url || "sareejpg.jpg";
+      // Some storage/CDN failures do not reliably dispatch an error event in embedded browsers.
+      // Recheck completed failures once and fall back to a repository-owned image.
+      window.setTimeout(function () {
+        if (image.isConnected && image.complete && image.naturalWidth === 0) {
+          if (!image.dataset.fallbackTried) {
+            image.dataset.fallbackTried = "true";
+            image.src = new URL("sareejpg.jpg", document.baseURI).href;
+          } else {
+            image.style.display = "none";
+            image.setAttribute("aria-hidden", "true");
+            item.classList.add("image-unavailable");
+          }
+        }
+      }, 5000);
 
     });
 
