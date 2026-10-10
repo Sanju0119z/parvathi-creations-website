@@ -1095,11 +1095,17 @@ function applyLanguage(language) {
     img.dataset.fallbackTried = "true";
     img.src = new URL("sareejpg.jpg", document.baseURI).href;
   }
+  function repairBrokenImages() {
+    document.querySelectorAll("img").forEach(img => {
+      if (img.complete && img.naturalWidth === 0) useFashionPhotoFallback(img);
+    });
+  }
   document.querySelectorAll("img").forEach(img => {
     img.addEventListener("error", function () { useFashionPhotoFallback(this); });
-    // Some older images fail before this script runs, so handle already-completed failures too.
-    if (img.complete && img.naturalWidth === 0) useFashionPhotoFallback(img);
   });
+  // A legacy image may fail before this script executes; re-check after the browser finishes loading.
+  window.addEventListener("load", repairBrokenImages, { once: true });
+  window.setTimeout(repairBrokenImages, 1800);
 
   const toggle = document.getElementById("music-toggle");
   const slider = document.getElementById("music-volume");
