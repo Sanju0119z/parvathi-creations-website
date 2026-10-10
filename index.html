@@ -863,6 +863,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
+<!-- Optional boutique ambience controls; starts OFF and requires a user tap. -->
+<div id="music-controls" aria-label="Optional background music">
+  <button id="music-toggle" type="button" aria-pressed="false">♫ Music: Off</button>
+  <label for="music-volume">Volume</label>
+  <input id="music-volume" type="range" min="0" max="100" value="18" aria-label="Music volume">
+</div>
+
 <!-- Footer -->
 
 <footer>
@@ -1054,5 +1062,86 @@ function applyLanguage(language) {
 }
 
 </script>
+
+<script>
+/* Accessible menu + optional generated ambient tones (no external audio or autoplay). */
+(function () {
+  const menu = document.getElementById("side-menu");
+  const overlay = document.getElementById("menu-overlay");
+  const openButton = document.getElementById("menu-toggle");
+  const closeButton = document.getElementById("menu-close");
+  function setMenu(open) {
+    if (!menu || !overlay) return;
+    menu.classList.toggle("open", open);
+    overlay.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    if (openButton) openButton.setAttribute("aria-expanded", String(open));
+  }
+  if (openButton) openButton.addEventListener("click", () => setMenu(true));
+  if (closeButton) closeButton.addEventListener("click", () => setMenu(false));
+  if (overlay) overlay.addEventListener("click", () => setMenu(false));
+  if (menu) menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+  const toggle = document.getElementById("music-toggle");
+  const slider = document.getElementById("music-volume");
+  if (!toggle || !slider) return;
+  let context = null, master = null, timer = null, noteIndex = 0, playing = false;
+  let volume = Number(localStorage.getItem("parvathiMusicVolume"));
+  if (!Number.isFinite(volume)) volume = 18;
+  volume = Math.max(0, Math.min(100, volume));
+  slider.value = String(volume);
+  const sequence = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
+  function playNote() {
+    if (!playing || !context || !master) return;
+    const osc = context.createOscillator();
+    const gain = context.createGain();
+    const now = context.currentTime;
+    osc.type = "sine";
+    osc.frequency.value = sequence[noteIndex++ % sequence.length];
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, volume / 100 * 0.025), now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
+    osc.connect(gain); gain.connect(master);
+    osc.start(now); osc.stop(now + 1.2);
+  }
+  function setPlaying(next) {
+    playing = next;
+    if (playing) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        toggle.textContent = "Music unavailable";
+        toggle.setAttribute("aria-pressed", "false");
+        playing = false;
+        return;
+      }
+      context = context || new AudioContextClass();
+      if (context.state === "suspended") context.resume();
+      master = master || context.createGain();
+      master.gain.value = 1;
+      master.connect(context.destination);
+      playNote();
+      timer = window.setInterval(playNote, 1250);
+      toggle.textContent = "♫ Music: On";
+      toggle.setAttribute("aria-pressed", "true");
+      localStorage.setItem("parvathiMusicChoice", "on");
+    } else {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      if (master && context) master.gain.setTargetAtTime(0, context.currentTime, 0.04);
+      toggle.textContent = "♫ Music: Off";
+      toggle.setAttribute("aria-pressed", "false");
+      localStorage.setItem("parvathiMusicChoice", "off");
+    }
+  }
+  slider.addEventListener("input", () => {
+    volume = Number(slider.value);
+    localStorage.setItem("parvathiMusicVolume", String(volume));
+  });
+  toggle.addEventListener("click", () => setPlaying(!playing));
+  // Music intentionally starts OFF on every visit; saved volume is retained.
+})();
+</script>
+
 </body>
 </html>
