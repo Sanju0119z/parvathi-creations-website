@@ -535,4 +535,15 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
+  window.changeLanguage = function (language) {
+  localStorage.setItem("parvathiLanguage", language);
+  document.documentElement.lang = language;
+
+  document.querySelectorAll("[data-en]").forEach(function (element) {
+    const text = element.getAttribute("data-" + language);
+    if (text !== null) {
+      element.textContent = text;
+    }
+  });
+};
 })();
