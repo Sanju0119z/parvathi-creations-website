@@ -563,6 +563,7 @@ const pcTranslations = {
   }
 };
 
+  
 window.changeLanguage = function (language) {
   const translations = pcTranslations[language];
   if (!translations) return;
@@ -574,11 +575,23 @@ window.changeLanguage = function (language) {
   const keys = ["home", "collection", "craft", "services", "contact"];
 
   nav.forEach(function (element, index) {
-    if (keys[index]) element.textContent = translations[keys[index]];
+    if (keys[index]) {
+      element.textContent = translations[keys[index]];
+    }
   });
 
   const enquire = document.querySelector(".header-cta");
-  if (enquire) enquire.firstChild.textContent = translations.enquire;
+  if (enquire) {
+    enquire.firstChild.textContent = translations.enquire;
+  }
+
+  document.querySelectorAll("[data-en]").forEach(function (element) {
+    const translated = element.getAttribute("data-" + language);
+    if (translated !== null) {
+      element.textContent = translated;
+    }
+  });
 };
+
 
 })();
