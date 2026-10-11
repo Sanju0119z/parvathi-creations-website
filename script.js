@@ -535,15 +535,50 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
-  window.changeLanguage = function (language) {
+
+const pcTranslations = {
+  en: {
+    home: "Home",
+    collection: "Collection",
+    craft: "Our Craft",
+    services: "Services",
+    contact: "Contact",
+    enquire: "Enquire"
+  },
+  te: {
+    home: "హోమ్",
+    collection: "కలెక్షన్",
+    craft: "మా కళ",
+    services: "సేవలు",
+    contact: "సంప్రదించండి",
+    enquire: "విచారించండి"
+  },
+  hi: {
+    home: "होम",
+    collection: "कलेक्शन",
+    craft: "हमारी कला",
+    services: "सेवाएँ",
+    contact: "संपर्क",
+    enquire: "पूछताछ करें"
+  }
+};
+
+window.changeLanguage = function (language) {
+  const translations = pcTranslations[language];
+  if (!translations) return;
+
   localStorage.setItem("parvathiLanguage", language);
   document.documentElement.lang = language;
 
-  document.querySelectorAll("[data-en]").forEach(function (element) {
-    const text = element.getAttribute("data-" + language);
-    if (text !== null) {
-      element.textContent = text;
-    }
+  const nav = document.querySelectorAll(".main-nav a");
+  const keys = ["home", "collection", "craft", "services", "contact"];
+
+  nav.forEach(function (element, index) {
+    if (keys[index]) element.textContent = translations[keys[index]];
   });
+
+  const enquire = document.querySelector(".header-cta");
+  if (enquire) enquire.firstChild.textContent = translations.enquire;
 };
+
 })();
