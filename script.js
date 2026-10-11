@@ -38,6 +38,8 @@
   const cats = window.PCCategories;
   const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, status: "loading" };
   let loading = false;
+  let heroSlideIndex = 0;
+  let heroSlideTimer = null;
   const el = {};
 
   /* ---------- Data preparation ---------- */
@@ -342,6 +344,65 @@
     el.grid.append(frag);
   }
 
+
+  /* ---------- Homepage hero slider: only real Supabase design uploads ---------- */
+  function initHeroSlider(designs) {
+    const root = document.getElementById("heroSlider");
+    const image = document.getElementById("heroSlideImage");
+    const name = document.getElementById("heroSlideName");
+    const category = document.getElementById("heroSlideCategory");
+    const dots = document.getElementById("heroSlideDots");
+    const count = document.getElementById("heroSlideCount");
+    if (!root || !image || !dots) return;
+    if (heroSlideTimer) { window.clearInterval(heroSlideTimer); heroSlideTimer = null; }
+    const slides = (Array.isArray(designs) ? designs : []).filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
+    if (!slides.length) { root.hidden = true; return; }
+    root.hidden = false;
+    heroSlideIndex = Math.min(heroSlideIndex, slides.length - 1);
+    dots.replaceChildren();
+    slides.forEach((design, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "hero-slide-dot";
+      dot.setAttribute("aria-label", "Show design " + (index + 1) + ": " + (design.name || design.categoryLabel || "Boutique design"));
+      dot.addEventListener("click", () => { heroSlideIndex = index; showSlide(); restartTimer(); });
+      dots.append(dot);
+    });
+    function showSlide() {
+      const design = slides[heroSlideIndex];
+      image.src = design.imageUrl;
+      image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" — ");
+      name.textContent = design.name || design.categoryLabel || "A design made with care";
+      category.textContent = design.categoryLabel || "Parvathi Creations";
+      count.textContent = String(heroSlideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+      Array.from(dots.children).forEach((dot, index) => {
+        dot.classList.toggle("active", index === heroSlideIndex);
+        if (index === heroSlideIndex) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      const multiple = slides.length > 1;
+      root.classList.toggle("is-single", !multiple);
+    }
+    function move(step) { heroSlideIndex = (heroSlideIndex + step + slides.length) % slides.length; showSlide(); }
+    const prev = document.getElementById("heroSlidePrev");
+    const next = document.getElementById("heroSlideNext");
+    if (prev) prev.onclick = () => { move(-1); restartTimer(); };
+    if (next) next.onclick = () => { move(1); restartTimer(); };
+    function restartTimer() {
+      if (heroSlideTimer) window.clearInterval(heroSlideTimer);
+      heroSlideTimer = null;
+      if (slides.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        heroSlideTimer = window.setInterval(() => move(1), 5500);
+      }
+    }
+    root.addEventListener("mouseenter", () => { if (heroSlideTimer) window.clearInterval(heroSlideTimer); heroSlideTimer = null; });
+    root.addEventListener("mouseleave", restartTimer);
+    root.addEventListener("focusin", () => { if (heroSlideTimer) window.clearInterval(heroSlideTimer); heroSlideTimer = null; });
+    root.addEventListener("focusout", restartTimer);
+    showSlide();
+    restartTimer();
+  }
+
   /* ---------- Loading from Supabase ---------- */
   async function loadDesigns() {
     if (loading) return;
@@ -359,6 +420,7 @@
       if (noImage.length) console.warn("Parvathi Creations: designs skipped (no valid image URL), ids:", noImage.join(", "));
       if (odd.length) console.warn("Parvathi Creations: designs with an unrecognised category are shown only under All Designs, ids:", odd.join(", "));
       state.designs = all.filter(d => !d.hidden && d.imageUrl);
+      initHeroSlider(state.designs);
       state.status = "ready";
     } catch (error) {
       console.error("Parvathi Creations: could not load designs.", error);
