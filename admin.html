@@ -556,7 +556,17 @@
                 padding: 22px;
             }
         }
-    </style>
+    
+        .multi-image-help{display:block;margin-top:7px;color:#777;line-height:1.6}
+        .multi-image-preview{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+        .multi-image-item{position:relative;border:1px solid #e5d8d4;border-radius:10px;padding:7px;background:#fff;min-width:0}
+        .multi-image-item img{display:block;width:100%;height:120px;object-fit:cover;border-radius:6px}
+        .multi-image-cover{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:12px;font-weight:600;color:#70283b}
+        .multi-image-cover input{accent-color:#70283b}
+        .multi-image-badge{position:absolute;top:12px;left:12px;background:#70283b;color:#fff;border-radius:20px;padding:4px 7px;font-size:10px}
+        @media(max-width:480px){.multi-image-preview{grid-template-columns:repeat(2,minmax(0,1fr))}.multi-image-item img{height:130px}}
+
+</style>
 </head>
 
 <body>
@@ -936,16 +946,11 @@
                             type="file"
                             id="designImage"
                             accept="image/*"
+                            multiple
                         >
 
-                        <small
-                            style="
-                                display:block;
-                                margin-top:7px;
-                                color:#777;
-                            "
-                        >
-                            Required for a new design. Optional when editing.
+                        <small class="multi-image-help">
+                            Choose 1–6 photos for this design. Select one as the cover photo; it appears first on the website. When editing, leave this empty to keep the existing photos.
                         </small>
 
                         <div
@@ -955,9 +960,10 @@
                             <img
                                 id="previewImage"
                                 src=""
-                                alt="Image preview"
+                                alt="Current cover photo"
                             >
                         </div>
+                        <div id="multiImagePreview" class="multi-image-preview" aria-live="polite"></div>
 
                     </div>
 
@@ -1383,56 +1389,69 @@
            IMAGE PREVIEW
            ========================================= */
 
-        designImage.addEventListener(
-            "change",
-            function() {
+        const multiImagePreview = document.getElementById("multiImagePreview");
+        let selectedCoverIndex = 0;
 
-                const file =
-                    designImage.files[0];
+        designImage.addEventListener("change", function() {
+            const files = Array.from(designImage.files || []);
+            multiImagePreview.replaceChildren();
+            selectedCoverIndex = 0;
 
-                if (!file) {
-
-                    imagePreview.style.display =
-                        "none";
-
-                    previewImage.src = "";
-
-                    return;
-
-                }
-
-                if (!file.type.startsWith("image/")) {
-
-                    showMessage(
-                        adminMessage,
-                        "Please select an image file.",
-                        "error"
-                    );
-
-                    designImage.value = "";
-
-                    return;
-
-                }
-
-                const reader =
-                    new FileReader();
-
-                reader.onload =
-                    function(event) {
-
-                        previewImage.src =
-                            event.target.result;
-
-                        imagePreview.style.display =
-                            "block";
-
-                    };
-
-                reader.readAsDataURL(file);
-
+            if (!files.length) {
+                multiImagePreview.style.display = "none";
+                imagePreview.style.display = editingId.value ? "block" : "none";
+                return;
             }
-        );
+
+            if (files.length > 6) {
+                showMessage(adminMessage, "Choose no more than 6 photos for one design.", "error");
+                designImage.value = "";
+                multiImagePreview.style.display = "none";
+                return;
+            }
+
+            if (files.some(file => !file.type.startsWith("image/"))) {
+                showMessage(adminMessage, "Please select image files only.", "error");
+                designImage.value = "";
+                multiImagePreview.style.display = "none";
+                return;
+            }
+
+            imagePreview.style.display = "none";
+            multiImagePreview.style.display = "grid";
+            files.forEach((file, index) => {
+                const item = document.createElement("div");
+                item.className = "multi-image-item";
+                const badge = document.createElement("span");
+                badge.className = "multi-image-badge";
+                badge.textContent = index === selectedCoverIndex ? "Cover photo" : "Photo " + (index + 1);
+                const img = document.createElement("img");
+                img.alt = "Selected design photo " + (index + 1);
+                const reader = new FileReader();
+                reader.onload = event => { img.src = event.target.result; };
+                reader.readAsDataURL(file);
+                const label = document.createElement("label");
+                label.className = "multi-image-cover";
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "designCoverPhoto";
+                radio.value = String(index);
+                radio.checked = index === selectedCoverIndex;
+                radio.setAttribute("aria-label", "Use photo " + (index + 1) + " as cover");
+                radio.addEventListener("change", () => {
+                    selectedCoverIndex = index;
+                    multiImagePreview.querySelectorAll(".multi-image-item").forEach((node, itemIndex) => {
+                        const itemBadge = node.querySelector(".multi-image-badge");
+                        if (itemBadge) itemBadge.textContent = itemIndex === index ? "Cover photo" : "Photo " + (itemIndex + 1);
+                    });
+                });
+                const labelText = document.createElement("span");
+                labelText.textContent = "Use as cover";
+                label.append(radio, labelText);
+                item.append(badge, img, label);
+                multiImagePreview.append(item);
+            });
+        });
 
 
         /* =========================================
@@ -1887,8 +1906,8 @@
                 const description =
                     designDescription.value.trim();
 
-                const imageFile =
-                    designImage.files[0];
+                const imageFiles =
+                    Array.from(designImage.files || []);
 
                 const featured =
                     designFeatured.checked;
@@ -1920,7 +1939,7 @@
                 }
 
 
-                if (!id && !imageFile) {
+                if (!id && !imageFiles.length) {
 
                     showMessage(
                         adminMessage,
@@ -1944,77 +1963,27 @@
                 try {
 
                     let imageUrl = null;
+                    let imageUrls = null;
 
-
-                    /* =================================
-                       UPLOAD NEW IMAGE
-                       ================================= */
-
-                    if (imageFile) {
-
-                        const safeName =
-                            imageFile.name
-                                .toLowerCase()
-                                .replace(
-                                    /[^a-z0-9.]+/g,
-                                    "-"
-                                );
-
-                        const uniqueName =
-                            Date.now() +
-                            "-" +
-                            Math.random()
-                                .toString(36)
-                                .substring(2, 8) +
-                            "-" +
-                            safeName;
-
-                        const filePath =
-                            "designs/" +
-                            uniqueName;
-
-
-                        const {
-                            error:
-                            uploadError
-                        } =
-                        await supabaseClient
-                            .storage
-                            .from("design-images")
-                            .upload(
-                                filePath,
-                                imageFile,
-                                {
-                                    cacheControl:
-                                        "3600",
-                                    upsert:
-                                        false
-                                }
-                            );
-
-
-                        if (uploadError) {
-                            throw uploadError;
+                    /* Upload every selected photo; put the chosen cover first. */
+                    if (imageFiles.length) {
+                        const uploadedUrls = [];
+                        for (const imageFile of imageFiles) {
+                            const safeName = imageFile.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
+                            const uniqueName = Date.now() + "-" + Math.random().toString(36).substring(2, 8) + "-" + safeName;
+                            const filePath = "designs/" + uniqueName;
+                            const { error: uploadError } = await supabaseClient.storage
+                                .from("design-images")
+                                .upload(filePath, imageFile, { cacheControl: "3600", upsert: false });
+                            if (uploadError) throw uploadError;
+                            const { data: publicData } = supabaseClient.storage
+                                .from("design-images")
+                                .getPublicUrl(filePath);
+                            uploadedUrls.push(publicData.publicUrl);
                         }
-
-
-                        const {
-                            data:
-                            publicData
-                        } =
-                        supabaseClient
-                            .storage
-                            .from(
-                                "design-images"
-                            )
-                            .getPublicUrl(
-                                filePath
-                            );
-
-
-                        imageUrl =
-                            publicData.publicUrl;
-
+                        const coverIndex = Math.min(selectedCoverIndex, uploadedUrls.length - 1);
+                        imageUrl = uploadedUrls[coverIndex];
+                        imageUrls = [imageUrl, ...uploadedUrls.filter((url, index) => index !== coverIndex)];
                     }
 
 
@@ -2060,10 +2029,8 @@
 
 
                     if (imageUrl) {
-
-                        designData.image_url =
-                            imageUrl;
-
+                        designData.image_url = imageUrl;
+                        designData.image_urls = imageUrls;
                     }
 
 
@@ -2210,19 +2177,14 @@
                 design.featured === true;
 
 
+            multiImagePreview.replaceChildren();
+            multiImagePreview.style.display = "none";
+            designImage.value = "";
             if (design.image_url) {
-
-                previewImage.src =
-                    design.image_url;
-
-                imagePreview.style.display =
-                    "block";
-
+                previewImage.src = design.image_url;
+                imagePreview.style.display = "block";
             } else {
-
-                imagePreview.style.display =
-                    "none";
-
+                imagePreview.style.display = "none";
             }
 
 
@@ -2281,6 +2243,9 @@
                 "none";
 
             previewImage.src = "";
+            multiImagePreview.replaceChildren();
+            multiImagePreview.style.display = "none";
+            selectedCoverIndex = 0;
 
         }
 

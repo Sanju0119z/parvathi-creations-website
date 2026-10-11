@@ -49,7 +49,15 @@
   }
 
   function toDesign(row) {
-    const imageUrl = cleanText(row && row.image_url);
+    let savedImages = row && row.image_urls;
+    if (typeof savedImages === "string") {
+      try { savedImages = JSON.parse(savedImages); } catch (_) { savedImages = []; }
+    }
+    if (!Array.isArray(savedImages)) savedImages = [];
+    const galleryImages = [...new Set(savedImages.map(cleanText).filter(url => /^https?:\/\//i.test(url)))];
+    const storedCover = cleanText(row && row.image_url);
+    const imageUrl = /^https?:\/\//i.test(storedCover) ? storedCover : (galleryImages[0] || "");
+    if (imageUrl && !galleryImages.includes(imageUrl)) galleryImages.unshift(imageUrl);
     const name = cleanText(row && row.name);
     const categoryRaw = cleanText(row && row.category);
     const key = cats.keyFor(categoryRaw);
@@ -62,7 +70,8 @@
       description: cleanText(row && row.description),
       code: cleanText(row && row.design_code),
       price: cleanText(row && row.price),
-      imageUrl: /^https?:\/\//i.test(imageUrl) ? imageUrl : "",
+      imageUrl: imageUrl,
+      galleryImages: galleryImages.length ? galleryImages : (imageUrl ? [imageUrl] : []),
       featured: !!row && isFeatured(row.featured),
       hidden: !!row && row.hidden === true,
       created: row && row.created_at ? (Date.parse(row.created_at) || 0) : 0,
@@ -137,10 +146,39 @@
     const onKeyDown = event => { if (event.key === "Escape") closeDialog(); };
     close.addEventListener("click", closeDialog);
 
+    const media = document.createElement("div");
+    media.className = "design-details-media";
     const photo = document.createElement("img");
     photo.className = "design-details-photo";
     photo.src = design.imageUrl;
     photo.alt = design.name || design.categoryLabel + " design";
+    media.append(photo);
+    const galleryImages = Array.isArray(design.galleryImages) ? design.galleryImages : [design.imageUrl];
+    if (galleryImages.length > 1) {
+      const thumbnails = document.createElement("div");
+      thumbnails.className = "design-details-thumbnails";
+      galleryImages.slice(0, 6).forEach((url, index) => {
+        const thumb = document.createElement("button");
+        thumb.type = "button";
+        thumb.className = "design-details-thumbnail" + (url === design.imageUrl ? " is-active" : "");
+        thumb.setAttribute("aria-label", (index === 0 ? "Cover photo" : "Photo " + (index + 1)));
+        thumb.setAttribute("aria-pressed", url === design.imageUrl ? "true" : "false");
+        const thumbImage = document.createElement("img");
+        thumbImage.src = url;
+        thumbImage.alt = "";
+        thumb.addEventListener("click", () => {
+          photo.src = url;
+          thumbnails.querySelectorAll(".design-details-thumbnail").forEach(button => {
+            const active = button === thumb;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+        });
+        thumb.append(thumbImage);
+        thumbnails.append(thumb);
+      });
+      media.append(thumbnails);
+    }
     const info = document.createElement("div");
     info.className = "design-details-info";
     const category = document.createElement("p");
@@ -170,7 +208,7 @@
     enquire.textContent = TEXT.enquire;
     enquire.addEventListener("click", () => openWhatsAppApp(design));
     info.append(enquire);
-    dialog.append(close, photo, info);
+    dialog.append(close, media, info);
     overlay.append(dialog);
     overlay.addEventListener("click", event => { if (event.target === overlay) closeDialog(); });
     document.addEventListener("keydown", onKeyDown);
