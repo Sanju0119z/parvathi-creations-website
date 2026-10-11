@@ -61,6 +61,7 @@
       categoryLabel: key === cats.UNCATEGORIZED ? (categoryRaw || "Other") : cats.labelFor(key),
       description: cleanText(row && row.description),
       code: cleanText(row && row.design_code),
+      price: cleanText(row && row.price),
       imageUrl: /^https?:\/\//i.test(imageUrl) ? imageUrl : "",
       featured: !!row && isFeatured(row.featured),
       hidden: !!row && row.hidden === true,
@@ -103,9 +104,78 @@
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
     const parts = ["Hello Parvathi Creations! I\u2019m interested in this design: " + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
     if (design.code) parts.push("Design code: " + design.code + ".");
+    if (design.price) parts.push("Price: ₹" + design.price);
+    if (design.description) parts.push("Description: " + design.description);
     parts.push("Image: " + design.imageUrl);
     parts.push("Please share details.");
     window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" ")), "_blank", "noopener,noreferrer");
+  }
+
+  /* ---------- Photo details dialog ---------- */
+  function openDesignDetails(design) {
+    const existing = document.querySelector(".design-details-overlay");
+    if (existing) existing.remove();
+
+    const overlay = document.createElement("div");
+    overlay.className = "design-details-overlay";
+    overlay.setAttribute("role", "presentation");
+    const dialog = document.createElement("section");
+    dialog.className = "design-details-dialog";
+    dialog.setAttribute("role", "dialog");
+    dialog.setAttribute("aria-modal", "true");
+    dialog.setAttribute("aria-label", (design.name || design.categoryLabel) + " details");
+
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "design-details-close";
+    close.textContent = "×";
+    close.setAttribute("aria-label", "Close design details");
+    const closeDialog = () => {
+      overlay.remove();
+      document.removeEventListener("keydown", onKeyDown);
+    };
+    const onKeyDown = event => { if (event.key === "Escape") closeDialog(); };
+    close.addEventListener("click", closeDialog);
+
+    const photo = document.createElement("img");
+    photo.className = "design-details-photo";
+    photo.src = design.imageUrl;
+    photo.alt = design.name || design.categoryLabel + " design";
+    const info = document.createElement("div");
+    info.className = "design-details-info";
+    const category = document.createElement("p");
+    category.className = "design-details-category";
+    category.textContent = design.categoryLabel;
+    const heading = document.createElement("h2");
+    heading.textContent = design.name || design.categoryLabel + " design";
+    const price = document.createElement("p");
+    price.className = "design-details-price";
+    price.textContent = design.price ? "₹" + design.price : "Price available on enquiry";
+    const descriptionLabel = document.createElement("h3");
+    descriptionLabel.textContent = "Description";
+    const description = document.createElement("p");
+    description.className = "design-details-description";
+    description.textContent = design.description || "Please contact us for more details about this design.";
+    info.append(category, heading, price);
+    if (design.code) {
+      const code = document.createElement("p");
+      code.className = "design-details-code";
+      code.textContent = "Design code: " + design.code;
+      info.append(code);
+    }
+    info.append(descriptionLabel, description);
+    const enquire = document.createElement("button");
+    enquire.type = "button";
+    enquire.className = "design-action design-enquire design-details-enquire";
+    enquire.textContent = TEXT.enquire;
+    enquire.addEventListener("click", () => openWhatsAppApp(design));
+    info.append(enquire);
+    dialog.append(close, photo, info);
+    overlay.append(dialog);
+    overlay.addEventListener("click", event => { if (event.target === overlay) closeDialog(); });
+    document.addEventListener("keydown", onKeyDown);
+    document.body.append(overlay);
+    close.focus();
   }
 
   /* ---------- Rendering ---------- */
@@ -117,6 +187,11 @@
 
     const media = document.createElement("div");
     media.className = "card-media";
+    const imageButton = document.createElement("button");
+    imageButton.type = "button";
+    imageButton.className = "design-image-trigger";
+    imageButton.setAttribute("aria-label", "View details for " + (design.name || design.categoryLabel));
+    imageButton.addEventListener("click", () => openDesignDetails(design));
     const img = document.createElement("img");
     img.src = design.imageUrl;
     img.alt = design.name || design.categoryLabel + " design";
@@ -126,9 +201,10 @@
       const fallback = document.createElement("div");
       fallback.className = "card-fallback";
       fallback.textContent = TEXT.photoUnavailable;
-      img.replaceWith(fallback);
+      imageButton.replaceWith(fallback);
     }, { once: true });
-    media.append(img);
+    imageButton.append(img);
+    media.append(imageButton);
     card.append(media);
 
     if (design.featured) {

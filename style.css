@@ -62,3 +62,22 @@ a{color:inherit}
 .card-category{margin:3px 0 0;font-size:11px;color:#89837b}
 @media(max-width:850px){.collection-card{--card-h:clamp(155px,28vw,230px)}}
 @media(max-width:560px){.collection-card{--card-h:clamp(145px,47vw,220px)}.gallery-tools{gap:8px}.gallery-sort{flex:1 1 140px}.gallery-status{padding:26px 14px}.gallery-status strong{font-size:19px}}
+
+
+/* Tap a gallery photo to see its full details */
+.design-image-trigger{display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in;text-align:inherit}
+.design-image-trigger img{display:block;width:100%;height:var(--card-h);object-fit:cover;object-position:center 35%}
+.design-image-trigger:focus-visible{outline:3px solid var(--wine);outline-offset:-3px}
+.design-details-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(28,17,19,.72);overflow-y:auto}
+.design-details-dialog{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);width:min(900px,100%);max-height:min(90vh,900px);overflow:auto;background:var(--paper);border:1px solid var(--line);box-shadow:0 22px 70px rgba(0,0,0,.25)}
+.design-details-close{position:absolute;z-index:2;right:10px;top:10px;width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--wine-dark);font-size:27px;line-height:1;cursor:pointer}
+.design-details-photo{display:block;width:100%;height:100%;min-height:420px;max-height:90vh;object-fit:contain;background:#e9e2d8}
+.design-details-info{align-self:center;padding:clamp(24px,4vw,48px)}
+.design-details-category{margin:0 0 10px;color:var(--wine);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.design-details-info h2{margin:0 34px 15px 0;font:400 clamp(28px,3vw,40px)/1.15 var(--serif);color:var(--ink)}
+.design-details-price{margin:0 0 18px;color:var(--wine);font-size:23px;font-weight:700}
+.design-details-info h3{margin:18px 0 7px;font:500 14px/1.4 var(--sans);color:var(--ink)}
+.design-details-description,.design-details-code{font-size:13px;line-height:1.8;color:#625b54;white-space:pre-wrap;overflow-wrap:anywhere}
+.design-details-code{margin:0 0 10px;font-size:11px}
+.design-details-enquire{margin-top:16px}
+@media(max-width:620px){.design-details-overlay{padding:10px;align-items:flex-start}.design-details-dialog{grid-template-columns:1fr;max-height:calc(100vh - 20px)}.design-details-photo{height:min(48vh,420px);min-height:220px;max-height:none}.design-details-info{padding:22px}.design-details-info h2{font-size:28px}.design-details-price{font-size:21px}}
