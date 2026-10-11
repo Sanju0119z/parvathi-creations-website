@@ -10,7 +10,7 @@
     { key: "computer", label: "Computer Embroidery", aliases: ["computer", "computer work", "computer embroidery", "computerized embroidery", "computerised embroidery", "computerized work", "computerised work", "machine embroidery"] },
     { key: "blouse",   label: "Blouse Designs",      aliases: ["blouse", "blouses", "blouse designs"] },
     { key: "designer", label: "Designer Wear",       aliases: ["designer", "designer wear", "designerwear", "designer outfit", "designer outfits"] },
-    { key: "frocks",   label: "Frocks",              aliases: ["frock", "frocks"] },
+    { key: "frocks",   label: "Frocks",              aliases: ["frock", "frocks", "frock design", "frock designs", "frocks design", "frocks designs", "kids frock", "kids frocks", "kid frock", "girl frock", "girls frock", "baby frock", "baby frocks", "children frock", "children frocks", "knee length frock", "short frock", "long frock", "frock stitching", "frock work"] },
     { key: "lehenga",  label: "Designer Lehengas",   aliases: ["lehenga", "lehengas", "designer lehengas"] },
     { key: "bridal",   label: "Wedding Wear",        aliases: ["bridal", "bridal wear", "wedding", "wedding wear", "wedding dresses", "occasionwear", "occasion wear"] },
     { key: "kids",     label: "Kids Wear",           aliases: ["kids", "kid wear", "kids wear", "children", "children wear"] },
