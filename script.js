@@ -134,7 +134,7 @@
     dialog.className = "design-details-dialog";
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
-    dialog.setAttribute("aria-label", (design.name || design.categoryLabel) + " details");
+    dialog.setAttribute("aria-label", pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " వివరాలు" : pcCurrentLanguage() === "hi" ? " विवरण" : " details"));
 
     const close = document.createElement("button");
     close.type = "button";
@@ -153,7 +153,7 @@
     const photo = document.createElement("img");
     photo.className = "design-details-photo";
     photo.src = design.imageUrl;
-    photo.alt = design.name || design.categoryLabel + " design";
+    photo.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " డిజైన్" : pcCurrentLanguage() === "hi" ? " डिज़ाइन" : " design");
     media.append(photo);
     const galleryImages = Array.isArray(design.galleryImages) ? design.galleryImages : [design.imageUrl];
     if (galleryImages.length > 1) {
@@ -185,17 +185,17 @@
     info.className = "design-details-info";
     const category = document.createElement("p");
     category.className = "design-details-category";
-    category.textContent = design.categoryLabel;
+    category.textContent = pcTranslateDesignText(design.categoryLabel, pcCurrentLanguage(), "category");
     const heading = document.createElement("h2");
-    heading.textContent = design.name || design.categoryLabel + " design";
+    heading.textContent = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name");
     const price = document.createElement("p");
     price.className = "design-details-price";
-    price.textContent = design.price ? "₹" + design.price : "Price available on enquiry";
+    price.textContent = design.price ? "₹" + design.price : (pcCurrentLanguage() === "te" ? "ధర కోసం సంప్రదించండి" : pcCurrentLanguage() === "hi" ? "कीमत जानने के लिए संपर्क करें" : "Price available on enquiry");
     const descriptionLabel = document.createElement("h3");
-    descriptionLabel.textContent = "Description";
+    descriptionLabel.textContent = pcCurrentLanguage() === "te" ? "వివరణ" : pcCurrentLanguage() === "hi" ? "विवरण" : "Description";
     const description = document.createElement("p");
     description.className = "design-details-description";
-    description.textContent = design.description || "Please contact us for more details about this design.";
+    description.textContent = design.description ? pcTranslateDesignText(design.description, pcCurrentLanguage(), "description") : (pcCurrentLanguage() === "te" ? "ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి." : pcCurrentLanguage() === "hi" ? "इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें." : "Please contact us for more details about this design.");
     info.append(category, heading, price);
     if (design.code) {
       const code = document.createElement("p");
@@ -219,6 +219,30 @@
   }
 
   /* ---------- Rendering ---------- */
+  /* Translate uploaded design labels without changing the saved Supabase values. */
+  function pcTranslateDesignText(value, language, kind) {
+    const original = typeof value === "string" ? value.trim() : "";
+    if (!original || language === "en") return original;
+    const phraseMaps = {
+      te: {
+        "Designer Wear":"డిజైనర్ దుస్తులు", "Designer Blouse":"డిజైనర్ బ్లౌజ్", "Blouse Design":"బ్లౌజ్ డిజైన్", "Blouse Designs":"బ్లౌజ్ డిజైన్లు", "Wedding Wear":"పెళ్లి దుస్తులు", "Bridal Wear":"వధువు దుస్తులు", "Kids Wear":"పిల్లల దుస్తులు", "Frocks":"ఫ్రాక్స్", "Frock":"ఫ్రాక్", "Lehenga":"లెహంగా", "Lehengas":"లెహంగాలు", "Saree":"చీర", "Tassels":"టాసెల్స్", "Maggam Work":"మగ్గం వర్క్", "Embroidery":"ఎంబ్రాయిడరీ", "Computer Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Custom Design":"కస్టమ్ డిజైన్", "Custom Designs":"కస్టమ్ డిజైన్లు", "Traditional":"సంప్రదాయ", "Handwork":"చేతిపని", "Hand Work":"చేతిపని", "Silk":"పట్టు", "Cotton":"కాటన్", "Party Wear":"పార్టీ వేర్", "Bridal":"పెళ్లి", "Beautiful":"అందమైన", "New Design":"కొత్త డిజైన్", "Description":"వివరణ", "Price available on enquiry":"ధర కోసం సంప్రదించండి", "Please contact us for more details about this design.":"ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి."
+      },
+      hi: {
+        "Designer Wear":"डिज़ाइनर कपड़े", "Designer Blouse":"डिज़ाइनर ब्लाउज़", "Blouse Design":"ब्लाउज़ डिज़ाइन", "Blouse Designs":"ब्लाउज़ डिज़ाइन", "Wedding Wear":"शादी के कपड़े", "Bridal Wear":"दुल्हन के कपड़े", "Kids Wear":"बच्चों के कपड़े", "Frocks":"फ्रॉक", "Frock":"फ्रॉक", "Lehenga":"लहंगा", "Lehengas":"लहंगे", "Saree":"साड़ी", "Tassels":"लटकन", "Maggam Work":"मग्गम वर्क", "Embroidery":"कढ़ाई", "Computer Embroidery":"कंप्यूटर कढ़ाई", "Custom Design":"कस्टम डिज़ाइन", "Custom Designs":"कस्टम डिज़ाइन", "Traditional":"पारंपरिक", "Handwork":"हाथ का काम", "Hand Work":"हाथ का काम", "Silk":"रेशम", "Cotton":"सूती", "Party Wear":"पार्टी वियर", "Bridal":"दुल्हन", "Beautiful":"सुंदर", "New Design":"नया डिज़ाइन", "Description":"विवरण", "Price available on enquiry":"कीमत जानने के लिए संपर्क करें", "Please contact us for more details about this design.":"इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें."
+      }
+    };
+    let result = original;
+    const map = phraseMaps[language] || {};
+    Object.keys(map).sort((a,b) => b.length-a.length).forEach(key => {
+      result = result.replace(new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), map[key]);
+    });
+    return result;
+  }
+  function pcCurrentLanguage() {
+    try { return localStorage.getItem("parvathiLanguage") || document.documentElement.lang || "en"; }
+    catch (_) { return document.documentElement.lang || "en"; }
+  }
+
   function buildCard(design) {
     const card = document.createElement("article");
     card.className = "collection-card uploaded-design";
@@ -230,7 +254,7 @@
     const imageButton = document.createElement("button");
     imageButton.type = "button";
     imageButton.className = "design-image-trigger";
-    imageButton.setAttribute("aria-label", "View details for " + (design.name || design.categoryLabel));
+    imageButton.setAttribute("aria-label", (pcCurrentLanguage() === "te" ? "డిజైన్ వివరాలు చూడండి: " : pcCurrentLanguage() === "hi" ? "डिज़ाइन विवरण देखें: " : "View details for ") + pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name"));
     imageButton.addEventListener("click", () => openDesignDetails(design));
     const img = document.createElement("img");
     img.src = design.imageUrl;
@@ -258,10 +282,10 @@
     label.className = "card-label";
     const textWrap = document.createElement("div");
     const heading = document.createElement("h3");
-    heading.textContent = design.name || design.categoryLabel;
+    heading.textContent = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name");
     const sub = document.createElement("p");
     sub.className = "card-category";
-    sub.textContent = design.categoryLabel;
+    sub.textContent = pcTranslateDesignText(design.categoryLabel, pcCurrentLanguage(), "category");
     textWrap.append(heading, sub);
     label.append(textWrap);
     card.append(label);
@@ -344,6 +368,10 @@
     el.grid.append(frag);
   }
 
+
+  document.addEventListener("parvathi-language-changed", function () {
+    if (state.status !== "loading" && el.grid) render();
+  });
 
   /* ---------- Homepage hero slider: only real Supabase design uploads ---------- */
   function initHeroSlider(designs) {
@@ -612,6 +640,7 @@ window.changeLanguage = function (language) {
   }
   const featured = document.getElementById("galleryFeatured");
   if (featured) featured.textContent = t.featured;
+  document.dispatchEvent(new Event("parvathi-language-changed"));
 };
 
 window.addEventListener("pageshow", function () {
