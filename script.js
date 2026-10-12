@@ -113,7 +113,7 @@
 
   function openWhatsApp(design) {
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
-    const parts = ["Hello Parvathi Creations! I\u2019m interested in this design: " + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
+    const parts = [pcUiText("message") + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
     if (design.code) parts.push(pcUiText("code") + design.code + ".");
     if (design.price) parts.push(pcUiText("price") + design.price);
     if (design.description) parts.push(pcUiText("description") + design.description);
