@@ -537,70 +537,16 @@
   else init();
 
 const pcTranslations = {
-  en: {
-    home: "Home",
-    collection: "Collection",
-    craft: "Our Craft",
-    services: "Services",
-    contact: "Contact",
-    enquire: "Enquire"
-  },
-  te: {
-    home: "హోమ్",
-    collection: "కలెక్షన్",
-    craft: "మా కళ",
-    services: "సేవలు",
-    contact: "సంప్రదించండి",
-    enquire: "విచారించండి"
-  },
-  hi: {
-    home: "होम",
-    collection: "कलेक्शन",
-    craft: "हमारी कला",
-    services: "सेवाएँ",
-    contact: "संपर्क",
-    enquire: "पूछताछ करें"
-  }
-};
-
-  
-window.changeLanguage = function (language) {
-
-const pcTranslations = {
-  en: {
-    home: "Home",
-    collection: "Collection",
-    craft: "Our Craft",
-    services: "Services",
-    contact: "Contact",
-    enquire: "Enquire"
-  },
-  te: {
-    home: "హోమ్",
-    collection: "కలెక్షన్",
-    craft: "మా కళ",
-    services: "సేవలు",
-    contact: "సంప్రదించండి",
-    enquire: "విచారించండి"
-  },
-  hi: {
-    home: "होम",
-    collection: "कलेक्शन",
-    craft: "हमारी कला",
-    services: "सेवाएँ",
-    contact: "संपर्क",
-    enquire: "पूछताछ करें"
-  }
+  en: { home: "Home", collection: "Collection", craft: "Our Craft", services: "Services", contact: "Contact", enquire: "Enquire" },
+  te: { home: "హోమ్", collection: "కలెక్షన్", craft: "మా కళ", services: "సేవలు", contact: "సంప్రదించండి", enquire: "విచారించండి" },
+  hi: { home: "होम", collection: "कलेक्शन", craft: "हमारी कला", services: "सेवाएँ", contact: "संपर्क", enquire: "पूछताछ करें" }
 };
 
 window.changeLanguage = function (language) {
   const translations = pcTranslations[language];
   if (!translations) return;
 
-  try {
-    localStorage.setItem("parvathiLanguage", language);
-  } catch (error) {}
-
+  try { localStorage.setItem("parvathiLanguage", language); } catch (error) {}
   document.documentElement.lang = language;
 
   const selector = document.getElementById("languageSelect");
@@ -608,11 +554,8 @@ window.changeLanguage = function (language) {
 
   const nav = document.querySelectorAll(".main-nav a");
   const keys = ["home", "collection", "craft", "services", "contact"];
-
   nav.forEach(function (element, index) {
-    if (keys[index]) {
-      element.textContent = translations[keys[index]];
-    }
+    if (keys[index]) element.textContent = translations[keys[index]];
   });
 
   const enquire = document.querySelector(".header-cta");
@@ -620,45 +563,29 @@ window.changeLanguage = function (language) {
     const textNode = Array.from(enquire.childNodes).find(
       node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
     );
-
-    if (textNode) {
-      textNode.textContent = " " + translations.enquire + " ";
-    } else {
-      enquire.textContent = translations.enquire;
-    }
+    if (textNode) textNode.textContent = " " + translations.enquire + " ";
+    else enquire.textContent = translations.enquire;
   }
 
   document.querySelectorAll("[data-en]").forEach(function (element) {
     const translated = element.getAttribute("data-" + language);
-
-    if (translated !== null) {
-      element.innerHTML = translated;
-    }
+    if (translated !== null) element.innerHTML = translated;
   });
 };
 
 function initSavedLanguage() {
   let language = "en";
-
   try {
     const saved = localStorage.getItem("parvathiLanguage");
-    if (saved && pcTranslations[saved]) {
-      language = saved;
-    }
+    if (saved && Object.prototype.hasOwnProperty.call(pcTranslations, saved)) language = saved;
   } catch (error) {}
-
   window.changeLanguage(language);
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initSavedLanguage, {
-    once: true
-  });
+  document.addEventListener("DOMContentLoaded", initSavedLanguage, { once: true });
 } else {
   initSavedLanguage();
 }
-
-  
-
 
 })();
