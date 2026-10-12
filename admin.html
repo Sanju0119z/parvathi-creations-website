@@ -1003,6 +1003,14 @@
             </div>
 
 
+            <div class="panel" id="heroManagementPanel">
+                <div class="panel-header"><div>
+                    <h3>Homepage Hero Slideshow</h3>
+                    <p style="margin:7px 0 0;color:#666;font-size:13px;line-height:1.6;">Choose which of your uploaded design photos appear at the top of the website. Select a design to include it; use Edit or Delete to manage it. Only your uploaded designs are used.</p>
+                </div></div>
+                <div id="heroDesignList" class="hero-design-list"><p class="loading">Load your designs to manage the slideshow.</p></div>
+            </div>
+
             <!-- =====================================
                  DESIGN MANAGEMENT
                  ===================================== -->
@@ -1505,6 +1513,7 @@
                 updateDashboard();
 
                 renderDesigns();
+                renderHeroDesigns();
 
             } catch (error) {
 
@@ -1537,11 +1546,8 @@
             const total =
                 allDesigns.length;
 
-            const featured =
-                allDesigns.filter(
-                    design =>
-                        design.featured === true
-                ).length;
+            const featured = allDesigns.filter(design => design.featured === true ||
+                (typeof design.featured === "string" && design.featured.trim().toLowerCase() === "true")).length;
 
             const hidden =
                 allDesigns.filter(
@@ -1847,6 +1853,52 @@
 
         }
 
+
+        /* Homepage slideshow controls for uploaded designs */
+        function renderHeroDesigns() {
+            const host = document.getElementById("heroDesignList");
+            if (!host) return;
+            host.replaceChildren();
+            const eligible = allDesigns.filter(d => d && d.hidden !== true && /^https?:\/\//i.test(String(d.image_url || "")));
+            if (!eligible.length) {
+                const empty = document.createElement("p");
+                empty.className = "loading";
+                empty.textContent = "No uploaded design photos yet. Add a design above to use it in the slideshow.";
+                host.append(empty);
+                return;
+            }
+            eligible.forEach(design => {
+                const row = document.createElement("div"); row.className = "hero-design-row";
+                const image = document.createElement("img"); image.src = design.image_url; image.alt = design.name || "Uploaded design"; image.loading = "lazy";
+                const details = document.createElement("div"); details.className = "hero-design-details";
+                const name = document.createElement("strong"); name.textContent = design.name || "Untitled design";
+                const meta = document.createElement("span"); meta.textContent = design.category || "Uncategorised";
+                details.append(name, meta);
+                const selectLabel = document.createElement("label"); selectLabel.className = "hero-design-select";
+                const checkbox = document.createElement("input"); checkbox.type = "checkbox";
+                checkbox.checked = design.featured === true || (typeof design.featured === "string" && design.featured.trim().toLowerCase() === "true");
+                checkbox.setAttribute("aria-label", "Show " + (design.name || "this design") + " in homepage slideshow");
+                checkbox.addEventListener("change", async () => {
+                    const next = checkbox.checked; checkbox.disabled = true;
+                    try {
+                        const { error } = await supabaseClient.from("designs").update({ featured: next }).eq("id", design.id);
+                        if (error) throw error;
+                        design.featured = next;
+                        showMessage(adminMessage, next ? "Added to the homepage slideshow." : "Removed from the homepage slideshow.", "success");
+                        updateDashboard(); renderDesigns(); renderHeroDesigns();
+                    } catch (error) {
+                        checkbox.checked = !next;
+                        showMessage(adminMessage, "Could not update slideshow: " + (error.message || "Please try again."), "error");
+                    } finally { checkbox.disabled = false; }
+                });
+                const selectText = document.createElement("span"); selectText.textContent = "Show on homepage";
+                selectLabel.append(checkbox, selectText);
+                const actions = document.createElement("div"); actions.className = "hero-design-actions";
+                const editBtn = document.createElement("button"); editBtn.type = "button"; editBtn.className = "btn btn-secondary btn-small"; editBtn.textContent = "Edit"; editBtn.addEventListener("click", () => startEdit(design));
+                const deleteBtn = document.createElement("button"); deleteBtn.type = "button"; deleteBtn.className = "btn btn-danger btn-small"; deleteBtn.textContent = "Delete"; deleteBtn.addEventListener("click", () => deleteDesign(design));
+                actions.append(editBtn, deleteBtn); row.append(image, details, selectLabel, actions); host.append(row);
+            });
+        }
 
         /* =========================================
            PRICE FORMAT
@@ -2181,8 +2233,8 @@
             designDescription.value =
                 design.description || "";
 
-            designFeatured.checked =
-                design.featured === true;
+            designFeatured.checked = design.featured === true ||
+                (typeof design.featured === "string" && design.featured.trim().toLowerCase() === "true");
 
 
             multiImagePreview.replaceChildren();
