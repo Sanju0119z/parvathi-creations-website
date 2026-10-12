@@ -383,7 +383,10 @@
     const count = document.getElementById("heroSlideCount");
     if (!root || !image || !dots) return;
     if (heroSlideTimer) { window.clearInterval(heroSlideTimer); heroSlideTimer = null; }
-    const slides = (Array.isArray(designs) ? designs : []).filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
+    const availableSlides = (Array.isArray(designs) ? designs : []).filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
+    /* If the owner selected hero photos in Admin, show only those. Until any are selected, keep the existing all-uploaded-photos slideshow. */
+    const selectedHeroSlides = availableSlides.filter(d => d.featured);
+    const slides = selectedHeroSlides.length ? selectedHeroSlides : availableSlides;
     if (!slides.length) { root.hidden = true; return; }
     root.hidden = false;
     heroSlideIndex = Math.min(heroSlideIndex, slides.length - 1);
