@@ -1007,6 +1007,30 @@
             </div>
 
 
+            <div class="panel" id="festivalUploadPanel">
+                <div class="panel-header"><div>
+                    <h3>Hero &amp; Festival Photos</h3>
+                    <p style="margin:7px 0 0;color:#666;font-size:13px;line-height:1.6;">Upload a separate homepage greeting for Dasara, Diwali, Sankranti, or another occasion. These photos are stored as Festival Banner entries and are kept out of the product gallery.</p>
+                </div></div>
+                <form id="festivalUploadForm">
+                    <div class="form-group">
+                        <label for="festivalPhotoTitle">Greeting title *</label>
+                        <input id="festivalPhotoTitle" type="text" placeholder="Example: Happy Dasara" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="festivalPhotoFile">Festival image *</label>
+                        <input id="festivalPhotoFile" type="file" accept="image/*" required>
+                        <small>Choose the Durga Matha or festival image you want visitors to see.</small>
+                    </div>
+                    <label class="checkbox-row">
+                        <input id="festivalPhotoFeatured" type="checkbox" checked>
+                        <span>Show this greeting in the homepage hero slideshow</span>
+                    </label>
+                    <button type="submit" class="btn btn-primary" id="festivalPhotoSaveBtn">Upload Festival Photo</button>
+                    <p id="festivalUploadMessage" role="status" aria-live="polite" style="margin-top:12px;"></p>
+                </form>
+            </div>
+
             <div class="panel" id="heroManagementPanel">
                 <div class="panel-header"><div>
                     <h3>Homepage Hero Slideshow</h3>
@@ -1943,6 +1967,54 @@
         /* =========================================
            ADD / EDIT DESIGN
            ========================================= */
+
+        const festivalUploadForm = document.getElementById("festivalUploadForm");
+        festivalUploadForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const title = document.getElementById("festivalPhotoTitle").value.trim();
+            const fileInput = document.getElementById("festivalPhotoFile");
+            const file = fileInput.files && fileInput.files[0];
+            const featured = document.getElementById("festivalPhotoFeatured").checked;
+            const message = document.getElementById("festivalUploadMessage");
+            const button = document.getElementById("festivalPhotoSaveBtn");
+            message.textContent = "";
+            message.style.color = "#a12626";
+            if (!title || !file) { message.textContent = "Enter a title and choose an image."; return; }
+            if (!file.type || !file.type.startsWith("image/")) { message.textContent = "Please choose an image file."; return; }
+            if (file.size > 8 * 1024 * 1024) { message.textContent = "Please choose an image smaller than 8 MB."; return; }
+            button.disabled = true;
+            button.textContent = "Uploading...";
+            try {
+                const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
+                const filePath = "festival/" + Date.now() + "-" + Math.random().toString(36).substring(2, 8) + "-" + safeName;
+                const { error: uploadError } = await supabaseClient.storage.from("design-images").upload(filePath, file, { cacheControl: "3600", upsert: false });
+                if (uploadError) throw uploadError;
+                const { data: publicData } = supabaseClient.storage.from("design-images").getPublicUrl(filePath);
+                const { error: insertError } = await supabaseClient.from("designs").insert([{
+                    name: title,
+                    category: "Festival Banner",
+                    description: "Seasonal homepage greeting",
+                    image_url: publicData.publicUrl,
+                    featured: featured
+                }]);
+                if (insertError) {
+                    await supabaseClient.storage.from("design-images").remove([filePath]);
+                    throw insertError;
+                }
+                message.style.color = "#176b3a";
+                message.textContent = "Festival photo uploaded. It will appear on the homepage after the website refreshes.";
+                festivalUploadForm.reset();
+                document.getElementById("festivalPhotoFeatured").checked = true;
+                if (typeof loadDesigns === "function") await loadDesigns();
+                if (typeof loadDashboard === "function") await loadDashboard();
+            } catch (error) {
+                console.error("Festival photo upload failed:", error);
+                message.textContent = error && error.message ? "Upload failed: " + error.message : "Upload failed. Please try again.";
+            } finally {
+                button.disabled = false;
+                button.textContent = "Upload Festival Photo";
+            }
+        });
 
         designForm.addEventListener(
             "submit",
