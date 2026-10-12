@@ -583,6 +583,8 @@ window.changeLanguage = function (language) {
   if (!Object.prototype.hasOwnProperty.call(pcTranslations, language)) language = "en";
   const t = pcTranslations[language];
   try { localStorage.setItem("parvathiLanguage", language); } catch (error) {}
+  const welcome = document.getElementById("languageWelcome");
+  if (welcome) welcome.hidden = true;
   document.documentElement.lang = language;
   document.documentElement.setAttribute("data-language", language);
   const selector = document.getElementById("languageSelect");
@@ -643,20 +645,24 @@ window.changeLanguage = function (language) {
   document.dispatchEvent(new Event("parvathi-language-changed"));
 };
 
-window.addEventListener("pageshow", function () {
-  let saved = "en";
-  try { const value = localStorage.getItem("parvathiLanguage"); if (value && pcTranslations[value]) saved = value; } catch (error) {}
-  window.changeLanguage(saved);
-});
-
-function initSavedLanguage() {
-  let language = "en";
-  try {
-    const saved = localStorage.getItem("parvathiLanguage");
-    if (saved && Object.prototype.hasOwnProperty.call(pcTranslations, saved)) language = saved;
-  } catch (error) {}
-  window.changeLanguage(language);
+function applySavedLanguageOrAsk() {
+  let saved = null;
+  try { saved = localStorage.getItem("parvathiLanguage"); } catch (error) {}
+  if (saved && Object.prototype.hasOwnProperty.call(pcTranslations, saved)) {
+    window.changeLanguage(saved);
+  } else {
+    const welcome = document.getElementById("languageWelcome");
+    if (welcome) {
+      welcome.hidden = false;
+      const firstChoice = welcome.querySelector("button");
+      if (firstChoice) firstChoice.focus();
+    }
+  }
 }
+
+window.addEventListener("pageshow", applySavedLanguageOrAsk);
+
+function initSavedLanguage() { applySavedLanguageOrAsk(); }
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initSavedLanguage, { once: true });
