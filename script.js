@@ -42,31 +42,6 @@
   let heroSlideTimer = null;
   const el = {};
 
-
-  let currentLanguage = "en";
-  const DESIGN_TRANSLATIONS = {
-    "7": {name:{te:"స్వీట్‌హార్ట్ బ్లౌజ్",hi:"स्वीटहार्ट ब्लाउज़"},description:{te:"#కుట్టు మాత్రమే\nలావెండర్ పెర్ల్ బ్లౌజ్ వివరాలు✨\n💜చేతులు: పూల ఎంబ్రాయిడరీతో పారదర్శక పఫ్ ఆర్గంజా చేతులు, వెడల్పైన ఎంబ్రాయిడరీ కఫ్స్.\n💜వెనుక: లోతైన U-కట్, ముత్యాల అంచు, వస్త్ర లట్కన్‌లతో డోరీ కట్టు, కింద బటన్ల పట్టీ.",hi:"#केवल सिलाई\nलैवेंडर पर्ल ब्लाउज़ विवरण✨\n💜आस्तीन: फूलों की कढ़ाई और चौड़े कढ़ाईदार कफ वाली पारदर्शी पफ ऑर्गेंज़ा आस्तीन।\n💜पीछे: गहरा U-कट, मोतियों की बॉर्डर, कपड़े की लटकन वाली डोरी और नीचे बटनों की पट्टी."}},
-    "6": {name:{te:"రోజువారీ బ్లౌజ్",hi:"रोज़ाना पहनने वाला ब्लाउज़"},description:{te:"మీ బ్లౌజ్ సైజు లేదా మీరు ఇచ్చే కొలతల ప్రకారం కుట్టి ఇవ్వగలము.",hi:"आपके ब्लाउज़ के साइज़ या दिए गए माप के अनुसार सिलाई की जा सकती है।"}},
-    "5": {name:{te:"లెహంగా",hi:"लहंगा"},description:{te:"ప్రతి కస్టమర్ అభిరుచి మరియు కొలతల ప్రకారం కుట్టి ఇవ్వగలము.",hi:"हर ग्राहक की पसंद और माप के अनुसार सिलाई की जा सकती है।"}},
-    "4": {name:{te:"లాంగ్ ఫ్రాక్",hi:"लंबी फ्रॉक"},description:{te:"ఇది అనార్కలి శైలి గౌన్ సూట్. వెడల్పైన U-మెడ, పూర్తి పొడవు చేతులు, నడుము మడతలతో నేలవరకు గొడుగు ఆకారపు విస్తరణ, సున్నితమైన పూల ఎంబ్రాయిడరీ, తేలికపాటి దుపట్టా ఉంటాయి.",hi:"यह अनारकली शैली का गाउन सूट है। इसमें चौड़ी U-नेकलाइन, पूरी आस्तीन, कमर से नीचे तक छतरी जैसा घेरा, हल्की फूलों की कढ़ाई और दुपट्टा है."}},
-    "3": {name:{te:"మోకాలి పొడవు ఫ్రాక్",hi:"घुटने तक लंबी फ्रॉक"},description:{te:"అందంగా కుట్టిన ఈ మోకాలి పొడవు ఫ్రాక్ పార్టీలకు చక్కగా సరిపోతుంది. పఫ్ చేతులు దీనికి ఆకర్షణీయమైన రూపాన్ని ఇస్తాయి.",hi:"यह खूबसूरती से सिली घुटने तक लंबी फ्रॉक पार्टियों के लिए बेहतरीन है। पफ आस्तीन इसे आकर्षक लुक देती हैं।"}},
-    "2": {name:{te:"తెల్లని పొడవాటి డ్రెస్",hi:"सफ़ेद लंबी ड्रेस"}},
-    "1": {name:{te:"మగ్గం వర్క్",hi:"मग्गम वर्क"}}
-  };
-  const CATEGORY_TRANSLATIONS = {
-    en:{all:"All Designs",maggam:"Maggam Work",computer:"Computer Embroidery",blouse:"Blouse Designs",designer:"Designer Wear",frocks:"Frocks",lehenga:"Designer Lehengas",bridal:"Wedding Wear",kids:"Kids Wear",saree:"Sarees & Tassels",custom:"Custom Designs"},
-    te:{all:"అన్ని డిజైన్లు",maggam:"మగ్గం వర్క్",computer:"కంప్యూటర్ ఎంబ్రాయిడరీ",blouse:"బ్లౌజ్ డిజైన్లు",designer:"డిజైనర్ దుస్తులు",frocks:"ఫ్రాక్స్",lehenga:"డిజైనర్ లెహెంగాలు",bridal:"పెళ్లి దుస్తులు",kids:"పిల్లల దుస్తులు",saree:"చీరలు & టాసెల్స్",custom:"కస్టమ్ డిజైన్లు"},
-    hi:{all:"सभी डिज़ाइन",maggam:"मग्गम वर्क",computer:"कंप्यूटर कढ़ाई",blouse:"ब्लाउज़ डिज़ाइन",designer:"डिज़ाइनर परिधान",frocks:"फ्रॉक",lehenga:"डिज़ाइनर लहंगे",bridal:"शादी के परिधान",kids:"बच्चों के कपड़े",saree:"साड़ियाँ और लटकन",custom:"कस्टम डिज़ाइन"}
-  };
-  function localizedField(design, field) {
-    const item = DESIGN_TRANSLATIONS[String(design.id)];
-    return currentLanguage !== "en" && item && item[field] && item[field][currentLanguage]
-      ? item[field][currentLanguage] : (design[field] || "");
-  }
-  function localizedCategory(key, fallback) {
-    return (CATEGORY_TRANSLATIONS[currentLanguage] && CATEGORY_TRANSLATIONS[currentLanguage][key]) || fallback || "";
-  }
-
   /* ---------- Data preparation ---------- */
   function cleanText(value) { return typeof value === "string" ? value.trim() : ""; }
 
@@ -138,10 +113,10 @@
 
   function openWhatsApp(design) {
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
-    const parts = ["Hello Parvathi Creations! I\u2019m interested in this design: " + (localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel)) + " (" + design.categoryLabel + ")."];
+    const parts = ["Hello Parvathi Creations! I\u2019m interested in this design: " + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
     if (design.code) parts.push("Design code: " + design.code + ".");
     if (design.price) parts.push("Price: ₹" + design.price);
-    if (localizedField(design, "description")) parts.push((currentLanguage === "te" ? "వివరణ: " : currentLanguage === "hi" ? "विवरण: " : "Description: ") + localizedField(design, "description"));
+    if (design.description) parts.push("Description: " + design.description);
     parts.push("Image: " + design.imageUrl);
     parts.push("Please share details.");
     window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" ")), "_blank", "noopener,noreferrer");
@@ -159,7 +134,7 @@
     dialog.className = "design-details-dialog";
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
-    dialog.setAttribute("aria-label", (localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel)) + " details");
+    dialog.setAttribute("aria-label", (design.name || design.categoryLabel) + " details");
 
     const close = document.createElement("button");
     close.type = "button";
@@ -178,7 +153,7 @@
     const photo = document.createElement("img");
     photo.className = "design-details-photo";
     photo.src = design.imageUrl;
-    photo.alt = localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel) + " design";
+    photo.alt = design.name || design.categoryLabel + " design";
     media.append(photo);
     const galleryImages = Array.isArray(design.galleryImages) ? design.galleryImages : [design.imageUrl];
     if (galleryImages.length > 1) {
@@ -210,9 +185,9 @@
     info.className = "design-details-info";
     const category = document.createElement("p");
     category.className = "design-details-category";
-    category.textContent = localizedCategory(design.categoryKey, design.categoryLabel);
+    category.textContent = design.categoryLabel;
     const heading = document.createElement("h2");
-    heading.textContent = localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel) + " design";
+    heading.textContent = design.name || design.categoryLabel + " design";
     const price = document.createElement("p");
     price.className = "design-details-price";
     price.textContent = design.price ? "₹" + design.price : "Price available on enquiry";
@@ -220,7 +195,7 @@
     descriptionLabel.textContent = "Description";
     const description = document.createElement("p");
     description.className = "design-details-description";
-    description.textContent = localizedField(design, "description") || (currentLanguage === "te" ? "ఈ డిజైన్ గురించి మరిన్ని వివరాల కోసం మమ్మల్ని సంప్రదించండి." : currentLanguage === "hi" ? "इस डिज़ाइन के बारे में अधिक जानकारी के लिए हमसे संपर्क करें।" : "Please contact us for more details about this design.");
+    description.textContent = design.description || "Please contact us for more details about this design.";
     info.append(category, heading, price);
     if (design.code) {
       const code = document.createElement("p");
@@ -233,7 +208,7 @@
     enquire.type = "button";
     enquire.className = "design-action design-enquire design-details-enquire";
     enquire.textContent = TEXT.enquire;
-    enquire.addEventListener("click", () => openWhatsApp(design));
+    enquire.addEventListener("click", () => openWhatsAppApp(design));
     info.append(enquire);
     dialog.append(close, media, info);
     overlay.append(dialog);
@@ -255,11 +230,11 @@
     const imageButton = document.createElement("button");
     imageButton.type = "button";
     imageButton.className = "design-image-trigger";
-    imageButton.setAttribute("aria-label", "View details for " + (localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel)));
+    imageButton.setAttribute("aria-label", "View details for " + (design.name || design.categoryLabel));
     imageButton.addEventListener("click", () => openDesignDetails(design));
     const img = document.createElement("img");
     img.src = design.imageUrl;
-    img.alt = localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel) + " design";
+    img.alt = design.name || design.categoryLabel + " design";
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => {
@@ -283,7 +258,7 @@
     label.className = "card-label";
     const textWrap = document.createElement("div");
     const heading = document.createElement("h3");
-    heading.textContent = localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel);
+    heading.textContent = design.name || design.categoryLabel;
     const sub = document.createElement("p");
     sub.className = "card-category";
     sub.textContent = design.categoryLabel;
@@ -389,7 +364,7 @@
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "hero-slide-dot";
-      dot.setAttribute("aria-label", "Show design " + (index + 1) + ": " + (localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel) || "Boutique design"));
+      dot.setAttribute("aria-label", "Show design " + (index + 1) + ": " + (design.name || design.categoryLabel || "Boutique design"));
       dot.addEventListener("click", () => { heroSlideIndex = index; showSlide(); restartTimer(); });
       dots.append(dot);
     });
@@ -397,7 +372,7 @@
       const design = slides[heroSlideIndex];
       image.src = design.imageUrl;
       image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" — ");
-      name.textContent = localizedField(design, "name") || localizedCategory(design.categoryKey, design.categoryLabel) || "A design made with care";
+      name.textContent = design.name || design.categoryLabel || "A design made with care";
       category.textContent = design.categoryLabel || "Parvathi Creations";
       count.textContent = String(heroSlideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
       Array.from(dots.children).forEach((dot, index) => {
@@ -568,7 +543,6 @@ const pcTranslations = {
 };
 
 window.changeLanguage = function (language) {
-  currentLanguage = language;
   const translations = pcTranslations[language];
   if (!translations) return;
 
@@ -597,11 +571,6 @@ window.changeLanguage = function (language) {
     const translated = element.getAttribute("data-" + language);
     if (translated !== null) element.innerHTML = translated;
   });
-  const labels = CATEGORY_TRANSLATIONS[language] || CATEGORY_TRANSLATIONS.en;
-  document.querySelectorAll("#galleryFilters button[data-filter]").forEach(function (button) {
-    button.textContent = labels[button.dataset.filter] || button.textContent;
-  });
-  if (state.status === "ready" && typeof render === "function") render();
 };
 
 function initSavedLanguage() {
