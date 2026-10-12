@@ -68,7 +68,8 @@
       name: name,
       categoryRaw: categoryRaw,
       categoryKey: key,
-      categoryLabel: key === cats.UNCATEGORIZED ? (categoryRaw || "Other") : cats.labelFor(key),
+      categoryLabel: /^festival\s*banner$/i.test(categoryRaw) ? "Festival Greeting" : (key === cats.UNCATEGORIZED ? (categoryRaw || "Other") : cats.labelFor(key)),
+      isFestivalBanner: /^festival\s*banner$/i.test(categoryRaw),
       description: cleanText(row && row.description),
       code: cleanText(row && row.design_code),
       price: cleanText(row && row.price),
@@ -409,6 +410,8 @@
     });
     function showSlide() {
       const design = slides[heroSlideIndex];
+      const kicker = root.querySelector(".hero-slide-kicker");
+      if (kicker) kicker.textContent = design.isFestivalBanner ? "FESTIVAL GREETINGS" : "MADE WITH CARE";
       image.src = design.imageUrl;
       image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" — ");
       name.textContent = design.name || design.categoryLabel || "A design made with care";
@@ -458,8 +461,8 @@
       const odd = all.filter(d => !d.hidden && d.imageUrl && d.categoryKey === cats.UNCATEGORIZED).map(d => d.id + " (" + JSON.stringify(d.categoryRaw) + ")");
       if (noImage.length) console.warn("Parvathi Creations: designs skipped (no valid image URL), ids:", noImage.join(", "));
       if (odd.length) console.warn("Parvathi Creations: designs with an unrecognised category are shown only under All Designs, ids:", odd.join(", "));
-      state.designs = all.filter(d => !d.hidden && d.imageUrl);
-      initHeroSlider(state.designs);
+      state.designs = all.filter(d => !d.hidden && d.imageUrl && !d.isFestivalBanner);
+      initHeroSlider(all.filter(d => !d.hidden && d.imageUrl));
       state.status = "ready";
     } catch (error) {
       console.error("Parvathi Creations: could not load designs.", error);
