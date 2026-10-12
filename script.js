@@ -140,7 +140,7 @@
     close.type = "button";
     close.className = "design-details-close";
     close.textContent = "×";
-    close.setAttribute("aria-label", "Close design details");
+    close.setAttribute("aria-label", pcCurrentLanguage() === "te" ? "డిజైన్ వివరాలను మూసివేయండి" : pcCurrentLanguage() === "hi" ? "डिज़ाइन विवरण बंद करें" : "Close design details");
     const closeDialog = () => {
       overlay.remove();
       document.removeEventListener("keydown", onKeyDown);
@@ -163,7 +163,7 @@
         const thumb = document.createElement("button");
         thumb.type = "button";
         thumb.className = "design-details-thumbnail" + (url === design.imageUrl ? " is-active" : "");
-        thumb.setAttribute("aria-label", (index === 0 ? "Cover photo" : "Photo " + (index + 1)));
+        thumb.setAttribute("aria-label", pcCurrentLanguage() === "te" ? (index === 0 ? "ప్రధాన ఫోటో" : "ఫోటో " + (index + 1)) : pcCurrentLanguage() === "hi" ? (index === 0 ? "मुख्य फ़ोटो" : "फ़ोटो " + (index + 1)) : (index === 0 ? "Cover photo" : "Photo " + (index + 1)));
         thumb.setAttribute("aria-pressed", url === design.imageUrl ? "true" : "false");
         const thumbImage = document.createElement("img");
         thumbImage.src = url;
@@ -200,15 +200,15 @@
     if (design.code) {
       const code = document.createElement("p");
       code.className = "design-details-code";
-      code.textContent = "Design code: " + design.code;
+      code.textContent = (pcCurrentLanguage() === "te" ? "డిజైన్ కోడ్: " : pcCurrentLanguage() === "hi" ? "डिज़ाइन कोड: " : "Design code: ") + design.code;
       info.append(code);
     }
     info.append(descriptionLabel, description);
     const enquire = document.createElement("button");
     enquire.type = "button";
     enquire.className = "design-action design-enquire design-details-enquire";
-    enquire.textContent = TEXT.enquire;
-    enquire.addEventListener("click", () => openWhatsAppApp(design));
+    enquire.textContent = (pcCurrentLanguage() === "te" ? "విచారించండి" : pcCurrentLanguage() === "hi" ? "पूछताछ करें" : TEXT.enquire);
+    enquire.addEventListener("click", () => openWhatsApp(design));
     info.append(enquire);
     dialog.append(close, media, info);
     overlay.append(dialog);
@@ -258,7 +258,7 @@
     imageButton.addEventListener("click", () => openDesignDetails(design));
     const img = document.createElement("img");
     img.src = design.imageUrl;
-    img.alt = design.name || design.categoryLabel + " design";
+    img.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " డిజైన్" : pcCurrentLanguage() === "hi" ? " डिज़ाइन" : " design");
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => {
