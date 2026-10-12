@@ -537,41 +537,88 @@
   else init();
 
 const pcTranslations = {
-  en: { home: "Home", collection: "Collection", craft: "Our Craft", services: "Services", contact: "Contact", enquire: "Enquire" },
-  te: { home: "హోమ్", collection: "కలెక్షన్", craft: "మా కళ", services: "సేవలు", contact: "సంప్రదించండి", enquire: "విచారించండి" },
-  hi: { home: "होम", collection: "कलेक्शन", craft: "हमारी कला", services: "सेवाएँ", contact: "संपर्क", enquire: "पूछताछ करें" }
+  en: { home:"Home", collection:"Collection", craft:"Our Craft", services:"Services", contact:"Contact", enquire:"Enquire", language:"🌐 Language", all:"All Designs", maggam:"Maggam Work", computer:"Computer Embroidery", blouse:"Blouse Designs", designer:"Designer Wear", frocks:"Frocks", lehenga:"Designer Lehengas", bridal:"Wedding Wear", kids:"Kids Wear", saree:"Saree Tassels", search:"Search designs", sortNewest:"Newest first", sortOldest:"Oldest first", sortName:"Name A–Z", featured:"★ Featured only", heroEyebrow:"PARVATHI CREATIONS · TELANGANA", heroTitle:"Tradition, tailored to you.", heroDescription:"Thoughtful stitching, intricate embroidery and occasionwear made with care — for the moments you want to remember.", explore:"Explore the collection", heroNote:"Made with care. Finished with love.", collectionEyebrow:"A LITTLE SOMETHING FOR EVERY OCCASION", collectionTitle:"Find your favourite.", collectionDescription:"From everyday elegance to wedding-day details, explore pieces inspired by your style.", photoDisclaimer:"Each custom order is discussed with you before stitching.", craftEyebrow:"THE BEAUTY IS IN THE DETAILS", craftTitle:"Made by hand. Made for you.", craftDescription:"From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.", craftCta:"Let’s create something together", servicesEyebrow:"WHAT WE DO", servicesTitle:"Every detail, considered.", servicesDescription:"Tell us what you have in mind. We’ll help you find the right finish, fit and details for your occasion.", contactEyebrow:"YOUR IDEA, OUR CRAFT", contactTitle:"Have something in mind?", contactDescription:"Share your inspiration with us. Let’s talk about your design.", whatsapp:"Chat with us on WhatsApp", footerStory:"Where every stitch tells a story.", instagram:"Instagram", owner:"Owner login", footerCollection:"Collection", footerServices:"Services", footerContact:"Contact" },
+  te: { home:"హోమ్", collection:"కలెక్షన్", craft:"మా కళ", services:"సేవలు", contact:"సంప్రదించండి", enquire:"విచారించండి", language:"🌐 భాష", all:"అన్ని డిజైన్లు", maggam:"మగ్గం వర్క్", computer:"కంప్యూటర్ ఎంబ్రాయిడరీ", blouse:"బ్లౌజ్ డిజైన్లు", designer:"డిజైనర్ దుస్తులు", frocks:"ఫ్రాక్స్", lehenga:"డిజైనర్ లెహంగాలు", bridal:"పెళ్లి దుస్తులు", kids:"పిల్లల దుస్తులు", saree:"చీర టాసెల్స్", search:"డిజైన్లను వెతకండి", sortNewest:"కొత్తవి ముందు", sortOldest:"పాతవి ముందు", sortName:"పేరు ప్రకారం", featured:"★ ప్రత్యేక డిజైన్లు మాత్రమే", heroEyebrow:"పార్వతి క్రియేషన్స్ · తెలంగాణ", heroTitle:"మీ అభిరుచికి తగ్గ సంప్రదాయ శైలి.", heroDescription:"మీకు గుర్తుండిపోయే సందర్భాల కోసం శ్రద్ధగా కుట్టిన దుస్తులు, అందమైన ఎంబ్రాయిడరీ, ప్రత్యేక వేడుకల దుస్తులు.", explore:"కలెక్షన్ చూడండి", heroNote:"శ్రద్ధతో తయారు చేసి, ప్రేమతో పూర్తి చేస్తాం.", collectionEyebrow:"ప్రతి సందర్భానికీ ప్రత్యేకంగా", collectionTitle:"మీకు నచ్చిన డిజైన్‌ను ఎంచుకోండి.", collectionDescription:"రోజువారీ అందం నుంచి పెళ్లి వేడుకల దుస్తుల వరకు, మీ శైలికి సరిపోయే డిజైన్లను చూడండి.", photoDisclaimer:"కుట్టు ప్రారంభించే ముందు ప్రతి కస్టమ్ ఆర్డర్ గురించి మీతో చర్చిస్తాం.", craftEyebrow:"వివరాల్లోనే అందం", craftTitle:"చేతితో తయారు చేసినవి. మీకోసమే.", craftDescription:"సున్నితమైన దారపు పనుల నుంచి చక్కగా పూర్తి చేసిన బ్లౌజ్‌ల వరకు, మీ ఆలోచనలకు రూపం ఇస్తాం.", craftCta:"మనిద్దరం కలిసి అందమైన డిజైన్ చేద్దాం", servicesEyebrow:"మా సేవలు", servicesTitle:"ప్రతి వివరానికీ ప్రత్యేక శ్రద్ధ.", servicesDescription:"మీకు కావలసిన డిజైన్‌ను చెప్పండి. సరైన ఫిట్, ఫినిషింగ్, వివరాలను ఎంచుకోవడంలో సహాయం చేస్తాం.", contactEyebrow:"మీ ఆలోచన — మా కళ", contactTitle:"మీ మనసులో ఏదైనా డిజైన్ ఉందా?", contactDescription:"మీకు నచ్చిన నమూనాను మాతో పంచుకోండి. మీ డిజైన్ గురించి మాట్లాడుకుందాం.", whatsapp:"వాట్సాప్‌లో మాట్లాడండి", footerStory:"ప్రతి కుట్టులో ఒక కథ ఉంటుంది.", instagram:"ఇన్‌స్టాగ్రామ్", owner:"యజమాని లాగిన్", footerCollection:"కలెక్షన్", footerServices:"సేవలు", footerContact:"సంప్రదించండి" },
+  hi: { home:"होम", collection:"कलेक्शन", craft:"हमारी कला", services:"सेवाएँ", contact:"संपर्क", enquire:"पूछताछ", language:"🌐 भाषा", all:"सभी डिज़ाइन", maggam:"मग्गम वर्क", computer:"कंप्यूटर कढ़ाई", blouse:"ब्लाउज़ डिज़ाइन", designer:"डिज़ाइनर वियर", frocks:"फ्रॉक", lehenga:"डिज़ाइनर लहंगे", bridal:"शादी के कपड़े", kids:"बच्चों के कपड़े", saree:"साड़ी टैसल", search:"डिज़ाइन खोजें", sortNewest:"नए पहले", sortOldest:"पुराने पहले", sortName:"नाम के अनुसार", featured:"★ केवल विशेष डिज़ाइन", heroEyebrow:"पार्वती क्रिएशन्स · तेलंगाना", heroTitle:"आपकी पसंद के अनुसार परंपरा।", heroDescription:"यादगार पलों के लिए सावधानी से की गई सिलाई, बारीक कढ़ाई और खास अवसरों के कपड़े।", explore:"कलेक्शन देखें", heroNote:"सावधानी से बनाया, प्यार से पूरा किया।", collectionEyebrow:"हर अवसर के लिए कुछ खास", collectionTitle:"अपना पसंदीदा डिज़ाइन चुनें।", collectionDescription:"रोज़मर्रा की सुंदरता से लेकर शादी के खास कपड़ों तक, अपनी शैली से प्रेरित डिज़ाइन देखें।", photoDisclaimer:"सिलाई शुरू करने से पहले हर कस्टम ऑर्डर पर आपसे चर्चा की जाती है।", craftEyebrow:"खूबसूरती बारीकियों में है", craftTitle:"हाथों से बनाया। आपके लिए।", craftDescription:"नाज़ुक धागे के काम से लेकर अच्छी तरह तैयार ब्लाउज़ तक, हम आपके विचारों को आकार देते हैं।", craftCta:"आइए, मिलकर कुछ खास बनाएँ", servicesEyebrow:"हमारी सेवाएँ", servicesTitle:"हर बारीकी पर ध्यान।", servicesDescription:"अपनी पसंद बताएँ। हम सही फिट, फिनिश और अवसर के अनुसार विवरण चुनने में मदद करेंगे।", contactEyebrow:"आपका विचार, हमारी कला", contactTitle:"क्या आपके मन में कोई डिज़ाइन है?", contactDescription:"अपनी पसंद की तस्वीर या प्रेरणा साझा करें। आइए, आपके डिज़ाइन पर बात करें।", whatsapp:"WhatsApp पर बात करें", footerStory:"हर सिलाई एक कहानी कहती है।", instagram:"इंस्टाग्राम", owner:"मालिक लॉगिन", footerCollection:"कलेक्शन", footerServices:"सेवाएँ", footerContact:"संपर्क" }
 };
 
-window.changeLanguage = function (language) {
-  const translations = pcTranslations[language];
-  if (!translations) return;
+const pcStaticTranslations = [
+  [".hero-copy .eyebrow","heroEyebrow"],[".hero-copy h1","heroTitle"],[".hero-description","heroDescription"],[".hero-copy .button-dark span:first-child","explore"],[".hero-note","heroNote"],
+  [".collection .section-topline .eyebrow","collectionEyebrow"],[".collection .section-heading-row h2","collectionTitle"],[".collection .section-heading-row > p","collectionDescription"],[".photo-disclaimer","photoDisclaimer"],
+  [".craft-copy .eyebrow","craftEyebrow"],[".craft-copy h2","craftTitle"],[".craft-copy > p:not(.eyebrow)","craftDescription"],[".craft-copy .button span:first-child","craftCta"],
+  [".services .section-topline .eyebrow","servicesEyebrow"],[".services-heading h2","servicesTitle"],[".services-heading > p","servicesDescription"],
+  [".contact-band .eyebrow","contactEyebrow"],[".contact-band h2","contactTitle"],[".contact-band > p:not(.eyebrow)","contactDescription"],[".contact-band .button span:first-child","whatsapp"],
+  [".site-footer > p","footerStory"]
+];
 
+window.changeLanguage = function (language) {
+  if (!Object.prototype.hasOwnProperty.call(pcTranslations, language)) language = "en";
+  const t = pcTranslations[language];
   try { localStorage.setItem("parvathiLanguage", language); } catch (error) {}
   document.documentElement.lang = language;
-
+  document.documentElement.setAttribute("data-language", language);
   const selector = document.getElementById("languageSelect");
-  if (selector) selector.value = language;
-
-  const nav = document.querySelectorAll(".main-nav a");
-  const keys = ["home", "collection", "craft", "services", "contact"];
-  nav.forEach(function (element, index) {
-    if (keys[index]) element.textContent = translations[keys[index]];
-  });
-
-  const enquire = document.querySelector(".header-cta");
-  if (enquire) {
-    const textNode = Array.from(enquire.childNodes).find(
-      node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
-    );
-    if (textNode) textNode.textContent = " " + translations.enquire + " ";
-    else enquire.textContent = translations.enquire;
-  }
+  if (selector && selector.value !== language) selector.value = language;
 
   document.querySelectorAll("[data-en]").forEach(function (element) {
     const translated = element.getAttribute("data-" + language);
+    const fallback = element.getAttribute("data-en");
     if (translated !== null) element.innerHTML = translated;
+    else if (fallback !== null) element.innerHTML = fallback;
   });
+
+  const navKeys = ["home", "collection", "craft", "services", "contact"];
+  document.querySelectorAll(".main-nav a").forEach(function (element, index) {
+    if (navKeys[index]) element.textContent = t[navKeys[index]];
+  });
+  const enquire = document.querySelector(".header-cta");
+  if (enquire) enquire.innerHTML = t.enquire + " <span>↗</span>";
+
+  pcStaticTranslations.forEach(function (pair) {
+    const element = document.querySelector(pair[0]);
+    if (element && t[pair[1]]) {
+      if (pair[1] === "heroNote") {
+        const star = element.querySelector(".tiny-star");
+        element.textContent = t[pair[1]];
+        if (star) element.prepend(star);
+      } else if (pair[1] === "craftTitle" || pair[1] === "servicesTitle" || pair[1] === "contactTitle") {
+        element.textContent = t[pair[1]];
+      } else {
+        const child = element.querySelector("span");
+        if (child && ["explore","craftCta","whatsapp"].includes(pair[1])) child.textContent = t[pair[1]];
+        else element.textContent = t[pair[1]];
+      }
+    }
+  });
+
+  const label = document.querySelector('label[for="languageSelect"]');
+  if (label) label.textContent = t.language;
+  const footerLinks = document.querySelectorAll(".footer-links a");
+  const footerKeys = ["footerCollection","footerServices","footerContact","instagram","owner"];
+  footerLinks.forEach(function (element,index) { if (t[footerKeys[index]]) element.textContent = t[footerKeys[index]] + (index === 3 ? " ↗" : ""); });
+
+  const categoryLabels = {all:t.all,maggam:t.maggam,computer:t.computer,blouse:t.blouse,designer:t.designer,frocks:t.frocks,lehenga:t.lehenga,bridal:t.bridal,kids:t.kids,saree:t.saree};
+  document.querySelectorAll(".gallery-filters button[data-filter]").forEach(function (button) {
+    const key = button.dataset.filter;
+    if (categoryLabels[key]) button.textContent = categoryLabels[key];
+  });
+  const search = document.getElementById("gallerySearch");
+  if (search) { search.placeholder = t.search; search.setAttribute("aria-label", t.search); }
+  const sort = document.getElementById("gallerySort");
+  if (sort && sort.options.length >= 3) {
+    sort.options[0].textContent = t.sortNewest;
+    sort.options[1].textContent = t.sortOldest;
+    sort.options[2].textContent = t.sortName;
+  }
+  const featured = document.getElementById("galleryFeatured");
+  if (featured) featured.textContent = t.featured;
 };
+
+window.addEventListener("pageshow", function () {
+  let saved = "en";
+  try { const value = localStorage.getItem("parvathiLanguage"); if (value && pcTranslations[value]) saved = value; } catch (error) {}
+  window.changeLanguage(saved);
+});
 
 function initSavedLanguage() {
   let language = "en";
