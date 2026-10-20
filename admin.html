@@ -575,6 +575,7 @@
         .photo-editor p{color:#666;font-size:13px;line-height:1.5;margin:0 0 14px}
         .photo-editor-stage{width:100%;height:min(48vh,430px);min-height:220px;background:#211a1a;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px}
         .photo-editor-stage img{display:block;max-width:100%;max-height:100%}
+        .photo-editor .cropper-canvas img,.photo-editor .cropper-view-box img{filter:var(--active-photo-filter,none)}
         .photo-editor-tools{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}
         .photo-editor-tools select{padding:10px;border:1px solid #d9ccc5;border-radius:9px;flex:1;min-width:145px;background:#fff}
         .photo-editor-footer{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -1522,12 +1523,12 @@
         photoAspect.addEventListener("change", () => {
             if (photoCropper) photoCropper.setAspectRatio(photoAspect.value === "free" ? NaN : Number(photoAspect.value));
         });
-        photoFilter.addEventListener("change", () => { photoEditorImage.style.filter = photoFilterCss[photoFilter.value] || "none"; });
+        photoFilter.addEventListener("change", () => { photoEditorBackdrop.style.setProperty("--active-photo-filter", photoFilterCss[photoFilter.value] || "none"); photoEditorImage.style.filter = photoFilterCss[photoFilter.value] || "none"; });
         document.getElementById("photoRotateLeft").addEventListener("click", () => photoCropper && photoCropper.rotate(-90));
         document.getElementById("photoRotateRight").addEventListener("click", () => photoCropper && photoCropper.rotate(90));
         document.getElementById("photoReset").addEventListener("click", () => {
             if (photoCropper) { photoCropper.reset(); photoCropper.setAspectRatio(NaN); }
-            photoAspect.value = "free"; photoFilter.value = "none"; photoEditorImage.style.filter = "none";
+            photoAspect.value = "free"; photoFilter.value = "none"; photoEditorImage.style.filter = "none"; photoEditorBackdrop.style.setProperty("--active-photo-filter", "none");
         });
         document.getElementById("photoEditorCancel").addEventListener("click", closePhotoEditor);
         photoEditorBackdrop.addEventListener("click", event => { if (event.target === photoEditorBackdrop) closePhotoEditor(); });
@@ -1608,6 +1609,7 @@
             if (files.length > 6) {
                 showMessage(adminMessage, "Choose no more than 6 photos for one design.", "error");
                 designImage.value = "";
+                selectedDesignFiles = [];
                 multiImagePreview.style.display = "none";
                 return;
             }
@@ -1615,6 +1617,7 @@
             if (files.some(file => !file.type.startsWith("image/"))) {
                 showMessage(adminMessage, "Please select image files only.", "error");
                 designImage.value = "";
+                selectedDesignFiles = [];
                 multiImagePreview.style.display = "none";
                 return;
             }
