@@ -581,6 +581,16 @@
         .photo-editor-footer{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:12px}
         @media(max-width:600px){.photo-editor{padding:12px}.photo-editor-stage{height:40vh;min-height:200px}.photo-editor-tools .btn{flex:1}}
 
+        .customer-preview-backdrop{position:fixed;inset:0;background:rgba(25,12,18,.72);z-index:10020;display:none;align-items:center;justify-content:center;padding:16px;overflow:auto}
+        .customer-preview-backdrop.open{display:flex}
+        .customer-preview-modal{width:min(100%,440px);max-height:92vh;overflow:auto;background:#fffaf8;border-radius:18px;padding:18px;box-shadow:0 18px 65px rgba(0,0,0,.3)}
+        .customer-preview-card{background:#fff;border:1px solid #eadbd5;border-radius:15px;overflow:hidden}
+        .customer-preview-image{position:relative;background:#f7efec;min-height:180px;display:flex;align-items:center;justify-content:center}
+        .customer-preview-image img{display:block;width:100%;max-height:420px;object-fit:contain}
+        .customer-preview-watermark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(16px,4vw,25px);font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.64);text-shadow:0 1px 3px rgba(0,0,0,.38);white-space:nowrap;pointer-events:none}
+        .customer-preview-copy{padding:15px}.customer-preview-copy h3{margin:0 0 7px;color:#61243a}.customer-preview-copy p{margin:8px 0;line-height:1.5;color:#5e5552;overflow-wrap:anywhere}.customer-preview-price{font-weight:800;color:#8d2847;font-size:19px}
+        .customer-preview-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+
 </style>
 </head>
 
@@ -1017,6 +1027,9 @@
                         Add Design
                     </button>
 
+                    <button type="button" class="btn btn-secondary" id="previewAsCustomerBtn" style="margin-left:6px;">Preview as Customer</button>
+                    <small style="display:block;margin-top:9px;color:#6b625f;line-height:1.5;">Preview the product card before saving. The real watermark is applied to the uploaded copy, not your original file.</small>
+
                 </form>
 
             </div>
@@ -1165,6 +1178,21 @@
         </div>
     </div>
 
+    <div class="customer-preview-backdrop" id="customerPreviewBackdrop" role="dialog" aria-modal="true" aria-labelledby="customerPreviewTitle">
+        <div class="customer-preview-modal">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;">
+                <h3 id="customerPreviewTitle" style="margin:0;color:#61243a;">Customer preview</h3>
+                <button type="button" class="btn btn-secondary btn-small" id="closeCustomerPreviewTop" aria-label="Close preview">✕</button>
+            </div>
+            <div class="customer-preview-card">
+                <div class="customer-preview-image" id="customerPreviewImageWrap"><img id="customerPreviewImage" alt="Product preview"><span class="customer-preview-watermark">ParvathiCreations</span></div>
+                <div class="customer-preview-copy"><h3 id="customerPreviewName">Your design name</h3><p id="customerPreviewCategory"></p><div class="customer-preview-price" id="customerPreviewPrice">Price on enquiry</div><p id="customerPreviewDescription"></p></div>
+            </div>
+            <p style="font-size:12px;color:#756a66;line-height:1.5;margin:12px 0 0;">This is a preview of the main product card. The website may display additional photos in the design gallery.</p>
+            <div class="customer-preview-actions"><button type="button" class="btn btn-primary" id="closeCustomerPreview">Back to editor</button></div>
+        </div>
+    </div>
+
     <script>
 
         /* =========================================
@@ -1271,6 +1299,42 @@
 
 
         let allDesigns = [];
+        let isSavingDesign = false;
+
+        const customerPreviewBackdrop = document.getElementById("customerPreviewBackdrop");
+        let customerPreviewObjectUrl = null;
+        function closeCustomerPreview() {
+            customerPreviewBackdrop.classList.remove("open");
+            if (customerPreviewObjectUrl) { URL.revokeObjectURL(customerPreviewObjectUrl); customerPreviewObjectUrl = null; }
+        }
+        function openCustomerPreview() {
+            const name = designName.value.trim();
+            if (!name) { showMessage(adminMessage, "Enter a design name first to preview it.", "error"); designName.focus(); return; }
+            document.getElementById("customerPreviewName").textContent = name;
+            document.getElementById("customerPreviewCategory").textContent = designCategory.value || "Category not selected";
+            const price = designPrice.value.trim();
+            document.getElementById("customerPreviewPrice").textContent = price !== "" && Number(price) >= 0 ? formatPrice(price) : "Price on enquiry";
+            document.getElementById("customerPreviewDescription").textContent = designDescription.value.trim() || "Contact us to ask about this design.";
+            const previewImg = document.getElementById("customerPreviewImage");
+            const imageWrap = document.getElementById("customerPreviewImageWrap");
+            if (customerPreviewObjectUrl) { URL.revokeObjectURL(customerPreviewObjectUrl); customerPreviewObjectUrl = null; }
+            if (selectedDesignFiles.length) {
+                const coverIndex = Math.min(selectedCoverIndex, selectedDesignFiles.length - 1);
+                customerPreviewObjectUrl = URL.createObjectURL(selectedDesignFiles[coverIndex]);
+                previewImg.src = customerPreviewObjectUrl; previewImg.style.display = "block";
+            } else if (previewImage.src && imagePreview.style.display !== "none") {
+                previewImg.src = previewImage.src; previewImg.style.display = "block";
+            } else {
+                previewImg.removeAttribute("src"); previewImg.style.display = "none";
+                imageWrap.style.minHeight = "180px";
+            }
+            customerPreviewBackdrop.classList.add("open");
+        }
+        document.getElementById("previewAsCustomerBtn").addEventListener("click", openCustomerPreview);
+        document.getElementById("closeCustomerPreview").addEventListener("click", closeCustomerPreview);
+        document.getElementById("closeCustomerPreviewTop").addEventListener("click", closeCustomerPreview);
+        customerPreviewBackdrop.addEventListener("click", event => { if (event.target === customerPreviewBackdrop) closeCustomerPreview(); });
+        document.addEventListener("keydown", event => { if (event.key === "Escape" && customerPreviewBackdrop.classList.contains("open")) closeCustomerPreview(); });
 
 
         /* =========================================
@@ -2204,6 +2268,7 @@
 
                 event.preventDefault();
 
+                if (isSavingDesign) return;
                 clearMessage(adminMessage);
 
                 const id =
@@ -2244,6 +2309,18 @@
                 }
 
 
+                if (priceValue !== "" && (!Number.isFinite(Number(priceValue)) || Number(priceValue) < 0)) {
+                    showMessage(adminMessage, "Price must be a valid amount of ₹0 or more.", "error");
+                    designPrice.focus();
+                    return;
+                }
+
+                if (code && allDesigns.some(design => String(design.design_code || "").trim().toLowerCase() === code.toLowerCase() && String(design.id) !== String(id))) {
+                    showMessage(adminMessage, "That design code is already used. Please choose a unique code.", "error");
+                    designCode.focus();
+                    return;
+                }
+
                 if (!category) {
 
                     showMessage(
@@ -2270,6 +2347,7 @@
                 }
 
 
+                isSavingDesign = true;
                 saveDesignBtn.disabled = true;
 
                 saveDesignBtn.textContent =
@@ -2435,6 +2513,7 @@
 
                 } finally {
 
+                    isSavingDesign = false;
                     saveDesignBtn.disabled =
                         false;
 
