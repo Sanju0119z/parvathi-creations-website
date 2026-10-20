@@ -2096,6 +2096,59 @@
            ADD / EDIT DESIGN
            ========================================= */
 
+
+        /* Add a subtle, centred brand watermark to a separate upload copy.
+           The selected/original photo in the editor remains unchanged. */
+        async function createWatermarkedUploadFile(file) {
+            const imageUrl = URL.createObjectURL(file);
+            try {
+                const image = new Image();
+                await new Promise((resolve, reject) => {
+                    image.onload = resolve;
+                    image.onerror = () => reject(new Error("Could not read the selected image."));
+                    image.src = imageUrl;
+                });
+
+                const maxDimension = 2400;
+                const scale = Math.min(1, maxDimension / Math.max(image.naturalWidth, image.naturalHeight));
+                const canvas = document.createElement("canvas");
+                canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+                canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+                const ctx = canvas.getContext("2d");
+                if (!ctx) throw new Error("Your browser could not prepare the watermark.");
+
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                const sampleX = Math.max(0, Math.min(canvas.width - 1, Math.floor(canvas.width / 2)));
+                const sampleY = Math.max(0, Math.min(canvas.height - 1, Math.floor(canvas.height / 2)));
+                const pixel = ctx.getImageData(sampleX, sampleY, 1, 1).data;
+                const brightness = (pixel[0] * 299 + pixel[1] * 587 + pixel[2] * 114) / 1000;
+                const watermarkColor = brightness > 145 ? "#3b1720" : "#fffaf2";
+                const fontSize = Math.max(16, Math.round(canvas.width * 0.038));
+
+                ctx.save();
+                ctx.globalAlpha = 0.24;
+                ctx.font = "600 " + fontSize + "px Georgia, serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.lineJoin = "round";
+                ctx.lineWidth = Math.max(1.5, fontSize * 0.075);
+                ctx.strokeStyle = brightness > 145 ? "rgba(255,250,242,0.65)" : "rgba(43,21,21,0.55)";
+                ctx.strokeText("ParvathiCreations", canvas.width / 2, canvas.height / 2, canvas.width * 0.78);
+                ctx.fillStyle = watermarkColor;
+                ctx.fillText("ParvathiCreations", canvas.width / 2, canvas.height / 2, canvas.width * 0.78);
+                ctx.restore();
+
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob(result => result ? resolve(result) : reject(new Error("Could not create the watermarked image.")), "image/jpeg", 0.94);
+                });
+                const outputName = file.name.replace(/\.[^.]+$/, "") + "-watermarked.jpg";
+                return new File([blob], outputName, { type: "image/jpeg", lastModified: Date.now() });
+            } finally {
+                URL.revokeObjectURL(imageUrl);
+            }
+        }
+
         const festivalUploadForm = document.getElementById("festivalUploadForm");
         festivalUploadForm.addEventListener("submit", async function(event) {
             event.preventDefault();
@@ -2115,7 +2168,8 @@
             try {
                 const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
                 const filePath = "festival/" + Date.now() + "-" + Math.random().toString(36).substring(2, 8) + "-" + safeName;
-                const { error: uploadError } = await supabaseClient.storage.from("design-images").upload(filePath, file, { cacheControl: "3600", upsert: false });
+                const watermarkedFile = await createWatermarkedUploadFile(file);
+                const { error: uploadError } = await supabaseClient.storage.from("design-images").upload(filePath.replace(/\.[^.]+$/, ".jpg"), watermarkedFile, { cacheControl: "3600", upsert: false });
                 if (uploadError) throw uploadError;
                 const { data: publicData } = supabaseClient.storage.from("design-images").getPublicUrl(filePath);
                 const { error: insertError } = await supabaseClient.from("designs").insert([{
@@ -2236,9 +2290,11 @@
                             const safeName = imageFile.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
                             const uniqueName = Date.now() + "-" + Math.random().toString(36).substring(2, 8) + "-" + safeName;
                             const filePath = "designs/" + uniqueName;
+                            const watermarkedImageFile = await createWatermarkedUploadFile(imageFile);
+                            const uploadPath = filePath.replace(/\.[^.]+$/, ".jpg");
                             const { error: uploadError } = await supabaseClient.storage
                                 .from("design-images")
-                                .upload(filePath, imageFile, { cacheControl: "3600", upsert: false });
+                                .upload(uploadPath, watermarkedImageFile, { cacheControl: "3600", upsert: false });
                             if (uploadError) throw uploadError;
                             const { data: publicData } = supabaseClient.storage
                                 .from("design-images")
