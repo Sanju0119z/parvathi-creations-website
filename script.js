@@ -2,7 +2,7 @@
   "use strict";
 
   /* ---------- Configuration ---------- */
-  const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
+  const SUPABASE_URL = "https://ydhqjkyzbbooolaugdk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs"; // public (publishable) key by design; access is controlled by RLS
   const WHATSAPP_NUMBER = "919550766784";
   const LIKES_KEY = "parvathi-creations-liked-designs";
