@@ -112,8 +112,36 @@
     <div class="footer-links"><a href="#collection">Collection</a><a href="#services">Services</a><a href="#contact">Contact</a><a href="https://www.instagram.com/parvathicreations8/">Instagram ↗</a><a href="admin.html">Owner login</a></div>
     <small>© <span id="year">2026</span> Parvathi Creations. Made with care.</small>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" crossorigin="anonymous"></script>
-  <script src="categories.js?v=20261012-3"></script>
-  <script src="script.js?v=20261021-2" defer></script>
+  <script>
+    // Try a backup CDN if the primary Supabase SDK cannot load.
+    (function () {
+      var sources = [
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js",
+        "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"
+      ];
+      function loadSiteScripts() {
+        var categories = document.createElement("script");
+        categories.src = "categories.js?v=20261021-3";
+        categories.onload = loadGallery;
+        categories.onerror = loadGallery;
+        document.body.appendChild(categories);
+      }
+      function loadGallery() {
+        var app = document.createElement("script");
+        app.src = "script.js?v=20261021-3";
+        document.body.appendChild(app);
+      }
+      function loadSdk(i) {
+        if (i >= sources.length) { loadSiteScripts(); return; }
+        var sdk = document.createElement("script");
+        sdk.src = sources[i];
+        sdk.crossOrigin = "anonymous";
+        sdk.onload = loadSiteScripts;
+        sdk.onerror = function () { loadSdk(i + 1); };
+        document.head.appendChild(sdk);
+      }
+      loadSdk(0);
+    })();
+  </script>
 </body>
 </html>
