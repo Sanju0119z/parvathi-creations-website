@@ -140,7 +140,7 @@ a{color:inherit}
   .language-picker{order:4;width:100%;justify-content:flex-start;padding-top:5px}
   .language-picker label{font-size:10px}
   .language-picker select{flex:1;min-width:115px}
-  .gallery-tools{grid-template-columns:minmax(0,1fr);gap:9px}
+  .gallery-tools{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
   .gallery-tools>*{width:100%;min-width:0}
   .gallery-count{font-size:12px;line-height:1.5}
   .design-actions{gap:7px}
