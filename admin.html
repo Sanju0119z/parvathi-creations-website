@@ -10,7 +10,7 @@
 
     <title>Parvathi Creations - Admin</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261021-1">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
@@ -587,7 +587,7 @@
         .customer-preview-card{background:#fff;border:1px solid #eadbd5;border-radius:15px;overflow:hidden}
         .customer-preview-image{position:relative;background:#f7efec;min-height:180px;display:flex;align-items:center;justify-content:center}
         .customer-preview-image img{display:block;width:100%;max-height:420px;object-fit:contain}
-        .customer-preview-watermark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(16px,4vw,25px);font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.64);text-shadow:0 1px 3px rgba(0,0,0,.38);white-space:nowrap;pointer-events:none}
+        .customer-preview-watermark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(16px,4vw,25px);font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.22);text-shadow:0 1px 3px rgba(0,0,0,.22);white-space:nowrap;pointer-events:none}
         .customer-preview-copy{padding:15px}.customer-preview-copy h3{margin:0 0 7px;color:#61243a}.customer-preview-copy p{margin:8px 0;line-height:1.5;color:#5e5552;overflow-wrap:anywhere}.customer-preview-price{font-weight:800;color:#8d2847;font-size:19px}
         .customer-preview-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
 
@@ -1416,12 +1416,12 @@
 
                     console.error(error);
 
-                    showMessage(
-                        loginMessage,
-                        error.message ||
-                        "Login failed. Please check your email and password.",
-                        "error"
-                    );
+                    const rawMessage = String(error && error.message || "");
+                    const networkFailure = /failed to fetch|fetch failed|networkerror|network request failed|load failed|failed to load/i.test(rawMessage);
+                    const loginHelp = networkFailure
+                        ? "Cannot reach Supabase authentication. Check your internet connection and open the published admin page (not a local file). If this keeps happening, the Supabase project/API may be unreachable; it does not automatically mean your password is wrong."
+                        : (rawMessage || "Login failed. Please check your email and password.");
+                    showMessage(loginMessage, loginHelp, "error");
 
                 } finally {
 

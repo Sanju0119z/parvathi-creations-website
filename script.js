@@ -35,6 +35,55 @@
     showing: (n, total) => "Showing " + n + " of " + total + " design" + (total === 1 ? "" : "s")
   };
 
+  /* Gallery status and count text follows the same language selector as the rest of the site. */
+  const galleryTextByLanguage = {
+    te: {
+      loading: "డిజైన్లు లోడ్ అవుతున్నాయి…",
+      errorTitle: "ప్రస్తుతం డిజైన్లను లోడ్ చేయలేకపోయాం.",
+      errorHelp: "ఇంటర్నెట్ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
+      retry: "మళ్లీ ప్రయత్నించండి",
+      emptyTitle: "మా డిజైన్ గ్యాలరీ నవీకరించబడుతోంది.",
+      emptyHelp: "కొత్త డిజైన్లు త్వరలో కనిపిస్తాయి. అప్పటివరకు తాజా డిజైన్ల కోసం WhatsAppలో సందేశం పంపండి.",
+      noMatchTitle: "మీ ఎంపికలకు సరిపోయే డిజైన్లు లేవు.",
+      noMatchHelp: "మరొక వర్గం లేదా శోధనను ప్రయత్నించండి, లేదా ఫిల్టర్లను తొలగించండి.",
+      clearFilters: "ఫిల్టర్లను తొలగించండి",
+      photoUnavailable: "ఫోటో అందుబాటులో లేదు",
+      showing: (n, total) => total + " డిజైన్లలో " + n + " చూపిస్తున్నాం"
+    },
+    hi: {
+      loading: "डिज़ाइन लोड हो रहे हैं…",
+      errorTitle: "अभी डिज़ाइन लोड नहीं हो सके।",
+      errorHelp: "अपना इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",
+      retry: "फिर कोशिश करें",
+      emptyTitle: "हमारी डिज़ाइन गैलरी अपडेट हो रही है।",
+      emptyHelp: "नए डिज़ाइन जल्द दिखाई देंगे। तब तक हमारे नए काम देखने के लिए WhatsApp पर संदेश भेजें।",
+      noMatchTitle: "आपकी पसंद से मेल खाने वाले डिज़ाइन नहीं मिले।",
+      noMatchHelp: "दूसरी श्रेणी या खोज आज़माएँ, या फ़िल्टर हटाएँ।",
+      clearFilters: "फ़िल्टर हटाएँ",
+      photoUnavailable: "फ़ोटो उपलब्ध नहीं है",
+      showing: (n, total) => total + " डिज़ाइन में से " + n + " दिखाए जा रहे हैं"
+    }
+  };
+
+  function applyGalleryLanguage(language) {
+    const translated = galleryTextByLanguage[language];
+    if (!translated) {
+      TEXT.loading = "Loading designs…";
+      TEXT.errorTitle = "We couldn’t load the designs right now.";
+      TEXT.errorHelp = "Please check your connection and try again.";
+      TEXT.retry = "Try again";
+      TEXT.emptyTitle = "Our design gallery is being updated.";
+      TEXT.emptyHelp = "New designs will appear here soon. In the meantime, message us on WhatsApp to see our latest work.";
+      TEXT.noMatchTitle = "No designs match your choices.";
+      TEXT.noMatchHelp = "Try another category or search, or clear the filters.";
+      TEXT.clearFilters = "Clear filters";
+      TEXT.photoUnavailable = "Photo unavailable";
+      TEXT.showing = (n, total) => "Showing " + n + " of " + total + " design" + (total === 1 ? "" : "s");
+      return;
+    }
+    Object.keys(translated).forEach(key => { TEXT[key] = translated[key]; });
+  }
+
   const cats = window.PCCategories;
   const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, status: "loading" };
   let loading = false;
@@ -226,10 +275,10 @@
     if (!original || language === "en") return original;
     const phraseMaps = {
       te: {
-        "Designer Wear":"డిజైనర్ దుస్తులు", "Designer Blouses":"డిజైనర్ బ్లౌజులు", "Designer Blouse":"డిజైనర్ బ్లౌజ్", "Blouse Design":"బ్లౌజ్ డిజైన్", "Blouse Designs":"బ్లౌజ్ డిజైన్లు", "Wedding Wear":"పెళ్లి దుస్తులు", "Bridal Wear":"వధువు దుస్తులు", "Kids Wear":"పిల్లల దుస్తులు", "Frocks":"ఫ్రాక్స్", "Frock":"ఫ్రాక్", "Lehenga":"లెహంగా", "Lehengas":"లెహంగాలు", "Saree":"చీర", "Tassels":"టాసెల్స్", "Maggam Work":"మగ్గం వర్క్", "Embroidery":"ఎంబ్రాయిడరీ", "Computer Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Custom Design":"కస్టమ్ డిజైన్", "Custom Designs":"కస్టమ్ డిజైన్లు", "Traditional":"సంప్రదాయ", "Handwork":"చేతిపని", "Hand Work":"చేతిపని", "Silk":"పట్టు", "Cotton":"కాటన్", "Party Wear":"పార్టీ వేర్", "Bridal":"పెళ్లి", "Beautiful":"అందమైన", "New Design":"కొత్త డిజైన్", "Description":"వివరణ", "Price available on enquiry":"ధర కోసం సంప్రదించండి", "Please contact us for more details about this design.":"ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి."
+        "Computer Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Computer Work":"కంప్యూటర్ వర్క్", "Computerized Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Designer Lehengas":"డిజైనర్ లెహంగాలు", "Designer Wear":"డిజైనర్ దుస్తులు", "Designer Blouses":"డిజైనర్ బ్లౌజులు", "Designer Blouse":"డిజైనర్ బ్లౌజ్", "Blouse Designs":"బ్లౌజ్ డిజైన్లు", "Blouse Design":"బ్లౌజ్ డిజైన్", "Wedding Dresses":"పెళ్లి దుస్తులు", "Wedding Wear":"పెళ్లి దుస్తులు", "Bridal Wear":"వధువు దుస్తులు", "Kids Wear":"పిల్లల దుస్తులు", "Sarees & Tassels":"చీరలు మరియు టాసెల్స్", "Saree Tassels":"చీర టాసెల్స్", "Custom Designs":"కస్టమ్ డిజైన్లు", "Custom Design":"కస్టమ్ డిజైన్", "Maggam Work":"మగ్గం వర్క్", "Frocks":"ఫ్రాక్స్", "Frock":"ఫ్రాక్", "Lehengas":"లెహంగాలు", "Lehenga":"లెహంగా", "Sarees":"చీరలు", "Saree":"చీర", "Tassels":"టాసెల్స్", "Embroidery":"ఎంబ్రాయిడరీ", "Tailoring":"దుస్తుల కుట్టు", "Traditional":"సంప్రదాయ", "Handwork":"చేతిపని", "Hand Work":"చేతిపని", "Silk":"పట్టు", "Cotton":"కాటన్", "Party Wear":"పార్టీ వేర్", "Bridal":"పెళ్లి", "Beautiful":"అందమైన", "New Design":"కొత్త డిజైన్", "Description":"వివరణ", "Price available on enquiry":"ధర కోసం సంప్రదించండి", "Please contact us for more details about this design.":"ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి."
       },
       hi: {
-        "Designer Wear":"डिज़ाइनर कपड़े", "Designer Blouses":"डिज़ाइनर ब्लाउज़", "Designer Blouse":"डिज़ाइनर ब्लाउज़", "Blouse Design":"ब्लाउज़ डिज़ाइन", "Blouse Designs":"ब्लाउज़ डिज़ाइन", "Wedding Wear":"शादी के कपड़े", "Bridal Wear":"दुल्हन के कपड़े", "Kids Wear":"बच्चों के कपड़े", "Frocks":"फ्रॉक", "Frock":"फ्रॉक", "Lehenga":"लहंगा", "Lehengas":"लहंगे", "Saree":"साड़ी", "Tassels":"लटकन", "Maggam Work":"मग्गम वर्क", "Embroidery":"कढ़ाई", "Computer Embroidery":"कंप्यूटर कढ़ाई", "Custom Design":"कस्टम डिज़ाइन", "Custom Designs":"कस्टम डिज़ाइन", "Traditional":"पारंपरिक", "Handwork":"हाथ का काम", "Hand Work":"हाथ का काम", "Silk":"रेशम", "Cotton":"सूती", "Party Wear":"पार्टी वियर", "Bridal":"दुल्हन", "Beautiful":"सुंदर", "New Design":"नया डिज़ाइन", "Description":"विवरण", "Price available on enquiry":"कीमत जानने के लिए संपर्क करें", "Please contact us for more details about this design.":"इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें."
+        "Computer Embroidery":"कंप्यूटर कढ़ाई", "Computer Work":"कंप्यूटर वर्क", "Computerized Embroidery":"कंप्यूटर कढ़ाई", "Designer Lehengas":"डिज़ाइनर लहंगे", "Designer Wear":"डिज़ाइनर कपड़े", "Designer Blouses":"डिज़ाइनर ब्लाउज़", "Designer Blouse":"डिज़ाइनर ब्लाउज़", "Blouse Designs":"ब्लाउज़ डिज़ाइन", "Blouse Design":"ब्लाउज़ डिज़ाइन", "Wedding Dresses":"शादी के कपड़े", "Wedding Wear":"शादी के कपड़े", "Bridal Wear":"दुल्हन के कपड़े", "Kids Wear":"बच्चों के कपड़े", "Sarees & Tassels":"साड़ी और लटकन", "Saree Tassels":"साड़ी टैसल", "Custom Designs":"कस्टम डिज़ाइन", "Custom Design":"कस्टम डिज़ाइन", "Maggam Work":"मग्गम वर्क", "Frocks":"फ्रॉक", "Frock":"फ्रॉक", "Lehengas":"लहंगे", "Lehenga":"लहंगा", "Sarees":"साड़ियाँ", "Saree":"साड़ी", "Tassels":"लटकन", "Embroidery":"कढ़ाई", "Tailoring":"सिलाई", "Traditional":"पारंपरिक", "Handwork":"हाथ का काम", "Hand Work":"हाथ का काम", "Silk":"रेशम", "Cotton":"सूती", "Party Wear":"पार्टी वियर", "Bridal":"दुल्हन", "Beautiful":"सुंदर", "New Design":"नया डिज़ाइन", "Description":"विवरण", "Price available on enquiry":"कीमत जानने के लिए संपर्क करें", "Please contact us for more details about this design.":"इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें."
       }
     };
     let result = original;
@@ -380,6 +429,7 @@
 
 
   document.addEventListener("parvathi-language-changed", function () {
+    applyGalleryLanguage(document.documentElement.lang || "en");
     if (state.status !== "loading" && el.grid) render();
   });
 
