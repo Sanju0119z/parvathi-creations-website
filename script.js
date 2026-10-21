@@ -86,7 +86,37 @@
     Object.keys(translated).forEach(key => { TEXT[key] = translated[key]; });
   }
 
-  const cats = window.PCCategories;
+  const cats = window.PCCategories || (function () {
+    /* Keep the gallery usable if categories.js is blocked by a CDN/network hiccup. */
+    const list = [
+      { key: "maggam", label: "Maggam Work", aliases: ["maggam", "maggam work", "thread work", "hand embroidery"] },
+      { key: "computer", label: "Computer Embroidery", aliases: ["computer", "computer work", "computer embroidery", "computerized embroidery", "machine embroidery"] },
+      { key: "blouse", label: "Blouse Designs", aliases: ["blouse", "blouses", "blouse designs"] },
+      { key: "designer-blouses", label: "Designer Blouses", aliases: ["designer blouse", "designer blouses"] },
+      { key: "designer", label: "Designer Wear", aliases: ["designer", "designer wear", "designerwear"] },
+      { key: "frocks", label: "Frocks", aliases: ["frock", "frocks", "kids frock", "baby frock"] },
+      { key: "lehenga", label: "Designer Lehengas", aliases: ["lehenga", "lehengas", "designer lehengas"] },
+      { key: "bridal", label: "Wedding Wear", aliases: ["bridal", "bridal wear", "wedding", "wedding wear", "wedding dresses", "occasionwear"] },
+      { key: "kids", label: "Kids Wear", aliases: ["kids", "kids wear", "children wear"] },
+      { key: "saree", label: "Sarees & Tassels", aliases: ["saree", "sarees", "saree tassels", "tassels"] },
+      { key: "custom", label: "Custom Designs", aliases: ["custom", "custom design", "custom designs", "tailoring", "salwar"] }
+    ];
+    const normalizeText = value => String(value == null ? "" : value).toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9 ]+/g, " ").replace(/\\s+/g, " ").trim();
+    const aliasToKey = {};
+    list.forEach(category => {
+      aliasToKey[normalizeText(category.key)] = category.key;
+      aliasToKey[normalizeText(category.label)] = category.key;
+      category.aliases.forEach(alias => { aliasToKey[normalizeText(alias)] = category.key; });
+    });
+    return {
+      list,
+      UNCATEGORIZED: "uncategorized",
+      normalizeText,
+      keyFor: value => aliasToKey[normalizeText(value)] || "uncategorized",
+      labelFor: key => (list.find(category => category.key === key) || {}).label || "Other",
+      isKnownKey: key => list.some(category => category.key === key)
+    };
+  })();
   const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, view: "all", status: "loading" };
   let loading = false;
   let heroSlideIndex = 0;
@@ -523,7 +553,23 @@
     /* Prefer designs marked Featured in Admin, but fall back to all visible uploaded designs so the hero never disappears just because none are featured. */
     const featuredSlides = availableSlides.filter(d => d.featured);
     const slides = featuredSlides.length ? featuredSlides : availableSlides;
-    if (!slides.length) { root.hidden = true; return; }
+    if (!slides.length) {
+      /* Keep the hero visible during an empty gallery or temporary Supabase outage. */
+      root.hidden = false;
+      root.classList.add("is-single");
+      image.src = "sareejpg.jpg";
+      image.alt = "Parvathi Creations boutique design";
+      if (name) name.textContent = "Thoughtfully Made, Beautifully Yours";
+      if (category) category.textContent = "Custom stitching & occasionwear";
+      if (dots) dots.replaceChildren();
+      if (count) count.textContent = "";
+      const kicker = root.querySelector(".hero-slide-kicker");
+      if (kicker) kicker.textContent = "PARVATHI CREATIONS";
+      [document.getElementById("heroSlidePrev"), document.getElementById("heroSlideNext")].forEach(button => {
+        if (button) button.hidden = true;
+      });
+      return;
+    }
     root.hidden = false;
     heroSlideIndex = Math.min(heroSlideIndex, slides.length - 1);
     dots.replaceChildren();
