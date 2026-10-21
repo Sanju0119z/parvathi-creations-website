@@ -152,3 +152,9 @@ a{color:inherit}
   .main-nav a{font-size:9px}
   .gallery-filters .filter-btn{padding:8px 9px}
 }
+
+
+/* Wishlist and recently viewed gallery controls */
+.gallery-view-btn{white-space:nowrap}
+.gallery-view-btn.active,.gallery-view-btn[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff}
+@media(max-width:560px){.gallery-view-btn{white-space:normal;text-align:center}}

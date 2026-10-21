@@ -10,7 +10,7 @@
 
     <title>Parvathi Creations - Admin</title>
 
-    <link rel="stylesheet" href="style.css?v=20261021-1">
+    <link rel="stylesheet" href="style.css?v=20261021-2">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
@@ -588,6 +588,12 @@
         .customer-preview-image{position:relative;background:#f7efec;min-height:180px;display:flex;align-items:center;justify-content:center}
         .customer-preview-image img{display:block;width:100%;max-height:420px;object-fit:contain}
         .customer-preview-watermark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(16px,4vw,25px);font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.22);text-shadow:0 1px 3px rgba(0,0,0,.22);white-space:nowrap;pointer-events:none}
+        .customer-interest-panel{margin-top:34px;border-top:3px solid var(--admin-gold)}
+        .customer-interest-subtitle,.customer-interest-note{color:var(--admin-gray);font-size:13px;line-height:1.6}
+        .interest-stats{margin:18px 0}
+        .interest-popular{font-size:15px;overflow-wrap:anywhere}
+        .interest-table-wrap{margin-top:14px}
+        @media(max-width:600px){.customer-interest-panel .panel-header{align-items:flex-start;gap:10px;flex-direction:column}.customer-interest-panel .panel-header button{width:100%}.interest-table-wrap{overflow-x:auto}}
         .customer-preview-copy{padding:15px}.customer-preview-copy h3{margin:0 0 7px;color:#61243a}.customer-preview-copy p{margin:8px 0;line-height:1.5;color:#5e5552;overflow-wrap:anywhere}.customer-preview-price{font-weight:800;color:#8d2847;font-size:19px}
         .customer-preview-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
 
@@ -1146,6 +1152,30 @@
 
             </div>
 
+            <!-- CUSTOMER INTEREST DASHBOARD: visible only after admin authentication, at the bottom -->
+            <section class="panel customer-interest-panel" id="customerInterestPanel" aria-labelledby="customerInterestTitle">
+                <div class="panel-header">
+                    <div>
+                        <h3 id="customerInterestTitle">Customer Interest Dashboard</h3>
+                        <p class="customer-interest-subtitle">Private admin view · Saved-design activity, views, and WhatsApp enquiries</p>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-small" id="refreshInterestBtn">Refresh statistics</button>
+                </div>
+                <div class="stats-grid interest-stats">
+                    <div class="stat-card"><span>Design views</span><strong id="interestViews">—</strong></div>
+                    <div class="stat-card"><span>Wishlist saves</span><strong id="interestLikes">—</strong></div>
+                    <div class="stat-card"><span>WhatsApp enquiries</span><strong id="interestEnquiries">—</strong></div>
+                    <div class="stat-card"><span>Popular design</span><strong id="interestPopular" class="interest-popular">—</strong></div>
+                </div>
+                <p id="interestDashboardMessage" class="customer-interest-note" role="status">Loading customer-interest statistics…</p>
+                <div class="table-wrapper interest-table-wrap" id="interestTableWrapper" hidden>
+                    <table class="design-table">
+                        <thead><tr><th>Design</th><th>Views</th><th>Saves</th><th>Enquiries</th></tr></thead>
+                        <tbody id="interestTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
         </main>
 
     </section>
@@ -1531,6 +1561,7 @@
             headerActions.classList.remove("hidden");
 
             await loadDesigns();
+            await loadCustomerInterestDashboard();
 
         }
 
@@ -2776,6 +2807,60 @@
 
         }
 
+
+        /* =========================================
+           CUSTOMER INTEREST DASHBOARD (ADMIN ONLY)
+           ========================================= */
+        const interestMessage = document.getElementById("interestDashboardMessage");
+        const interestTableWrapper = document.getElementById("interestTableWrapper");
+        const interestTableBody = document.getElementById("interestTableBody");
+
+        async function loadCustomerInterestDashboard() {
+            const ids = ["interestViews", "interestLikes", "interestEnquiries", "interestPopular"];
+            ids.forEach(id => { const node = document.getElementById(id); if (node) node.textContent = "—"; });
+            interestTableWrapper.hidden = true;
+            interestTableBody.replaceChildren();
+            interestMessage.textContent = "Loading customer-interest statistics…";
+            try {
+                const { data, error } = await supabaseClient
+                    .from("design_interactions")
+                    .select("event_type, design_id, design_code, design_name, created_at")
+                    .order("created_at", { ascending: false })
+                    .limit(2000);
+                if (error) throw error;
+                const events = Array.isArray(data) ? data : [];
+                const count = (type) => events.filter(event => event.event_type === type).length;
+                document.getElementById("interestViews").textContent = count("view");
+                document.getElementById("interestLikes").textContent = count("like");
+                document.getElementById("interestEnquiries").textContent = count("enquiry");
+                const grouped = new Map();
+                events.forEach(event => {
+                    const key = String(event.design_id || event.design_code || event.design_name || "unknown");
+                    if (!grouped.has(key)) grouped.set(key, {name:event.design_name || event.design_code || "Design", views:0, likes:0, enquiries:0});
+                    const row = grouped.get(key);
+                    if (event.event_type === "view") row.views++;
+                    if (event.event_type === "like") row.likes++;
+                    if (event.event_type === "enquiry") row.enquiries++;
+                });
+                const rows = [...grouped.values()].sort((x,y) => (y.enquiries*4+y.likes*2+y.views) - (x.enquiries*4+x.likes*2+x.views)).slice(0,10);
+                document.getElementById("interestPopular").textContent = rows[0] ? rows[0].name : "No data yet";
+                rows.forEach(row => {
+                    const tr = document.createElement("tr");
+                    [row.name, row.views, row.likes, row.enquiries].forEach(value => {
+                        const td = document.createElement("td"); td.textContent = String(value); tr.append(td);
+                    });
+                    interestTableBody.append(tr);
+                });
+                interestTableWrapper.hidden = rows.length === 0;
+                interestMessage.textContent = events.length
+                    ? "Showing the latest " + events.length + " tracked interactions. Counts are limited to the latest 2,000 events."
+                    : "No customer activity has been recorded yet. Once the analytics table is configured, design views, wishlist saves, and WhatsApp enquiry clicks will appear here.";
+            } catch (error) {
+                console.warn("Customer-interest analytics is not configured or could not be loaded.", error);
+                interestMessage.textContent = "Analytics setup is required: create the design_interactions table and its row-level security policies in Supabase. The public website remains usable without analytics.";
+            }
+        }
+        document.getElementById("refreshInterestBtn").addEventListener("click", loadCustomerInterestDashboard);
 
         /* =========================================
            START

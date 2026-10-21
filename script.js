@@ -6,6 +6,8 @@
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs"; // public (publishable) key by design; access is controlled by RLS
   const WHATSAPP_NUMBER = "919550766784";
   const LIKES_KEY = "parvathi-creations-liked-designs";
+  const RECENT_KEY = "parvathi-creations-recently-viewed";
+  const INTEREST_TABLE = "design_interactions";
 
   /* Customer-facing text lives in one place so it can be translated later. */
   const TEXT = {
@@ -85,7 +87,7 @@
   }
 
   const cats = window.PCCategories;
-  const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, status: "loading" };
+  const state = { designs: [], category: "all", query: "", sort: "newest", featuredOnly: false, view: "all", status: "loading" };
   let loading = false;
   let heroSlideIndex = 0;
   let heroSlideTimer = null;
@@ -134,7 +136,11 @@
   /* ---------- Filtering, searching and sorting (all combine) ---------- */
   function visibleDesigns() {
     const q = cats.normalizeText(state.query);
+    const savedIds = readLikedDesigns();
+    const recentIds = readRecentDesigns();
     const list = state.designs.filter(d => {
+      if (state.view === "saved" && !savedIds.includes(d.id)) return false;
+      if (state.view === "recent" && !recentIds.includes(d.id)) return false;
       if (state.category !== "all" && d.categoryKey !== state.category) return false;
       if (state.featuredOnly && !d.featured) return false;
       if (q) {
@@ -160,9 +166,37 @@
   function writeLikedDesigns(list) {
     try { localStorage.setItem(LIKES_KEY, JSON.stringify(list)); } catch (_) {}
   }
+  function readRecentDesigns() {
+    try {
+      const value = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch (_) { return []; }
+  }
+  function rememberRecentDesign(id) {
+    const recent = readRecentDesigns().filter(value => value !== id);
+    recent.unshift(id);
+    try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent.slice(0, 12))); } catch (_) {}
+  }
+  async function trackInterest(eventType, design) {
+    if (!design || !design.id) return;
+    try {
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const { error } = await client.from(INTEREST_TABLE).insert({
+        event_type: eventType,
+        design_id: String(design.id),
+        design_code: design.code || null,
+        design_name: (design.name || design.categoryLabel || "Design").slice(0, 160)
+      });
+      if (error) throw error;
+    } catch (error) {
+      // Analytics is optional until the interest table and its policies are installed.
+      if (window.__PC_ANALYTICS_DEBUG__) console.debug("Customer-interest tracking is not configured yet.", error);
+    }
+  }
 
   function openWhatsApp(design) {
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
+    trackInterest("enquiry", design);
     const parts = [pcUiText("message") + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
     if (design.code) parts.push(pcUiText("code") + design.code + ".");
     if (design.price) parts.push(pcUiText("price") + design.price);
@@ -314,7 +348,11 @@
     imageButton.type = "button";
     imageButton.className = "design-image-trigger";
     imageButton.setAttribute("aria-label", (pcCurrentLanguage() === "te" ? "డిజైన్ వివరాలు చూడండి: " : pcCurrentLanguage() === "hi" ? "डिज़ाइन विवरण देखें: " : "View details for ") + pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name"));
-    imageButton.addEventListener("click", () => openDesignDetails(design));
+    imageButton.addEventListener("click", () => {
+      rememberRecentDesign(design.id);
+      trackInterest("view", design);
+      openDesignDetails(design);
+    });
     const img = document.createElement("img");
     img.src = design.imageUrl;
     img.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " డిజైన్" : pcCurrentLanguage() === "hi" ? " डिज़ाइन" : " design");
@@ -364,9 +402,11 @@
     like.addEventListener("click", () => {
       const liked = readLikedDesigns();
       const index = liked.indexOf(design.id);
-      if (index >= 0) liked.splice(index, 1); else liked.push(design.id);
+      if (index >= 0) { liked.splice(index, 1); trackInterest("unlike", design); }
+      else { liked.push(design.id); trackInterest("like", design); }
       writeLikedDesigns(liked);
       renderLike();
+      if (state.view === "saved") render();
     });
     const enquire = document.createElement("button");
     enquire.type = "button";
@@ -414,12 +454,37 @@
   function render() {
     syncControls();
     el.grid.replaceChildren();
+    if (el.saved && el.recent) {
+      const lang = pcCurrentLanguage();
+      const labels = {en:{saved:"♡ Saved designs",recent:"◷ Recently viewed",savedOn:"♥ Showing saved designs",recentOn:"◷ Showing recently viewed"},te:{saved:"♡ సేవ్ చేసిన డిజైన్లు",recent:"◷ ఇటీవల చూసినవి",savedOn:"♥ సేవ్ చేసిన డిజైన్లు",recentOn:"◷ ఇటీవల చూసినవి"},hi:{saved:"♡ सेव किए डिज़ाइन",recent:"◷ हाल ही में देखे",savedOn:"♥ सेव किए डिज़ाइन",recentOn:"◷ हाल ही में देखे"}};
+      const t = labels[lang] || labels.en;
+      el.saved.textContent = state.view === "saved" ? t.savedOn : t.saved;
+      el.recent.textContent = state.view === "recent" ? t.recentOn : t.recent;
+      el.saved.setAttribute("aria-pressed", String(state.view === "saved"));
+      el.recent.setAttribute("aria-pressed", String(state.view === "recent"));
+      el.saved.classList.toggle("active", state.view === "saved");
+      el.recent.classList.toggle("active", state.view === "recent");
+    }
     el.grid.setAttribute("aria-busy", String(state.status === "loading"));
     if (state.status === "loading") { setStatus("loading", TEXT.loading); el.count.textContent = ""; return; }
     if (state.status === "error") { setStatus("error", TEXT.errorTitle, TEXT.errorHelp, TEXT.retry, loadDesigns); el.count.textContent = ""; return; }
     if (!state.designs.length) { setStatus("empty", TEXT.emptyTitle, TEXT.emptyHelp); el.count.textContent = ""; return; }
     const list = visibleDesigns();
     el.count.textContent = TEXT.showing(list.length, state.designs.length);
+    if (!list.length && state.view === "saved") {
+      const lang = pcCurrentLanguage();
+      setStatus("empty", lang === "te" ? "ఇంకా సేవ్ చేసిన డిజైన్లు లేవు." : lang === "hi" ? "अभी कोई डिज़ाइन सेव नहीं है।" : "No saved designs yet.",
+        lang === "te" ? "మీకు నచ్చిన డిజైన్‌లోని హృదయ గుర్తును నొక్కితే ఇక్కడ కనిపిస్తుంది." : lang === "hi" ? "किसी डिज़ाइन पर दिल के निशान को दबाएँ, वह यहाँ दिखाई देगा।" : "Tap the heart on any design to save it here.",
+        lang === "te" ? "అన్ని డిజైన్లు చూడండి" : lang === "hi" ? "सभी डिज़ाइन देखें" : "Browse all designs", () => { state.view = "all"; render(); });
+      return;
+    }
+    if (!list.length && state.view === "recent") {
+      const lang = pcCurrentLanguage();
+      setStatus("empty", lang === "te" ? "ఇటీవల చూసిన డిజైన్లు ఇంకా లేవు." : lang === "hi" ? "अभी हाल ही में देखे गए डिज़ाइन नहीं हैं।" : "No recently viewed designs yet.",
+        lang === "te" ? "ఏదైనా డిజైన్‌ను తెరిస్తే అది ఇక్కడ కనిపిస్తుంది." : lang === "hi" ? "किसी डिज़ाइन को खोलें, वह यहाँ दिखाई देगा।" : "Open a design to see it listed here.",
+        lang === "te" ? "అన్ని డిజైన్లు చూడండి" : lang === "hi" ? "सभी डिज़ाइन देखें" : "Browse all designs", () => { state.view = "all"; render(); });
+      return;
+    }
     if (!list.length) { setStatus("empty", TEXT.noMatchTitle, TEXT.noMatchHelp, TEXT.clearFilters, clearFilters); return; }
     setStatus(null);
     const frag = document.createDocumentFragment();
@@ -430,6 +495,17 @@
 
   document.addEventListener("parvathi-language-changed", function () {
     applyGalleryLanguage(document.documentElement.lang || "en");
+    const lang = pcCurrentLanguage();
+    if (el.saved && el.recent) {
+      const labels = {
+        en: {saved:"♡ Saved designs", recent:"◷ Recently viewed", savedOn:"♥ Showing saved designs", recentOn:"◷ Showing recently viewed"},
+        te: {saved:"♡ సేవ్ చేసిన డిజైన్లు", recent:"◷ ఇటీవల చూసినవి", savedOn:"♥ సేవ్ చేసిన డిజైన్లు", recentOn:"◷ ఇటీవల చూసినవి"},
+        hi: {saved:"♡ सेव किए डिज़ाइन", recent:"◷ हाल ही में देखे", savedOn:"♥ सेव किए डिज़ाइन", recentOn:"◷ हाल ही में देखे"}
+      };
+      const t = labels[lang] || labels.en;
+      el.saved.textContent = state.view === "saved" ? t.savedOn : t.saved;
+      el.recent.textContent = state.view === "recent" ? t.recentOn : t.recent;
+    }
     if (state.status !== "loading" && el.grid) render();
   });
 
@@ -532,7 +608,9 @@
     el.sort = document.getElementById("gallerySort");
     el.featured = document.getElementById("galleryFeatured");
     el.count = document.getElementById("galleryCount");
-    if (!el.grid || !el.filters || !el.status || !el.search || !el.sort || !el.featured || !el.count) return false;
+    el.saved = document.getElementById("gallerySaved");
+    el.recent = document.getElementById("galleryRecent");
+    if (!el.grid || !el.filters || !el.status || !el.search || !el.sort || !el.featured || !el.count || !el.saved || !el.recent) return false;
 
     const makeButton = (key, label) => {
       const b = document.createElement("button");
@@ -563,6 +641,8 @@
     el.sort.addEventListener("change", () => { state.sort = el.sort.value; render(); });
     el.featured.textContent = TEXT.featuredOnly;
     el.featured.addEventListener("click", () => { state.featuredOnly = !state.featuredOnly; render(); });
+    el.saved.addEventListener("click", () => { state.view = state.view === "saved" ? "all" : "saved"; render(); });
+    el.recent.addEventListener("click", () => { state.view = state.view === "recent" ? "all" : "recent"; render(); });
     return true;
   }
 
