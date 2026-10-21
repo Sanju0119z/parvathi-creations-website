@@ -520,8 +520,9 @@
     if (!root || !image || !dots) return;
     if (heroSlideTimer) { window.clearInterval(heroSlideTimer); heroSlideTimer = null; }
     const availableSlides = (Array.isArray(designs) ? designs : []).filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
-    /* Only designs explicitly selected in Admin appear in the homepage hero slideshow. */
-    const slides = availableSlides.filter(d => d.featured);
+    /* Prefer designs marked Featured in Admin, but fall back to all visible uploaded designs so the hero never disappears just because none are featured. */
+    const featuredSlides = availableSlides.filter(d => d.featured);
+    const slides = featuredSlides.length ? featuredSlides : availableSlides;
     if (!slides.length) { root.hidden = true; return; }
     root.hidden = false;
     heroSlideIndex = Math.min(heroSlideIndex, slides.length - 1);
@@ -592,6 +593,8 @@
       state.status = "ready";
     } catch (error) {
       console.error("Parvathi Creations: could not load designs.", error);
+      /* Keep the page usable if Supabase is temporarily unavailable; the gallery status offers retry. */
+      initHeroSlider([]);
       state.status = "error";
     } finally {
       loading = false;
