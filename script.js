@@ -2,7 +2,7 @@
   "use strict";
 
   /* ---------- Configuration ---------- */
-  const SUPABASE_URL = "https://ydhqjkyzbbooolaugdk.supabase.co";
+  const SUPABASE_URL = "https://ydhqjkyzbbooolaugydk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_uAy9Zv6zXK_cVFFGJfOxKQ_I1aRhJMs"; // public (publishable) key by design; access is controlled by RLS
   const WHATSAPP_NUMBER = "919550766784";
   const LIKES_KEY = "parvathi-creations-liked-designs";
@@ -40,38 +40,38 @@
   /* Gallery status and count text follows the same language selector as the rest of the site. */
   const galleryTextByLanguage = {
     te: {
-      loading: "à°¡à°¿à°à±à°¨à±à°²à± à°²à±à°¡à± à°à°µà±à°¤à±à°¨à±à°¨à°¾à°¯à°¿â¦",
-      errorTitle: "à°ªà±à°°à°¸à±à°¤à±à°¤à° à°¡à°¿à°à±à°¨à±à°²à°¨à± à°²à±à°¡à± à°à±à°¯à°²à±à°à°ªà±à°¯à°¾à°.",
-      errorHelp: "à°à°à°à°°à±à°¨à±à°à± à°à°¨à±à°à±à°·à°¨à±âà°¨à± à°¤à°¨à°¿à°à± à°à±à°¸à°¿ à°®à°³à±à°²à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°à°à°à°¡à°¿.",
-      retry: "à°®à°³à±à°²à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°à°à°à°¡à°¿",
-      emptyTitle: "à°®à°¾ à°¡à°¿à°à±à°¨à± à°à±à°¯à°¾à°²à°°à± à°¨à°µà±à°à°°à°¿à°à°à°¬à°¡à±à°¤à±à°à°¦à°¿.",
-      emptyHelp: "à°à±à°¤à±à°¤ à°¡à°¿à°à±à°¨à±à°²à± à°¤à±à°µà°°à°²à± à°à°¨à°¿à°ªà°¿à°¸à±à°¤à°¾à°¯à°¿. à°à°ªà±à°ªà°à°¿à°µà°°à°à± à°¤à°¾à°à°¾ à°¡à°¿à°à±à°¨à±à°² à°à±à°¸à° WhatsAppà°²à± à°¸à°à°¦à±à°¶à° à°ªà°à°ªà°à°¡à°¿.",
-      noMatchTitle: "à°®à± à°à°à°ªà°¿à°à°²à°à± à°¸à°°à°¿à°ªà±à°¯à± à°¡à°¿à°à±à°¨à±à°²à± à°²à±à°µà±.",
-      noMatchHelp: "à°®à°°à±à° à°µà°°à±à°à° à°²à±à°¦à°¾ à°¶à±à°§à°¨à°¨à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°à°à°à°¡à°¿, à°²à±à°¦à°¾ à°«à°¿à°²à±à°à°°à±à°²à°¨à± à°¤à±à°²à°à°¿à°à°à°à°¡à°¿.",
-      clearFilters: "à°«à°¿à°²à±à°à°°à±à°²à°¨à± à°¤à±à°²à°à°¿à°à°à°à°¡à°¿",
-      photoUnavailable: "à°«à±à°à± à°à°à°¦à±à°¬à°¾à°à±à°²à± à°²à±à°¦à±",
-      showing: (n, total) => total + " à°¡à°¿à°à±à°¨à±à°²à°²à± " + n + " à°à±à°ªà°¿à°¸à±à°¤à±à°¨à±à°¨à°¾à°"
+      loading: "డిజైన్లు లోడ్ అవుతున్నాయి…",
+      errorTitle: "ప్రస్తుతం డిజైన్లను లోడ్ చేయలేకపోయాం.",
+      errorHelp: "ఇంటర్నెట్ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
+      retry: "మళ్లీ ప్రయత్నించండి",
+      emptyTitle: "మా డిజైన్ గ్యాలరీ నవీకరించబడుతోంది.",
+      emptyHelp: "కొత్త డిజైన్లు త్వరలో కనిపిస్తాయి. అప్పటివరకు తాజా డిజైన్ల కోసం WhatsAppలో సందేశం పంపండి.",
+      noMatchTitle: "మీ ఎంపికలకు సరిపోయే డిజైన్లు లేవు.",
+      noMatchHelp: "మరొక వర్గం లేదా శోధనను ప్రయత్నించండి, లేదా ఫిల్టర్లను తొలగించండి.",
+      clearFilters: "ఫిల్టర్లను తొలగించండి",
+      photoUnavailable: "ఫోటో అందుబాటులో లేదు",
+      showing: (n, total) => total + " డిజైన్లలో " + n + " చూపిస్తున్నాం"
     },
     hi: {
-      loading: "à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤²à¥à¤¡ à¤¹à¥ à¤°à¤¹à¥ à¤¹à¥à¤â¦",
-      errorTitle: "à¤à¤­à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤²à¥à¤¡ à¤¨à¤¹à¥à¤ à¤¹à¥ à¤¸à¤à¥à¥¤",
-      errorHelp: "à¤à¤ªà¤¨à¤¾ à¤à¤à¤à¤°à¤¨à¥à¤ à¤à¤¨à¥à¤à¥à¤¶à¤¨ à¤à¤¾à¤à¤à¥à¤ à¤à¤° à¤«à¤¿à¤° à¤à¥à¤¶à¤¿à¤¶ à¤à¤°à¥à¤à¥¤",
-      retry: "à¤«à¤¿à¤° à¤à¥à¤¶à¤¿à¤¶ à¤à¤°à¥à¤",
-      emptyTitle: "à¤¹à¤®à¤¾à¤°à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥à¤²à¤°à¥ à¤à¤ªà¤¡à¥à¤ à¤¹à¥ à¤°à¤¹à¥ à¤¹à¥à¥¤",
-      emptyHelp: "à¤¨à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¤²à¥à¤¦ à¤¦à¤¿à¤à¤¾à¤ à¤¦à¥à¤à¤à¥à¥¤ à¤¤à¤¬ à¤¤à¤ à¤¹à¤®à¤¾à¤°à¥ à¤¨à¤ à¤à¤¾à¤® à¤¦à¥à¤à¤¨à¥ à¤à¥ à¤²à¤¿à¤ WhatsApp à¤ªà¤° à¤¸à¤à¤¦à¥à¤¶ à¤­à¥à¤à¥à¤à¥¤",
-      noMatchTitle: "à¤à¤ªà¤à¥ à¤ªà¤¸à¤à¤¦ à¤¸à¥ à¤®à¥à¤² à¤à¤¾à¤¨à¥ à¤µà¤¾à¤²à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¨à¤¹à¥à¤ à¤®à¤¿à¤²à¥à¥¤",
-      noMatchHelp: "à¤¦à¥à¤¸à¤°à¥ à¤¶à¥à¤°à¥à¤£à¥ à¤¯à¤¾ à¤à¥à¤ à¤à¤à¤¼à¤®à¤¾à¤à¤, à¤¯à¤¾ à¤«à¤¼à¤¿à¤²à¥à¤à¤° à¤¹à¤à¤¾à¤à¤à¥¤",
-      clearFilters: "à¤«à¤¼à¤¿à¤²à¥à¤à¤° à¤¹à¤à¤¾à¤à¤",
-      photoUnavailable: "à¤«à¤¼à¥à¤à¥ à¤à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥à¤ à¤¹à¥",
-      showing: (n, total) => total + " à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤®à¥à¤ à¤¸à¥ " + n + " à¤¦à¤¿à¤à¤¾à¤ à¤à¤¾ à¤°à¤¹à¥ à¤¹à¥à¤"
+      loading: "डिज़ाइन लोड हो रहे हैं…",
+      errorTitle: "अभी डिज़ाइन लोड नहीं हो सके।",
+      errorHelp: "अपना इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",
+      retry: "फिर कोशिश करें",
+      emptyTitle: "हमारी डिज़ाइन गैलरी अपडेट हो रही है।",
+      emptyHelp: "नए डिज़ाइन जल्द दिखाई देंगे। तब तक हमारे नए काम देखने के लिए WhatsApp पर संदेश भेजें।",
+      noMatchTitle: "आपकी पसंद से मेल खाने वाले डिज़ाइन नहीं मिले।",
+      noMatchHelp: "दूसरी श्रेणी या खोज आज़माएँ, या फ़िल्टर हटाएँ।",
+      clearFilters: "फ़िल्टर हटाएँ",
+      photoUnavailable: "फ़ोटो उपलब्ध नहीं है",
+      showing: (n, total) => total + " डिज़ाइन में से " + n + " दिखाए जा रहे हैं"
     }
   };
 
   function applyGalleryLanguage(language) {
     const translated = galleryTextByLanguage[language];
     if (!translated) {
-      TEXT.loading = "Loading designsâ¦";
-      TEXT.errorTitle = "We couldnât load the designs right now.";
+      TEXT.loading = "Loading designs…";
+      TEXT.errorTitle = "We couldn't load the designs right now.";
       TEXT.errorHelp = "Please check your connection and try again.";
       TEXT.retry = "Try again";
       TEXT.emptyTitle = "Our design gallery is being updated.";
@@ -248,13 +248,13 @@
     dialog.className = "design-details-dialog";
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
-    dialog.setAttribute("aria-label", pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " à°µà°¿à°µà°°à°¾à°²à±" : pcCurrentLanguage() === "hi" ? " à¤µà¤¿à¤µà¤°à¤£" : " details"));
+    dialog.setAttribute("aria-label", pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " వివరాలు" : pcCurrentLanguage() === "hi" ? " विवरण" : " details"));
 
     const close = document.createElement("button");
     close.type = "button";
     close.className = "design-details-close";
-    close.textContent = "Ã";
-    close.setAttribute("aria-label", pcCurrentLanguage() === "te" ? "à°¡à°¿à°à±à°¨à± à°µà°¿à°µà°°à°¾à°²à°¨à± à°®à±à°¸à°¿à°µà±à°¯à°à°¡à°¿" : pcCurrentLanguage() === "hi" ? "à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤µà¤¿à¤µà¤°à¤£ à¤¬à¤à¤¦ à¤à¤°à¥à¤" : "Close design details");
+    close.textContent = "×";
+    close.setAttribute("aria-label", pcCurrentLanguage() === "te" ? "డిజైన్ వివరాలను మూసివేయండి" : pcCurrentLanguage() === "hi" ? "डिज़ाइन विवरण बंद करें" : "Close design details");
     const closeDialog = () => {
       overlay.remove();
       document.removeEventListener("keydown", onKeyDown);
@@ -267,7 +267,7 @@
     const photo = document.createElement("img");
     photo.className = "design-details-photo";
     photo.src = design.imageUrl;
-    photo.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " à°¡à°¿à°à±à°¨à±" : pcCurrentLanguage() === "hi" ? " à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨" : " design");
+    photo.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " డిజైన్" : pcCurrentLanguage() === "hi" ? " डिज़ाइन" : " design");
     media.append(photo);
     const galleryImages = Array.isArray(design.galleryImages) ? design.galleryImages : [design.imageUrl];
     if (galleryImages.length > 1) {
@@ -277,7 +277,7 @@
         const thumb = document.createElement("button");
         thumb.type = "button";
         thumb.className = "design-details-thumbnail" + (url === design.imageUrl ? " is-active" : "");
-        thumb.setAttribute("aria-label", pcCurrentLanguage() === "te" ? (index === 0 ? "à°ªà±à°°à°§à°¾à°¨ à°«à±à°à±" : "à°«à±à°à± " + (index + 1)) : pcCurrentLanguage() === "hi" ? (index === 0 ? "à¤®à¥à¤à¥à¤¯ à¤«à¤¼à¥à¤à¥" : "à¤«à¤¼à¥à¤à¥ " + (index + 1)) : (index === 0 ? "Cover photo" : "Photo " + (index + 1)));
+        thumb.setAttribute("aria-label", pcCurrentLanguage() === "te" ? (index === 0 ? "ప్రధాన ఫోటో" : "ఫోటో " + (index + 1)) : pcCurrentLanguage() === "hi" ? (index === 0 ? "मुख्य फ़ोटो" : "फ़ोटो " + (index + 1)) : (index === 0 ? "Cover photo" : "Photo " + (index + 1)));
         thumb.setAttribute("aria-pressed", url === design.imageUrl ? "true" : "false");
         const thumbImage = document.createElement("img");
         thumbImage.src = url;
@@ -304,17 +304,17 @@
     heading.textContent = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name");
     const price = document.createElement("p");
     price.className = "design-details-price";
-    price.textContent = design.price ? "â¹" + design.price : (pcCurrentLanguage() === "te" ? "à°§à°° à°à±à°¸à° à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿" : pcCurrentLanguage() === "hi" ? "à¤à¥à¤®à¤¤ à¤à¤¾à¤¨à¤¨à¥ à¤à¥ à¤²à¤¿à¤ à¤¸à¤à¤ªà¤°à¥à¤ à¤à¤°à¥à¤" : "Price available on enquiry");
+    price.textContent = design.price ? "₹" + design.price : (pcCurrentLanguage() === "te" ? "ధర కోసం సంప్రదించండి" : pcCurrentLanguage() === "hi" ? "कीमत जानने के लिए संपर्क करें" : "Price available on enquiry");
     const descriptionLabel = document.createElement("h3");
-    descriptionLabel.textContent = pcCurrentLanguage() === "te" ? "à°µà°¿à°µà°°à°£" : pcCurrentLanguage() === "hi" ? "à¤µà¤¿à¤µà¤°à¤£" : "Description";
+    descriptionLabel.textContent = pcCurrentLanguage() === "te" ? "వివరణ" : pcCurrentLanguage() === "hi" ? "विवरण" : "Description";
     const description = document.createElement("p");
     description.className = "design-details-description";
-    description.textContent = design.description ? pcTranslateDesignText(design.description, pcCurrentLanguage(), "description") : (pcCurrentLanguage() === "te" ? "à° à°¡à°¿à°à±à°¨à± à°µà°¿à°µà°°à°¾à°² à°à±à°¸à° à°¦à°¯à°à±à°¸à°¿ à°®à°®à±à°®à°²à±à°¨à°¿ à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿." : pcCurrentLanguage() === "hi" ? "à¤à¤¸ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥ à¤à¤§à¤¿à¤ à¤à¤¾à¤¨à¤à¤¾à¤°à¥ à¤à¥ à¤²à¤¿à¤ à¤à¥à¤ªà¤¯à¤¾ à¤¸à¤à¤ªà¤°à¥à¤ à¤à¤°à¥à¤." : "Please contact us for more details about this design.");
+    description.textContent = design.description ? pcTranslateDesignText(design.description, pcCurrentLanguage(), "description") : (pcCurrentLanguage() === "te" ? "ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి." : pcCurrentLanguage() === "hi" ? "इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें." : "Please contact us for more details about this design.");
     info.append(category, heading, price);
     if (design.code) {
       const code = document.createElement("p");
       code.className = "design-details-code";
-      code.textContent = (pcCurrentLanguage() === "te" ? "à°¡à°¿à°à±à°¨à± à°à±à°¡à±: " : pcCurrentLanguage() === "hi" ? "à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥à¤¡: " : "Design code: ") + design.code;
+      code.textContent = (pcCurrentLanguage() === "te" ? "డిజైన్ కోడ్: " : pcCurrentLanguage() === "hi" ? "डिज़ाइन कोड: " : "Design code: ") + design.code;
       info.append(code);
     }
     info.append(descriptionLabel, description);
@@ -339,10 +339,10 @@
     if (!original || language === "en") return original;
     const phraseMaps = {
       te: {
-        "Computer Embroidery":"à°à°à°ªà±à°¯à±à°à°°à± à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", "Computer Work":"à°à°à°ªà±à°¯à±à°à°°à± à°µà°°à±à°à±", "Computerized Embroidery":"à°à°à°ªà±à°¯à±à°à°°à± à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", "Designer Lehengas":"à°¡à°¿à°à±à°¨à°°à± à°²à±à°¹à°à°à°¾à°²à±", "Designer Wear":"à°¡à°¿à°à±à°¨à°°à± à°¦à±à°¸à±à°¤à±à°²à±", "Designer Blouses":"à°¡à°¿à°à±à°¨à°°à± à°¬à±à°²à±à°à±à°²à±", "Designer Blouse":"à°¡à°¿à°à±à°¨à°°à± à°¬à±à°²à±à°à±", "Blouse Designs":"à°¬à±à°²à±à°à± à°¡à°¿à°à±à°¨à±à°²à±", "Blouse Design":"à°¬à±à°²à±à°à± à°¡à°¿à°à±à°¨à±", "Wedding Dresses":"à°ªà±à°³à±à°²à°¿ à°¦à±à°¸à±à°¤à±à°²à±", "Wedding Wear":"à°ªà±à°³à±à°²à°¿ à°¦à±à°¸à±à°¤à±à°²à±", "Bridal Wear":"à°µà°§à±à°µà± à°¦à±à°¸à±à°¤à±à°²à±", "Kids Wear":"à°ªà°¿à°²à±à°²à°² à°¦à±à°¸à±à°¤à±à°²à±", "Sarees & Tassels":"à°à±à°°à°²à± à°®à°°à°¿à°¯à± à°à°¾à°¸à±à°²à±à°¸à±", "Saree Tassels":"à°à±à°° à°à°¾à°¸à±à°²à±à°¸à±", "Custom Designs":"à°à°¸à±à°à°®à± à°¡à°¿à°à±à°¨à±à°²à±", "Custom Design":"à°à°¸à±à°à°®à± à°¡à°¿à°à±à°¨à±", "Maggam Work":"à°®à°à±à°à° à°µà°°à±à°à±", "Frocks":"à°«à±à°°à°¾à°à±à°¸à±", "Frock":"à°«à±à°°à°¾à°à±", "Lehengas":"à°²à±à°¹à°à°à°¾à°²à±", "Lehenga":"à°²à±à°¹à°à°à°¾", "Sarees":"à°à±à°°à°²à±", "Saree":"à°à±à°°", "Tassels":"à°à°¾à°¸à±à°²à±à°¸à±", "Embroidery":"à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", "Tailoring":"à°¦à±à°¸à±à°¤à±à°² à°à±à°à±à°à±", "Traditional":"à°¸à°à°ªà±à°°à°¦à°¾à°¯", "Handwork":"à°à±à°¤à°¿à°ªà°¨à°¿", "Hand Work":"à°à±à°¤à°¿à°ªà°¨à°¿", "Silk":"à°ªà°à±à°à±", "Cotton":"à°à°¾à°à°¨à±", "Party Wear":"à°ªà°¾à°°à±à°à± à°µà±à°°à±", "Bridal":"à°ªà±à°³à±à°²à°¿", "Beautiful":"à°à°à°¦à°®à±à°¨", "New Design":"à°à±à°¤à±à°¤ à°¡à°¿à°à±à°¨à±", "Description":"à°µà°¿à°µà°°à°£", "Price available on enquiry":"à°§à°° à°à±à°¸à° à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿", "Please contact us for more details about this design.":"à° à°¡à°¿à°à±à°¨à± à°µà°¿à°µà°°à°¾à°² à°à±à°¸à° à°¦à°¯à°à±à°¸à°¿ à°®à°®à±à°®à°²à±à°¨à°¿ à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿."
+        "Computer Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Computer Work":"కంప్యూటర్ వర్క్", "Computerized Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Designer Lehengas":"డిజైనర్ లెహంగాలు", "Designer Wear":"డిజైనర్ దుస్తులు", "Designer Blouses":"డిజైనర్ బ్లౌజులు", "Designer Blouse":"డిజైనర్ బ్లౌజ్", "Blouse Designs":"బ్లౌజ్ డిజైన్లు", "Blouse Design":"బ్లౌజ్ డిజైన్", "Wedding Dresses":"పెళ్లి దుస్తులు", "Wedding Wear":"పెళ్లి దుస్తులు", "Bridal Wear":"వధువు దుస్తులు", "Kids Wear":"పిల్లల దుస్తులు", "Sarees & Tassels":"చీరలు మరియు టాసెల్స్", "Saree Tassels":"చీర టాసెల్స్", "Custom Designs":"కస్టమ్ డిజైన్లు", "Custom Design":"కస్టమ్ డిజైన్", "Maggam Work":"మగ్గం వర్క్", "Frocks":"ఫ్రాక్స్", "Frock":"ఫ్రాక్", "Lehengas":"లెహంగాలు", "Lehenga":"లెహంగా", "Sarees":"చీరలు", "Saree":"చీర", "Tassels":"టాసెల్స్", "Embroidery":"ఎంబ్రాయిడరీ", "Tailoring":"దుస్తుల కుట్టు", "Traditional":"సంప్రదాయ", "Handwork":"చేతిపని", "Hand Work":"చేతిపని", "Silk":"పట్టు", "Cotton":"కాటన్", "Party Wear":"పార్టీ వేర్", "Bridal":"పెళ్లి", "Beautiful":"అందమైన", "New Design":"కొత్త డిజైన్", "Description":"వివరణ", "Price available on enquiry":"ధర కోసం సంప్రదించండి", "Please contact us for more details about this design.":"ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి."
       },
       hi: {
-        "Computer Embroidery":"à¤à¤à¤ªà¥à¤¯à¥à¤à¤° à¤à¤¢à¤¼à¤¾à¤", "Computer Work":"à¤à¤à¤ªà¥à¤¯à¥à¤à¤° à¤µà¤°à¥à¤", "Computerized Embroidery":"à¤à¤à¤ªà¥à¤¯à¥à¤à¤° à¤à¤¢à¤¼à¤¾à¤", "Designer Lehengas":"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤²à¤¹à¤à¤à¥", "Designer Wear":"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤à¤ªà¤¡à¤¼à¥", "Designer Blouses":"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤¬à¥à¤²à¤¾à¤à¤à¤¼", "Designer Blouse":"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤¬à¥à¤²à¤¾à¤à¤à¤¼", "Blouse Designs":"à¤¬à¥à¤²à¤¾à¤à¤à¤¼ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", "Blouse Design":"à¤¬à¥à¤²à¤¾à¤à¤à¤¼ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", "Wedding Dresses":"à¤¶à¤¾à¤¦à¥ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", "Wedding Wear":"à¤¶à¤¾à¤¦à¥ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", "Bridal Wear":"à¤¦à¥à¤²à¥à¤¹à¤¨ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", "Kids Wear":"à¤¬à¤à¥à¤à¥à¤ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", "Sarees & Tassels":"à¤¸à¤¾à¤¡à¤¼à¥ à¤à¤° à¤²à¤à¤à¤¨", "Saree Tassels":"à¤¸à¤¾à¤¡à¤¼à¥ à¤à¥à¤¸à¤²", "Custom Designs":"à¤à¤¸à¥à¤à¤® à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", "Custom Design":"à¤à¤¸à¥à¤à¤® à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", "Maggam Work":"à¤®à¤à¥à¤à¤® à¤µà¤°à¥à¤", "Frocks":"à¤«à¥à¤°à¥à¤", "Frock":"à¤«à¥à¤°à¥à¤", "Lehengas":"à¤²à¤¹à¤à¤à¥", "Lehenga":"à¤²à¤¹à¤à¤à¤¾", "Sarees":"à¤¸à¤¾à¤¡à¤¼à¤¿à¤¯à¤¾à¤", "Saree":"à¤¸à¤¾à¤¡à¤¼à¥", "Tassels":"à¤²à¤à¤à¤¨", "Embroidery":"à¤à¤¢à¤¼à¤¾à¤", "Tailoring":"à¤¸à¤¿à¤²à¤¾à¤", "Traditional":"à¤ªà¤¾à¤°à¤à¤ªà¤°à¤¿à¤", "Handwork":"à¤¹à¤¾à¤¥ à¤à¤¾ à¤à¤¾à¤®", "Hand Work":"à¤¹à¤¾à¤¥ à¤à¤¾ à¤à¤¾à¤®", "Silk":"à¤°à¥à¤¶à¤®", "Cotton":"à¤¸à¥à¤¤à¥", "Party Wear":"à¤ªà¤¾à¤°à¥à¤à¥ à¤µà¤¿à¤¯à¤°", "Bridal":"à¤¦à¥à¤²à¥à¤¹à¤¨", "Beautiful":"à¤¸à¥à¤à¤¦à¤°", "New Design":"à¤¨à¤¯à¤¾ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", "Description":"à¤µà¤¿à¤µà¤°à¤£", "Price available on enquiry":"à¤à¥à¤®à¤¤ à¤à¤¾à¤¨à¤¨à¥ à¤à¥ à¤²à¤¿à¤ à¤¸à¤à¤ªà¤°à¥à¤ à¤à¤°à¥à¤", "Please contact us for more details about this design.":"à¤à¤¸ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥ à¤à¤§à¤¿à¤ à¤à¤¾à¤¨à¤à¤¾à¤°à¥ à¤à¥ à¤²à¤¿à¤ à¤à¥à¤ªà¤¯à¤¾ à¤¸à¤à¤ªà¤°à¥à¤ à¤à¤°à¥à¤."
+        "Computer Embroidery":"कंप्यूटर कढ़ाई", "Computer Work":"कंप्यूटर वर्क", "Computerized Embroidery":"कंप्यूटर कढ़ाई", "Designer Lehengas":"डिज़ाइनर लहंगे", "Designer Wear":"डिज़ाइनर कपड़े", "Designer Blouses":"डिज़ाइनर ब्लाउज़", "Designer Blouse":"डिज़ाइनर ब्लाउज़", "Blouse Designs":"ब्लाउज़ डिज़ाइन", "Blouse Design":"ब्लाउज़ डिज़ाइन", "Wedding Dresses":"शादी के कपड़े", "Wedding Wear":"शादी के कपड़े", "Bridal Wear":"दुल्हन के कपड़े", "Kids Wear":"बच्चों के कपड़े", "Sarees & Tassels":"साड़ी और लटकन", "Saree Tassels":"साड़ी टैसल", "Custom Designs":"कस्टम डिज़ाइन", "Custom Design":"कस्टम डिज़ाइन", "Maggam Work":"मग्गम वर्क", "Frocks":"फ्रॉक", "Frock":"फ्रॉक", "Lehengas":"लहंगे", "Lehenga":"लहंगा", "Sarees":"साड़ियाँ", "Saree":"साड़ी", "Tassels":"लटकन", "Embroidery":"कढ़ाई", "Tailoring":"सिलाई", "Traditional":"पारंपरिक", "Handwork":"हाथ का काम", "Hand Work":"हाथ का काम", "Silk":"रेशम", "Cotton":"सूती", "Party Wear":"पार्टी वियर", "Bridal":"दुल्हन", "Beautiful":"सुंदर", "New Design":"नया डिज़ाइन", "Description":"विवरण", "Price available on enquiry":"कीमत जानने के लिए संपर्क करें", "Please contact us for more details about this design.":"इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें."
       }
     };
     let result = original;
@@ -359,9 +359,9 @@
 
   function pcUiText(key) {
     const labels = {
-      en: {like:"â¡ I Like This Design", liked:"â¥ Liked", enquire:"Enquire on WhatsApp", message:"Hello Parvathi Creations! I would like to enquire about this design: ", code:"Design code: ", price:"Price: â¹", description:"Description: ", details:"Please share details."},
-      te: {like:"â¡ à° à°¡à°¿à°à±à°¨à± à°¨à°¾à°à± à°¨à°à±à°à°¿à°à°¦à°¿", liked:"â¥ à°¨à°à±à°à°¿à°à°¦à°¿", enquire:"à°µà°¾à°à±à°¸à°¾à°ªà±âà°²à± à°µà°¿à°µà°°à°¾à°²à± à°à°¡à°à°à°¡à°¿", message:"à°¨à°®à°¸à±à°à°¾à°°à° à°ªà°¾à°°à±à°µà°¤à°¿ à°à±à°°à°¿à°¯à±à°·à°¨à±à°¸à±! à° à°¡à°¿à°à±à°¨à± à°à±à°°à°¿à°à°à°¿ à°µà°¿à°µà°°à°¾à°²à± à°à°¾à°µà°¾à°²à°¿: ", code:"à°¡à°¿à°à±à°¨à± à°à±à°¡à±: ", price:"à°§à°°: â¹", description:"à°µà°¿à°µà°°à°£: ", details:"à°¦à°¯à°à±à°¸à°¿ à°®à°°à°¿à°¨à±à°¨à°¿ à°µà°¿à°µà°°à°¾à°²à± à°ªà°à°ªà°à°¡à°¿."},
-      hi: {like:"â¡ à¤®à¥à¤à¥ à¤¯à¤¹ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤ªà¤¸à¤à¤¦ à¤¹à¥", liked:"â¥ à¤ªà¤¸à¤à¤¦ à¤à¤¯à¤¾", enquire:"WhatsApp à¤ªà¤° à¤ªà¥à¤à¤¤à¤¾à¤ à¤à¤°à¥à¤", message:"à¤¨à¤®à¤¸à¥à¤¤à¥ à¤ªà¤¾à¤°à¥à¤µà¤¤à¥ à¤à¥à¤°à¤¿à¤à¤¶à¤¨à¥à¤¸! à¤®à¥à¤à¥ à¤à¤¸ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥ à¤¬à¤¾à¤°à¥ à¤®à¥à¤ à¤à¤¾à¤¨à¤à¤¾à¤°à¥ à¤à¤¾à¤¹à¤¿à¤: ", code:"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥à¤¡: ", price:"à¤à¥à¤®à¤¤: â¹", description:"à¤µà¤¿à¤µà¤°à¤£: ", details:"à¤à¥à¤ªà¤¯à¤¾ à¤à¤° à¤à¤¾à¤¨à¤à¤¾à¤°à¥ à¤¸à¤¾à¤à¤¾ à¤à¤°à¥à¤à¥¤"}
+      en: {like:"♡ I Like This Design", liked:"♥ Liked", enquire:"Enquire on WhatsApp", message:"Hello Parvathi Creations! I would like to enquire about this design: ", code:"Design code: ", price:"Price: ₹", description:"Description: ", details:"Please share details."},
+      te: {like:"♡ ఈ డిజైన్ నాకు నచ్చింది", liked:"♥ నచ్చింది", enquire:"వాట్సాప్‌లో వివరాలు అడగండి", message:"నమస్కారం పార్వతి క్రియేషన్స్! ఈ డిజైన్ గురించి వివరాలు కావాలి: ", code:"డిజైన్ కోడ్: ", price:"ధర: ₹", description:"వివరణ: ", details:"దయచేసి మరిన్ని వివరాలు పంపండి."},
+      hi: {like:"♡ मुझे यह डिज़ाइन पसंद है", liked:"♥ पसंद आया", enquire:"WhatsApp पर पूछताछ करें", message:"नमस्ते पार्वती क्रिएशन्स! मुझे इस डिज़ाइन के बारे में जानकारी चाहिए: ", code:"डिज़ाइन कोड: ", price:"कीमत: ₹", description:"विवरण: ", details:"कृपया और जानकारी साझा करें।"}
     };
     return (labels[pcCurrentLanguage()] || labels.en)[key] || labels.en[key] || "";
   }
@@ -377,7 +377,7 @@
     const imageButton = document.createElement("button");
     imageButton.type = "button";
     imageButton.className = "design-image-trigger";
-    imageButton.setAttribute("aria-label", (pcCurrentLanguage() === "te" ? "à°¡à°¿à°à±à°¨à± à°µà°¿à°µà°°à°¾à°²à± à°à±à°¡à°à°¡à°¿: " : pcCurrentLanguage() === "hi" ? "à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤µà¤¿à¤µà¤°à¤£ à¤¦à¥à¤à¥à¤: " : "View details for ") + pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name"));
+    imageButton.setAttribute("aria-label", (pcCurrentLanguage() === "te" ? "డిజైన్ వివరాలు చూడండి: " : pcCurrentLanguage() === "hi" ? "डिज़ाइन विवरण देखें: " : "View details for ") + pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name"));
     imageButton.addEventListener("click", () => {
       rememberRecentDesign(design.id);
       trackInterest("view", design);
@@ -385,7 +385,7 @@
     });
     const img = document.createElement("img");
     img.src = design.imageUrl;
-    img.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " à°¡à°¿à°à±à°¨à±" : pcCurrentLanguage() === "hi" ? " à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨" : " design");
+    img.alt = pcTranslateDesignText(design.name || design.categoryLabel, pcCurrentLanguage(), "name") + (pcCurrentLanguage() === "te" ? " డిజైన్" : pcCurrentLanguage() === "hi" ? " डिज़ाइन" : " design");
     img.loading = "lazy";
     img.decoding = "async";
     img.addEventListener("error", () => {
@@ -486,7 +486,7 @@
     el.grid.replaceChildren();
     if (el.saved && el.recent) {
       const lang = pcCurrentLanguage();
-      const labels = {en:{saved:"â¡ Saved designs",recent:"â· Recently viewed",savedOn:"â¥ Showing saved designs",recentOn:"â· Showing recently viewed"},te:{saved:"â¡ à°¸à±à°µà± à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à±",recent:"â· à°à°à±à°µà°² à°à±à°¸à°¿à°¨à°µà°¿",savedOn:"â¥ à°¸à±à°µà± à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à±",recentOn:"â· à°à°à±à°µà°² à°à±à°¸à°¿à°¨à°µà°¿"},hi:{saved:"â¡ à¤¸à¥à¤µ à¤à¤¿à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨",recent:"â· à¤¹à¤¾à¤² à¤¹à¥ à¤®à¥à¤ à¤¦à¥à¤à¥",savedOn:"â¥ à¤¸à¥à¤µ à¤à¤¿à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨",recentOn:"â· à¤¹à¤¾à¤² à¤¹à¥ à¤®à¥à¤ à¤¦à¥à¤à¥"}};
+      const labels = {en:{saved:"♡ Saved designs",recent:"◷ Recently viewed",savedOn:"♥ Showing saved designs",recentOn:"◷ Showing recently viewed"},te:{saved:"♡ సేవ్ చేసిన డిజైన్లు",recent:"◷ ఇటీవల చూసినవి",savedOn:"♥ సేవ్ చేసిన డిజైన్లు",recentOn:"◷ ఇటీవల చూసినవి"},hi:{saved:"♡ सेव किए डिज़ाइन",recent:"◷ हाल ही में देखे",savedOn:"♥ सेव किए डिज़ाइन",recentOn:"◷ हाल ही में देखे"}};
       const t = labels[lang] || labels.en;
       el.saved.textContent = state.view === "saved" ? t.savedOn : t.saved;
       el.recent.textContent = state.view === "recent" ? t.recentOn : t.recent;
@@ -508,16 +508,16 @@
     el.count.textContent = TEXT.showing(list.length, state.designs.length);
     if (!list.length && state.view === "saved") {
       const lang = pcCurrentLanguage();
-      setStatus("empty", lang === "te" ? "à°à°à°à°¾ à°¸à±à°µà± à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à± à°²à±à°µà±." : lang === "hi" ? "à¤à¤­à¥ à¤à¥à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¸à¥à¤µ à¤¨à¤¹à¥à¤ à¤¹à¥à¥¤" : "No saved designs yet.",
-        lang === "te" ? "à°®à±à°à± à°¨à°à±à°à°¿à°¨ à°¡à°¿à°à±à°¨à±âà°²à±à°¨à°¿ à°¹à±à°¦à°¯ à°à±à°°à±à°¤à±à°¨à± à°¨à±à°à±à°à°¿à°¤à± à°à°à±à°à°¡ à°à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°à°¦à°¿." : lang === "hi" ? "à¤à¤¿à¤¸à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤ªà¤° à¤¦à¤¿à¤² à¤à¥ à¤¨à¤¿à¤¶à¤¾à¤¨ à¤à¥ à¤¦à¤¬à¤¾à¤à¤, à¤µà¤¹ à¤¯à¤¹à¤¾à¤ à¤¦à¤¿à¤à¤¾à¤ à¤¦à¥à¤à¤¾à¥¤" : "Tap the heart on any design to save it here.",
-        lang === "te" ? "à°à°¨à±à°¨à°¿ à°¡à°¿à°à±à°¨à±à°²à± à°à±à°¡à°à°¡à°¿" : lang === "hi" ? "à¤¸à¤­à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¦à¥à¤à¥à¤" : "Browse all designs", () => { state.view = "all"; render(); });
+      setStatus("empty", lang === "te" ? "ఇంకా సేవ్ చేసిన డిజైన్లు లేవు." : lang === "hi" ? "अभी कोई डिज़ाइन सेव नहीं है।" : "No saved designs yet.",
+        lang === "te" ? "మీకు నచ్చిన డిజైన్‌లోని హృదయ గుర్తును నొక్కితే ఇక్కడ కనిపిస్తుంది." : lang === "hi" ? "किसी डिज़ाइन पर दिल के निशान को दबाएँ, वह यहाँ दिखाई देगा।" : "Tap the heart on any design to save it here.",
+        lang === "te" ? "అన్ని డిజైన్లు చూడండి" : lang === "hi" ? "सभी डिज़ाइन देखें" : "Browse all designs", () => { state.view = "all"; render(); });
       return;
     }
     if (!list.length && state.view === "recent") {
       const lang = pcCurrentLanguage();
-      setStatus("empty", lang === "te" ? "à°à°à±à°µà°² à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à± à°à°à°à°¾ à°²à±à°µà±." : lang === "hi" ? "à¤à¤­à¥ à¤¹à¤¾à¤² à¤¹à¥ à¤®à¥à¤ à¤¦à¥à¤à¥ à¤à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¨à¤¹à¥à¤ à¤¹à¥à¤à¥¤" : "No recently viewed designs yet.",
-        lang === "te" ? "à°à°¦à±à°¨à°¾ à°¡à°¿à°à±à°¨à±âà°¨à± à°¤à±à°°à°¿à°¸à±à°¤à± à°à°¦à°¿ à°à°à±à°à°¡ à°à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°à°¦à°¿." : lang === "hi" ? "à¤à¤¿à¤¸à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥ à¤à¥à¤²à¥à¤, à¤µà¤¹ à¤¯à¤¹à¤¾à¤ à¤¦à¤¿à¤à¤¾à¤ à¤¦à¥à¤à¤¾à¥¤" : "Open a design to see it listed here.",
-        lang === "te" ? "à°à°¨à±à°¨à°¿ à°¡à°¿à°à±à°¨à±à°²à± à°à±à°¡à°à°¡à°¿" : lang === "hi" ? "à¤¸à¤­à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¦à¥à¤à¥à¤" : "Browse all designs", () => { state.view = "all"; render(); });
+      setStatus("empty", lang === "te" ? "ఇటీవల చూసిన డిజైన్లు ఇంకా లేవు." : lang === "hi" ? "अभी हाल ही में देखे गए डिज़ाइन नहीं हैं।" : "No recently viewed designs yet.",
+        lang === "te" ? "ఏదైనా డిజైన్‌ను తెరిస్తే అది ఇక్కడ కనిపిస్తుంది." : lang === "hi" ? "किसी डिज़ाइन को खोलें, वह यहाँ दिखाई देगा।" : "Open a design to see it listed here.",
+        lang === "te" ? "అన్ని డిజైన్లు చూడండి" : lang === "hi" ? "सभी डिज़ाइन देखें" : "Browse all designs", () => { state.view = "all"; render(); });
       return;
     }
     if (!list.length) { setStatus("empty", TEXT.noMatchTitle, TEXT.noMatchHelp, TEXT.clearFilters, clearFilters); return; }
@@ -533,9 +533,9 @@
     const lang = pcCurrentLanguage();
     if (el.saved && el.recent) {
       const labels = {
-        en: {saved:"â¡ Saved designs", recent:"â· Recently viewed", savedOn:"â¥ Showing saved designs", recentOn:"â· Showing recently viewed"},
-        te: {saved:"â¡ à°¸à±à°µà± à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à±", recent:"â· à°à°à±à°µà°² à°à±à°¸à°¿à°¨à°µà°¿", savedOn:"â¥ à°¸à±à°µà± à°à±à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±à°²à±", recentOn:"â· à°à°à±à°µà°² à°à±à°¸à°¿à°¨à°µà°¿"},
-        hi: {saved:"â¡ à¤¸à¥à¤µ à¤à¤¿à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", recent:"â· à¤¹à¤¾à¤² à¤¹à¥ à¤®à¥à¤ à¤¦à¥à¤à¥", savedOn:"â¥ à¤¸à¥à¤µ à¤à¤¿à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", recentOn:"â· à¤¹à¤¾à¤² à¤¹à¥ à¤®à¥à¤ à¤¦à¥à¤à¥"}
+        en: {saved:"♡ Saved designs", recent:"◷ Recently viewed", savedOn:"♥ Showing saved designs", recentOn:"◷ Showing recently viewed"},
+        te: {saved:"♡ సేవ్ చేసిన డిజైన్లు", recent:"◷ ఇటీవల చూసినవి", savedOn:"♥ సేవ్ చేసిన డిజైన్లు", recentOn:"◷ ఇటీవల చూసినవి"},
+        hi: {saved:"♡ सेव किए डिज़ाइन", recent:"◷ हाल ही में देखे", savedOn:"♥ सेव किए डिज़ाइन", recentOn:"◷ हाल ही में देखे"}
       };
       const t = labels[lang] || labels.en;
       el.saved.textContent = state.view === "saved" ? t.savedOn : t.saved;
@@ -591,7 +591,7 @@
       const kicker = root.querySelector(".hero-slide-kicker");
       if (kicker) kicker.textContent = design.isFestivalBanner ? "FESTIVAL GREETINGS" : "MADE WITH CARE";
       image.src = design.imageUrl;
-      image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" â ");
+      image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" — ");
       name.textContent = design.name || design.categoryLabel || "A design made with care";
       category.textContent = design.categoryLabel || "Parvathi Creations";
       count.textContent = String(heroSlideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
@@ -774,9 +774,9 @@
   else init();
 
 const pcTranslations = {
-  en: { home:"Home", collection:"Collection", craft:"Our Craft", services:"Services", contact:"Contact", enquire:"Enquire", language:"ð Language", all:"All Designs", maggam:"Maggam Work", computer:"Computer Embroidery", blouse:"Blouse Designs", designerBlouses:"Designer Blouses", custom:"Custom Designs", designer:"Designer Wear", frocks:"Frocks", lehenga:"Designer Lehengas", bridal:"Wedding Wear", kids:"Kids Wear", saree:"Saree Tassels", search:"Search designs", sortNewest:"Newest first", sortOldest:"Oldest first", sortName:"Name AâZ", featured:"â Featured only", heroEyebrow:"PARVATHI CREATIONS Â· TELANGANA", heroTitle:"Tradition, tailored to you.", heroDescription:"Thoughtful stitching, intricate embroidery and occasionwear made with care â for the moments you want to remember.", explore:"Explore the collection", heroNote:"Made with care. Finished with love.", collectionEyebrow:"A LITTLE SOMETHING FOR EVERY OCCASION", collectionTitle:"Find your favourite.", collectionDescription:"From everyday elegance to wedding-day details, explore pieces inspired by your style.", photoDisclaimer:"Each custom order is discussed with you before stitching.", craftEyebrow:"THE BEAUTY IS IN THE DETAILS", craftTitle:"Made by hand. Made for you.", craftDescription:"From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.", craftCta:"Letâs create something together", servicesEyebrow:"WHAT WE DO", servicesTitle:"Every detail, considered.", servicesDescription:"Tell us what you have in mind. Weâll help you find the right finish, fit and details for your occasion.", contactEyebrow:"YOUR IDEA, OUR CRAFT", contactTitle:"Have something in mind?", contactDescription:"Share your inspiration with us. Letâs talk about your design.", whatsapp:"Chat with us on WhatsApp", footerStory:"Where every stitch tells a story.", instagram:"Instagram", owner:"Owner login", footerCollection:"Collection", footerServices:"Services", footerContact:"Contact", service1:"Maggam work & hand embroidery", service2:"Computer embroidery", service3:"Blouse stitching & custom designs", service4:"Bridal wear, lehengas & occasionwear", service5:"Frocks, kids wear & salwar stitching", service6:"Saree tassels & finishing" },
-  te: { home:"à°¹à±à°®à±", collection:"à°à°²à±à°à±à°·à°¨à±", craft:"à°®à°¾ à°à°³", services:"à°¸à±à°µà°²à±", contact:"à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿", enquire:"à°µà°¿à°à°¾à°°à°¿à°à°à°à°¡à°¿", language:"ð à°­à°¾à°·", all:"à°à°¨à±à°¨à°¿ à°¡à°¿à°à±à°¨à±à°²à±", maggam:"à°®à°à±à°à° à°µà°°à±à°à±", computer:"à°à°à°ªà±à°¯à±à°à°°à± à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", blouse:"à°¬à±à°²à±à°à± à°¡à°¿à°à±à°¨à±à°²à±", designerBlouses:"à°¡à°¿à°à±à°¨à°°à± à°¬à±à°²à±à°à±à°²à±", custom:"à°à°¸à±à°à°®à± à°¡à°¿à°à±à°¨à±à°²à±", designer:"à°¡à°¿à°à±à°¨à°°à± à°¦à±à°¸à±à°¤à±à°²à±", frocks:"à°«à±à°°à°¾à°à±à°¸à±", lehenga:"à°¡à°¿à°à±à°¨à°°à± à°²à±à°¹à°à°à°¾à°²à±", bridal:"à°ªà±à°³à±à°²à°¿ à°¦à±à°¸à±à°¤à±à°²à±", kids:"à°ªà°¿à°²à±à°²à°² à°¦à±à°¸à±à°¤à±à°²à±", saree:"à°à±à°° à°à°¾à°¸à±à°²à±à°¸à±", search:"à°¡à°¿à°à±à°¨à±à°²à°¨à± à°µà±à°¤à°à°à°¡à°¿", sortNewest:"à°à±à°¤à±à°¤à°µà°¿ à°®à±à°à°¦à±", sortOldest:"à°ªà°¾à°¤à°µà°¿ à°®à±à°à°¦à±", sortName:"à°ªà±à°°à± à°ªà±à°°à°à°¾à°°à°", featured:"â à°ªà±à°°à°¤à±à°¯à±à° à°¡à°¿à°à±à°¨à±à°²à± à°®à°¾à°¤à±à°°à°®à±", heroEyebrow:"à°ªà°¾à°°à±à°µà°¤à°¿ à°à±à°°à°¿à°¯à±à°·à°¨à±à°¸à± Â· à°¤à±à°²à°à°à°¾à°£", heroTitle:"à°®à± à°à°­à°¿à°°à±à°à°¿à°à°¿ à°¤à°à±à° à°¸à°à°ªà±à°°à°¦à°¾à°¯ à°¶à±à°²à°¿.", heroDescription:"à°®à±à°à± à°à±à°°à±à°¤à±à°à°¡à°¿à°ªà±à°¯à± à°¸à°à°¦à°°à±à°­à°¾à°² à°à±à°¸à° à°¶à±à°°à°¦à±à°§à°à°¾ à°à±à°à±à°à°¿à°¨ à°¦à±à°¸à±à°¤à±à°²à±, à°à°à°¦à°®à±à°¨ à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±, à°ªà±à°°à°¤à±à°¯à±à° à°µà±à°¡à±à°à°² à°¦à±à°¸à±à°¤à±à°²à±.", explore:"à°à°²à±à°à±à°·à°¨à± à°à±à°¡à°à°¡à°¿", heroNote:"à°¶à±à°°à°¦à±à°§à°¤à± à°¤à°¯à°¾à°°à± à°à±à°¸à°¿, à°ªà±à°°à±à°®à°¤à± à°ªà±à°°à±à°¤à°¿ à°à±à°¸à±à°¤à°¾à°.", collectionEyebrow:"à°ªà±à°°à°¤à°¿ à°¸à°à°¦à°°à±à°­à°¾à°¨à°¿à°à± à°ªà±à°°à°¤à±à°¯à±à°à°à°à°¾", collectionTitle:"à°®à±à°à± à°¨à°à±à°à°¿à°¨ à°¡à°¿à°à±à°¨à±âà°¨à± à°à°à°à±à°à±à°à°¡à°¿.", collectionDescription:"à°°à±à°à±à°µà°¾à°°à± à°à°à°¦à° à°¨à±à°à°à°¿ à°ªà±à°³à±à°²à°¿ à°µà±à°¡à±à°à°² à°¦à±à°¸à±à°¤à±à°² à°µà°°à°à±, à°®à± à°¶à±à°²à°¿à°à°¿ à°¸à°°à°¿à°ªà±à°¯à± à°¡à°¿à°à±à°¨à±à°²à°¨à± à°à±à°¡à°à°¡à°¿.", photoDisclaimer:"à°à±à°à±à°à± à°ªà±à°°à°¾à°°à°à°­à°¿à°à°à± à°®à±à°à°¦à± à°ªà±à°°à°¤à°¿ à°à°¸à±à°à°®à± à°à°°à±à°¡à°°à± à°à±à°°à°¿à°à°à°¿ à°®à±à°¤à± à°à°°à±à°à°¿à°¸à±à°¤à°¾à°.", craftEyebrow:"à°µà°¿à°µà°°à°¾à°²à±à°²à±à°¨à± à°à°à°¦à°", craftTitle:"à°à±à°¤à°¿à°¤à± à°¤à°¯à°¾à°°à± à°à±à°¸à°¿à°¨à°µà°¿. à°®à±à°à±à°¸à°®à±.", craftDescription:"à°¸à±à°¨à±à°¨à°¿à°¤à°®à±à°¨ à°¦à°¾à°°à°ªà± à°ªà°¨à±à°² à°¨à±à°à°à°¿ à°à°à±à°à°à°¾ à°ªà±à°°à±à°¤à°¿ à°à±à°¸à°¿à°¨ à°¬à±à°²à±à°à±âà°² à°µà°°à°à±, à°®à± à°à°²à±à°à°¨à°²à°à± à°°à±à°ªà° à°à°¸à±à°¤à°¾à°.", craftCta:"à°®à°¨à°¿à°¦à±à°¦à°°à° à°à°²à°¿à°¸à°¿ à°à°à°¦à°®à±à°¨ à°¡à°¿à°à±à°¨à± à°à±à°¦à±à°¦à°¾à°", servicesEyebrow:"à°®à°¾ à°¸à±à°µà°²à±", servicesTitle:"à°ªà±à°°à°¤à°¿ à°µà°¿à°µà°°à°¾à°¨à°¿à°à± à°ªà±à°°à°¤à±à°¯à±à° à°¶à±à°°à°¦à±à°§.", servicesDescription:"à°®à±à°à± à°à°¾à°µà°²à°¸à°¿à°¨ à°¡à°¿à°à±à°¨à±âà°¨à± à°à±à°ªà±à°ªà°à°¡à°¿. à°¸à°°à±à°¨ à°«à°¿à°à±, à°«à°¿à°¨à°¿à°·à°¿à°à°à±, à°µà°¿à°µà°°à°¾à°²à°¨à± à°à°à°à±à°à±à°µà°¡à°à°²à± à°¸à°¹à°¾à°¯à° à°à±à°¸à±à°¤à°¾à°.", contactEyebrow:"à°®à± à°à°²à±à°à°¨ â à°®à°¾ à°à°³", contactTitle:"à°®à± à°®à°¨à°¸à±à°²à± à°à°¦à±à°¨à°¾ à°¡à°¿à°à±à°¨à± à°à°à°¦à°¾?", contactDescription:"à°®à±à°à± à°¨à°à±à°à°¿à°¨ à°¨à°®à±à°¨à°¾à°¨à± à°®à°¾à°¤à± à°ªà°à°à±à°à±à°à°¡à°¿. à°®à± à°¡à°¿à°à±à°¨à± à°à±à°°à°¿à°à°à°¿ à°®à°¾à°à±à°²à°¾à°¡à±à°à±à°à°¦à°¾à°.", whatsapp:"à°µà°¾à°à±à°¸à°¾à°ªà±âà°²à± à°®à°¾à°à±à°²à°¾à°¡à°à°¡à°¿", footerStory:"à°ªà±à°°à°¤à°¿ à°à±à°à±à°à±à°²à± à°à° à°à°¥ à°à°à°à±à°à°¦à°¿.", instagram:"à°à°¨à±âà°¸à±à°à°¾à°à±à°°à°¾à°®à±", owner:"à°¯à°à°®à°¾à°¨à°¿ à°²à°¾à°à°¿à°¨à±", footerCollection:"à°à°²à±à°à±à°·à°¨à±", footerServices:"à°¸à±à°µà°²à±", footerContact:"à°¸à°à°ªà±à°°à°¦à°¿à°à°à°à°¡à°¿", service1:"à°®à°à±à°à° à°µà°°à±à°à± à°®à°°à°¿à°¯à± à°à±à°¤à°¿ à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", service2:"à°à°à°ªà±à°¯à±à°à°°à± à°à°à°¬à±à°°à°¾à°¯à°¿à°¡à°°à±", service3:"à°¬à±à°²à±à°à± à°à±à°à±à°à± à°®à°°à°¿à°¯à± à°à°¸à±à°à°®à± à°¡à°¿à°à±à°¨à±à°²à±", service4:"à°ªà±à°³à±à°²à°¿ à°¦à±à°¸à±à°¤à±à°²à±, à°²à±à°¹à°à°à°¾à°²à± à°®à°°à°¿à°¯à± à°ªà±à°°à°¤à±à°¯à±à° à°¦à±à°¸à±à°¤à±à°²à±", service5:"à°«à±à°°à°¾à°à±à°¸à±, à°ªà°¿à°²à±à°²à°² à°¦à±à°¸à±à°¤à±à°²à± à°®à°°à°¿à°¯à± à°¸à°²à±à°µà°¾à°°à± à°à±à°à±à°à±", service6:"à°à±à°° à°à°¾à°¸à±à°²à±à°¸à± à°®à°°à°¿à°¯à± à°«à°¿à°¨à°¿à°·à°¿à°à°à±" },
-  hi: { home:"à¤¹à¥à¤®", collection:"à¤à¤²à¥à¤à¥à¤¶à¤¨", craft:"à¤¹à¤®à¤¾à¤°à¥ à¤à¤²à¤¾", services:"à¤¸à¥à¤µà¤¾à¤à¤", contact:"à¤¸à¤à¤ªà¤°à¥à¤", enquire:"à¤ªà¥à¤à¤¤à¤¾à¤", language:"ð à¤­à¤¾à¤·à¤¾", all:"à¤¸à¤­à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", maggam:"à¤®à¤à¥à¤à¤® à¤µà¤°à¥à¤", computer:"à¤à¤à¤ªà¥à¤¯à¥à¤à¤° à¤à¤¢à¤¼à¤¾à¤", blouse:"à¤¬à¥à¤²à¤¾à¤à¤à¤¼ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", designerBlouses:"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤¬à¥à¤²à¤¾à¤à¤à¤¼", custom:"à¤à¤¸à¥à¤à¤® à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", designer:"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤µà¤¿à¤¯à¤°", frocks:"à¤«à¥à¤°à¥à¤", lehenga:"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨à¤° à¤²à¤¹à¤à¤à¥", bridal:"à¤¶à¤¾à¤¦à¥ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", kids:"à¤¬à¤à¥à¤à¥à¤ à¤à¥ à¤à¤ªà¤¡à¤¼à¥", saree:"à¤¸à¤¾à¤¡à¤¼à¥ à¤à¥à¤¸à¤²", search:"à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥à¤à¥à¤", sortNewest:"à¤¨à¤ à¤ªà¤¹à¤²à¥", sortOldest:"à¤ªà¥à¤°à¤¾à¤¨à¥ à¤ªà¤¹à¤²à¥", sortName:"à¤¨à¤¾à¤® à¤à¥ à¤à¤¨à¥à¤¸à¤¾à¤°", featured:"â à¤à¥à¤µà¤² à¤µà¤¿à¤¶à¥à¤· à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", heroEyebrow:"à¤ªà¤¾à¤°à¥à¤µà¤¤à¥ à¤à¥à¤°à¤¿à¤à¤¶à¤¨à¥à¤¸ Â· à¤¤à¥à¤²à¤à¤à¤¾à¤¨à¤¾", heroTitle:"à¤à¤ªà¤à¥ à¤ªà¤¸à¤à¤¦ à¤à¥ à¤à¤¨à¥à¤¸à¤¾à¤° à¤ªà¤°à¤à¤ªà¤°à¤¾à¥¤", heroDescription:"à¤¯à¤¾à¤¦à¤à¤¾à¤° à¤ªà¤²à¥à¤ à¤à¥ à¤²à¤¿à¤ à¤¸à¤¾à¤µà¤§à¤¾à¤¨à¥ à¤¸à¥ à¤à¥ à¤à¤ à¤¸à¤¿à¤²à¤¾à¤, à¤¬à¤¾à¤°à¥à¤ à¤à¤¢à¤¼à¤¾à¤ à¤à¤° à¤à¤¾à¤¸ à¤à¤µà¤¸à¤°à¥à¤ à¤à¥ à¤à¤ªà¤¡à¤¼à¥à¥¤", explore:"à¤à¤²à¥à¤à¥à¤¶à¤¨ à¤¦à¥à¤à¥à¤", heroNote:"à¤¸à¤¾à¤µà¤§à¤¾à¤¨à¥ à¤¸à¥ à¤¬à¤¨à¤¾à¤¯à¤¾, à¤ªà¥à¤¯à¤¾à¤° à¤¸à¥ à¤ªà¥à¤°à¤¾ à¤à¤¿à¤¯à¤¾à¥¤", collectionEyebrow:"à¤¹à¤° à¤à¤µà¤¸à¤° à¤à¥ à¤²à¤¿à¤ à¤à¥à¤ à¤à¤¾à¤¸", collectionTitle:"à¤à¤ªà¤¨à¤¾ à¤ªà¤¸à¤à¤¦à¥à¤¦à¤¾ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤à¥à¤¨à¥à¤à¥¤", collectionDescription:"à¤°à¥à¤à¤¼à¤®à¤°à¥à¤°à¤¾ à¤à¥ à¤¸à¥à¤à¤¦à¤°à¤¤à¤¾ à¤¸à¥ à¤²à¥à¤à¤° à¤¶à¤¾à¤¦à¥ à¤à¥ à¤à¤¾à¤¸ à¤à¤ªà¤¡à¤¼à¥à¤ à¤¤à¤, à¤à¤ªà¤¨à¥ à¤¶à¥à¤²à¥ à¤¸à¥ à¤ªà¥à¤°à¥à¤°à¤¿à¤¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¦à¥à¤à¥à¤à¥¤", photoDisclaimer:"à¤¸à¤¿à¤²à¤¾à¤ à¤¶à¥à¤°à¥ à¤à¤°à¤¨à¥ à¤¸à¥ à¤ªà¤¹à¤²à¥ à¤¹à¤° à¤à¤¸à¥à¤à¤® à¤à¤°à¥à¤¡à¤° à¤ªà¤° à¤à¤ªà¤¸à¥ à¤à¤°à¥à¤à¤¾ à¤à¥ à¤à¤¾à¤¤à¥ à¤¹à¥à¥¤", craftEyebrow:"à¤à¥à¤¬à¤¸à¥à¤°à¤¤à¥ à¤¬à¤¾à¤°à¥à¤à¤¿à¤¯à¥à¤ à¤®à¥à¤ à¤¹à¥", craftTitle:"à¤¹à¤¾à¤¥à¥à¤ à¤¸à¥ à¤¬à¤¨à¤¾à¤¯à¤¾à¥¤ à¤à¤ªà¤à¥ à¤²à¤¿à¤à¥¤", craftDescription:"à¤¨à¤¾à¤à¤¼à¥à¤ à¤§à¤¾à¤à¥ à¤à¥ à¤à¤¾à¤® à¤¸à¥ à¤²à¥à¤à¤° à¤à¤à¥à¤à¥ à¤¤à¤°à¤¹ à¤¤à¥à¤¯à¤¾à¤° à¤¬à¥à¤²à¤¾à¤à¤à¤¼ à¤¤à¤, à¤¹à¤® à¤à¤ªà¤à¥ à¤µà¤¿à¤à¤¾à¤°à¥à¤ à¤à¥ à¤à¤à¤¾à¤° à¤¦à¥à¤¤à¥ à¤¹à¥à¤à¥¤", craftCta:"à¤à¤à¤, à¤®à¤¿à¤²à¤à¤° à¤à¥à¤ à¤à¤¾à¤¸ à¤¬à¤¨à¤¾à¤à¤", servicesEyebrow:"à¤¹à¤®à¤¾à¤°à¥ à¤¸à¥à¤µà¤¾à¤à¤", servicesTitle:"à¤¹à¤° à¤¬à¤¾à¤°à¥à¤à¥ à¤ªà¤° à¤§à¥à¤¯à¤¾à¤¨à¥¤", servicesDescription:"à¤à¤ªà¤¨à¥ à¤ªà¤¸à¤à¤¦ à¤¬à¤¤à¤¾à¤à¤à¥¤ à¤¹à¤® à¤¸à¤¹à¥ à¤«à¤¿à¤, à¤«à¤¿à¤¨à¤¿à¤¶ à¤à¤° à¤à¤µà¤¸à¤° à¤à¥ à¤à¤¨à¥à¤¸à¤¾à¤° à¤µà¤¿à¤µà¤°à¤£ à¤à¥à¤¨à¤¨à¥ à¤®à¥à¤ à¤®à¤¦à¤¦ à¤à¤°à¥à¤à¤à¥à¥¤", contactEyebrow:"à¤à¤ªà¤à¤¾ à¤µà¤¿à¤à¤¾à¤°, à¤¹à¤®à¤¾à¤°à¥ à¤à¤²à¤¾", contactTitle:"à¤à¥à¤¯à¤¾ à¤à¤ªà¤à¥ à¤®à¤¨ à¤®à¥à¤ à¤à¥à¤ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤¹à¥?", contactDescription:"à¤à¤ªà¤¨à¥ à¤ªà¤¸à¤à¤¦ à¤à¥ à¤¤à¤¸à¥à¤µà¥à¤° à¤¯à¤¾ à¤ªà¥à¤°à¥à¤°à¤£à¤¾ à¤¸à¤¾à¤à¤¾ à¤à¤°à¥à¤à¥¤ à¤à¤à¤, à¤à¤ªà¤à¥ à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨ à¤ªà¤° à¤¬à¤¾à¤¤ à¤à¤°à¥à¤à¥¤", whatsapp:"WhatsApp à¤ªà¤° à¤¬à¤¾à¤¤ à¤à¤°à¥à¤", footerStory:"à¤¹à¤° à¤¸à¤¿à¤²à¤¾à¤ à¤à¤ à¤à¤¹à¤¾à¤¨à¥ à¤à¤¹à¤¤à¥ à¤¹à¥à¥¤", instagram:"à¤à¤à¤¸à¥à¤à¤¾à¤à¥à¤°à¤¾à¤®", owner:"à¤®à¤¾à¤²à¤¿à¤ à¤²à¥à¤à¤¿à¤¨", footerCollection:"à¤à¤²à¥à¤à¥à¤¶à¤¨", footerServices:"à¤¸à¥à¤µà¤¾à¤à¤", footerContact:"à¤¸à¤à¤ªà¤°à¥à¤", service1:"à¤®à¤à¥à¤à¤® à¤µà¤°à¥à¤ à¤à¤° à¤¹à¤¾à¤¥ à¤à¥ à¤à¤¢à¤¼à¤¾à¤", service2:"à¤à¤à¤ªà¥à¤¯à¥à¤à¤° à¤à¤¢à¤¼à¤¾à¤", service3:"à¤¬à¥à¤²à¤¾à¤à¤à¤¼ à¤¸à¤¿à¤²à¤¾à¤ à¤à¤° à¤à¤¸à¥à¤à¤® à¤¡à¤¿à¤à¤¼à¤¾à¤à¤¨", service4:"à¤¶à¤¾à¤¦à¥ à¤à¥ à¤à¤ªà¤¡à¤¼à¥, à¤²à¤¹à¤à¤à¥ à¤à¤° à¤à¤¾à¤¸ à¤ªà¤°à¤¿à¤§à¤¾à¤¨", service5:"à¤«à¥à¤°à¥à¤, à¤¬à¤à¥à¤à¥à¤ à¤à¥ à¤à¤ªà¤¡à¤¼à¥ à¤à¤° à¤¸à¤²à¤µà¤¾à¤° à¤¸à¤¿à¤²à¤¾à¤", service6:"à¤¸à¤¾à¤¡à¤¼à¥ à¤à¥à¤¸à¤² à¤à¤° à¤«à¤¿à¤¨à¤¿à¤¶à¤¿à¤à¤" }
+  en: { home:"Home", collection:"Collection", craft:"Our Craft", services:"Services", contact:"Contact", enquire:"Enquire", language:"🌐 Language", all:"All Designs", maggam:"Maggam Work", computer:"Computer Embroidery", blouse:"Blouse Designs", designerBlouses:"Designer Blouses", custom:"Custom Designs", designer:"Designer Wear", frocks:"Frocks", lehenga:"Designer Lehengas", bridal:"Wedding Wear", kids:"Kids Wear", saree:"Saree Tassels", search:"Search designs", sortNewest:"Newest first", sortOldest:"Oldest first", sortName:"Name A–Z", featured:"★ Featured only", heroEyebrow:"PARVATHI CREATIONS · TELANGANA", heroTitle:"Tradition, tailored to you.", heroDescription:"Thoughtful stitching, intricate embroidery and occasionwear made with care — for the moments you want to remember.", explore:"Explore the collection", heroNote:"Made with care. Finished with love.", collectionEyebrow:"A LITTLE SOMETHING FOR EVERY OCCASION", collectionTitle:"Find your favourite.", collectionDescription:"From everyday elegance to wedding-day details, explore pieces inspired by your style.", photoDisclaimer:"Each custom order is discussed with you before stitching.", craftEyebrow:"THE BEAUTY IS IN THE DETAILS", craftTitle:"Made by hand. Made for you.", craftDescription:"From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.", craftCta:"Let's create something together", servicesEyebrow:"WHAT WE DO", servicesTitle:"Every detail, considered.", servicesDescription:"Tell us what you have in mind. We'll help you find the right finish, fit and details for your occasion.", contactEyebrow:"YOUR IDEA, OUR CRAFT", contactTitle:"Have something in mind?", contactDescription:"Share your inspiration with us. Let's talk about your design.", whatsapp:"Chat with us on WhatsApp", footerStory:"Where every stitch tells a story.", instagram:"Instagram", owner:"Owner login", footerCollection:"Collection", footerServices:"Services", footerContact:"Contact", service1:"Maggam work & hand embroidery", service2:"Computer embroidery", service3:"Blouse stitching & custom designs", service4:"Bridal wear, lehengas & occasionwear", service5:"Frocks, kids wear & salwar stitching", service6:"Saree tassels & finishing" },
+  te: { home:"హోమ్", collection:"కలెక్షన్", craft:"మా కళ", services:"సేవలు", contact:"సంప్రదించండి", enquire:"విచారించండి", language:"🌐 భాష", all:"అన్ని డిజైన్లు", maggam:"మగ్గం వర్క్", computer:"కంప్యూటర్ ఎంబ్రాయిడరీ", blouse:"బ్లౌజ్ డిజైన్లు", designerBlouses:"డిజైనర్ బ్లౌజులు", custom:"కస్టమ్ డిజైన్లు", designer:"డిజైనర్ దుస్తులు", frocks:"ఫ్రాక్స్", lehenga:"డిజైనర్ లెహంగాలు", bridal:"పెళ్లి దుస్తులు", kids:"పిల్లల దుస్తులు", saree:"చీర టాసెల్స్", search:"డిజైన్లను వెతకండి", sortNewest:"కొత్తవి ముందు", sortOldest:"పాతవి ముందు", sortName:"పేరు ప్రకారం", featured:"★ ప్రత్యేక డిజైన్లు మాత్రమే", heroEyebrow:"పార్వతి క్రియేషన్స్ · తెలంగాణ", heroTitle:"మీ అభిరుచికి తగ్గ సంప్రదాయ శైలి.", heroDescription:"మీకు గుర్తుండిపోయే సందర్భాల కోసం శ్రద్ధగా కుట్టిన దుస్తులు, అందమైన ఎంబ్రాయిడరీ, ప్రత్యేక వేడుకల దుస్తులు.", explore:"కలెక్షన్ చూడండి", heroNote:"శ్రద్ధతో తయారు చేసి, ప్రేమతో పూర్తి చేస్తాం.", collectionEyebrow:"ప్రతి సందర్భానికీ ప్రత్యేకంగా", collectionTitle:"మీకు నచ్చిన డిజైన్‌ను ఎంచుకోండి.", collectionDescription:"రోజువారీ అందం నుంచి పెళ్లి వేడుకల దుస్తుల వరకు, మీ శైలికి సరిపోయే డిజైన్లను చూడండి.", photoDisclaimer:"కుట్టు ప్రారంభించే ముందు ప్రతి కస్టమ్ ఆర్డర్ గురించి మీతో చర్చిస్తాం.", craftEyebrow:"వివరాల్లోనే అందం", craftTitle:"చేతితో తయారు చేసినవి. మీకోసమే.", craftDescription:"సున్నితమైన దారపు పనుల నుంచి చక్కగా పూర్తి చేసిన బ్లౌజ్‌ల వరకు, మీ ఆలోచనలకు రూపం ఇస్తాం.", craftCta:"మనిద్దరం కలిసి అందమైన డిజైన్ చేద్దాం", servicesEyebrow:"మా సేవలు", servicesTitle:"ప్రతి వివరానికీ ప్రత్యేక శ్రద్ధ.", servicesDescription:"మీకు కావలసిన డిజైన్‌ను చెప్పండి. సరైన ఫిట్, ఫినిషింగ్, వివరాలను ఎంచుకోవడంలో సహాయం చేస్తాం.", contactEyebrow:"మీ ఆలోచన — మా కళ", contactTitle:"మీ మనసులో ఏదైనా డిజైన్ ఉందా?", contactDescription:"మీకు నచ్చిన నమూనాను మాతో పంచుకోండి. మీ డిజైన్ గురించి మాట్లాడుకుందాం.", whatsapp:"వాట్సాప్‌లో మాట్లాడండి", footerStory:"ప్రతి కుట్టులో ఒక కథ ఉంటుంది.", instagram:"ఇన్‌స్టాగ్రామ్", owner:"యజమాని లాగిన్", footerCollection:"కలెక్షన్", footerServices:"సేవలు", footerContact:"సంప్రదించండి", service1:"మగ్గం వర్క్ మరియు చేతి ఎంబ్రాయిడరీ", service2:"కంప్యూటర్ ఎంబ్రాయిడరీ", service3:"బ్లౌజ్ కుట్టు మరియు కస్టమ్ డిజైన్లు", service4:"పెళ్లి దుస్తులు, లెహంగాలు మరియు ప్రత్యేక దుస్తులు", service5:"ఫ్రాక్స్, పిల్లల దుస్తులు మరియు సల్వార్ కుట్టు", service6:"చీర టాసెల్స్ మరియు ఫినిషింగ్" },
+  hi: { home:"होम", collection:"कलेक्शन", craft:"हमारी कला", services:"सेवाएँ", contact:"संपर्क", enquire:"पूछताछ", language:"🌐 भाषा", all:"सभी डिज़ाइन", maggam:"मग्गम वर्क", computer:"कंप्यूटर कढ़ाई", blouse:"ब्लाउज़ डिज़ाइन", designerBlouses:"डिज़ाइनर ब्लाउज़", custom:"कस्टम डिज़ाइन", designer:"डिज़ाइनर वियर", frocks:"फ्रॉक", lehenga:"डिज़ाइनर लहंगे", bridal:"शादी के कपड़े", kids:"बच्चों के कपड़े", saree:"साड़ी टैसल", search:"डिज़ाइन खोजें", sortNewest:"नए पहले", sortOldest:"पुराने पहले", sortName:"नाम के अनुसार", featured:"★ केवल विशेष डिज़ाइन", heroEyebrow:"पार्वती क्रिएशन्स · तेलंगाना", heroTitle:"आपकी पसंद के अनुसार परंपरा।", heroDescription:"यादगार पलों के लिए सावधानी से की गई सिलाई, बारीक कढ़ाई और खास अवसरों के कपड़े।", explore:"कलेक्शन देखें", heroNote:"सावधानी से बनाया, प्यार से पूरा किया।", collectionEyebrow:"हर अवसर के लिए कुछ खास", collectionTitle:"अपना पसंदीदा डिज़ाइन चुनें।", collectionDescription:"रोज़मर्रा की सुंदरता से लेकर शादी के खास कपड़ों तक, अपनी शैली से प्रेरित डिज़ाइन देखें।", photoDisclaimer:"सिलाई शुरू करने से पहले हर कस्टम ऑर्डर पर आपसे चर्चा की जाती है।", craftEyebrow:"खूबसूरती बारीकियों में है", craftTitle:"हाथों से बनाया। आपके लिए।", craftDescription:"नाज़ुक धागे के काम से लेकर अच्छी तरह तैयार ब्लाउज़ तक, हम आपके विचारों को आकार देते हैं।", craftCta:"आइए, मिलकर कुछ खास बनाएँ", servicesEyebrow:"हमारी सेवाएँ", servicesTitle:"हर बारीकी पर ध्यान।", servicesDescription:"अपनी पसंद बताएँ। हम सही फिट, फिनिश और अवसर के अनुसार विवरण चुनने में मदद करेंगे।", contactEyebrow:"आपका विचार, हमारी कला", contactTitle:"क्या आपके मन में कोई डिज़ाइन है?", contactDescription:"अपनी पसंद की तस्वीर या प्रेरणा साझा करें। आइए, आपके डिज़ाइन पर बात करें।", whatsapp:"WhatsApp पर बात करें", footerStory:"हर सिलाई एक कहानी कहती है।", instagram:"इंस्टाग्राम", owner:"मालिक लॉगिन", footerCollection:"कलेक्शन", footerServices:"सेवाएँ", footerContact:"संपर्क", service1:"मग्गम वर्क और हाथ की कढ़ाई", service2:"कंप्यूटर कढ़ाई", service3:"ब्लाउज़ सिलाई और कस्टम डिज़ाइन", service4:"शादी के कपड़े, लहंगे और खास परिधान", service5:"फ्रॉक, बच्चों के कपड़े और सलवार सिलाई", service6:"साड़ी टैसल और फिनिशिंग" }
 };
 
 const pcStaticTranslations = [
@@ -811,7 +811,7 @@ window.changeLanguage = function (language) {
     if (navKeys[index]) element.textContent = t[navKeys[index]];
   });
   const enquire = document.querySelector(".header-cta");
-  if (enquire) enquire.innerHTML = t.enquire + " <span>â</span>";
+  if (enquire) enquire.innerHTML = t.enquire + " <span>↗</span>";
 
   pcStaticTranslations.forEach(function (pair) {
     const element = document.querySelector(pair[0]);
@@ -834,8 +834,8 @@ window.changeLanguage = function (language) {
   if (contactWhatsApp) {
     const messages = {
       en: "Hello Parvathi Creations, I'd like to enquire about a custom order.",
-      te: "à°¨à°®à°¸à±à°à°¾à°°à° à°ªà°¾à°°à±à°µà°¤à°¿ à°à±à°°à°¿à°¯à±à°·à°¨à±à°¸à±, à°à°¸à±à°à°®à± à°à°°à±à°¡à°°à± à°à±à°°à°¿à°à°à°¿ à°µà°¿à°µà°°à°¾à°²à± à°à°¾à°µà°¾à°²à°¿.",
-      hi: "à¤¨à¤®à¤¸à¥à¤¤à¥ à¤ªà¤¾à¤°à¥à¤µà¤¤à¥ à¤à¥à¤°à¤¿à¤à¤¶à¤¨à¥à¤¸, à¤®à¥à¤ à¤à¤¸à¥à¤à¤® à¤à¤°à¥à¤¡à¤° à¤à¥ à¤¬à¤¾à¤°à¥ à¤®à¥à¤ à¤ªà¥à¤à¤¤à¤¾à¤ à¤à¤°à¤¨à¤¾ à¤à¤¾à¤¹à¤¤à¤¾/à¤à¤¾à¤¹à¤¤à¥ à¤¹à¥à¤à¥¤"
+      te: "నమస్కారం పార్వతి క్రియేషన్స్, కస్టమ్ ఆర్డర్ గురించి వివరాలు కావాలి.",
+      hi: "नमस्ते पार्वती क्रिएशन्स, मैं कस्टम ऑर्डर के बारे में पूछताछ करना चाहता/चाहती हूँ।"
     };
     contactWhatsApp.href = "https://wa.me/919550766784?text=" + encodeURIComponent(messages[language] || messages.en);
   }
@@ -844,7 +844,7 @@ window.changeLanguage = function (language) {
   if (label) label.textContent = t.language;
   const footerLinks = document.querySelectorAll(".footer-links a");
   const footerKeys = ["footerCollection","footerServices","footerContact","instagram","owner"];
-  footerLinks.forEach(function (element,index) { if (t[footerKeys[index]]) element.textContent = t[footerKeys[index]] + (index === 3 ? " â" : ""); });
+  footerLinks.forEach(function (element,index) { if (t[footerKeys[index]]) element.textContent = t[footerKeys[index]] + (index === 3 ? " ↗" : ""); });
 
   const categoryLabels = {all:t.all,maggam:t.maggam,computer:t.computer,blouse:t.blouse,"designer-blouses":t.designerBlouses,designer:t.designer,frocks:t.frocks,lehenga:t.lehenga,bridal:t.bridal,kids:t.kids,saree:t.saree,custom:t.custom};
   document.querySelectorAll(".gallery-filters button[data-filter]").forEach(function (button) {
