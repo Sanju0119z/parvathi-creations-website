@@ -766,7 +766,7 @@ const pcTranslations = {
 const pcStaticTranslations = [
   [".hero-copy .eyebrow","heroEyebrow"],[".hero-copy h1","heroTitle"],[".hero-description","heroDescription"],[".hero-copy .button-dark span:first-child","explore"],[".hero-note","heroNote"],
   [".collection .section-topline .eyebrow","collectionEyebrow"],[".collection .section-heading-row h2","collectionTitle"],[".collection .section-heading-row > p","collectionDescription"],[".photo-disclaimer","photoDisclaimer"],
-  [".craft-copy .eyebrow","craftEyebrow"],[".craft-copy h2","craftTitle"],[".craft-copy > p:not(.eyebrow)","craftDescription"],[".craft-copy .button span:first-child","craftCta"],
+  [".craft-copy .eyebrow","craftEyebrow"],[".craft-copy h2","craftTitle"],[".craft-copy > p:not(.eyebrow)","craftDescription"],
   [".services .section-topline .eyebrow","servicesEyebrow"],[".services-heading h2","servicesTitle"],[".services-heading > p","servicesDescription"],
   [".contact-band .eyebrow","contactEyebrow"],[".contact-band h2","contactTitle"],[".contact-band > p:not(.eyebrow)","contactDescription"],[".contact-band .button span:first-child","whatsapp"],
   [".site-footer > p","footerStory"],[".service-list > div:nth-child(1) h3","service1"],[".service-list > div:nth-child(2) h3","service2"],[".service-list > div:nth-child(3) h3","service3"],[".service-list > div:nth-child(4) h3","service4"],[".service-list > div:nth-child(5) h3","service5"],[".service-list > div:nth-child(6) h3","service6"]
