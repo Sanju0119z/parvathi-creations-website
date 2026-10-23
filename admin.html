@@ -597,6 +597,45 @@
         .customer-preview-copy{padding:15px}.customer-preview-copy h3{margin:0 0 7px;color:#61243a}.customer-preview-copy p{margin:8px 0;line-height:1.5;color:#5e5552;overflow-wrap:anywhere}.customer-preview-price{font-weight:800;color:#8d2847;font-size:19px}
         .customer-preview-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
 
+
+        /* Dashboard polish: warm boutique colours, responsive shortcuts and live overview */
+        .dashboard-welcome{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:190px;margin:0 0 18px;padding:28px 30px;border:1px solid #ead5c9;border-radius:22px;background:linear-gradient(115deg,#fff7f0 0%,#fff0ed 52%,#f9e5e8 100%);box-shadow:0 12px 34px rgba(89,34,47,.08)}
+        .dashboard-welcome-copy{position:relative;z-index:2;max-width:600px}
+        .dashboard-eyebrow,.dashboard-section-kicker{display:block;color:#9b6b35;font-size:10px;font-weight:800;letter-spacing:1.8px}
+        .dashboard-welcome h3{margin:12px 0 8px;color:#65263a;font-family:Georgia,'Times New Roman',serif;font-size:clamp(23px,3vw,32px);font-weight:600;letter-spacing:-.5px}
+        .dashboard-welcome-copy>p{max-width:490px;margin:0;color:#715c5c;font-size:14px;line-height:1.7}
+        .dashboard-date-row{display:flex;align-items:center;gap:8px;margin-top:18px;color:#76565c;font-size:12px;font-weight:600}
+        .dashboard-live-dot{width:8px;height:8px;border-radius:50%;background:#4b9a67;box-shadow:0 0 0 4px rgba(75,154,103,.13)}
+        .dashboard-welcome-art{position:absolute;z-index:1;right:28px;top:50%;width:150px;height:150px;transform:translateY(-50%);border:1px solid rgba(156,83,98,.18);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.75),rgba(255,255,255,0) 68%)}
+        .dashboard-art-ring{position:absolute;inset:17px;border:1px dashed rgba(156,83,98,.35);border-radius:50%}
+        .dashboard-art-flower{position:absolute;left:32px;top:21px;color:#b65b77;font-size:92px;line-height:1;animation:dashboardFloat 5s ease-in-out infinite}
+        .dashboard-art-sparkle{position:absolute;right:16px;bottom:19px;color:#c9a227;font-size:35px;animation:dashboardTwinkle 3s ease-in-out infinite}
+        .dashboard-quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:18px}
+        .dashboard-action{min-width:0;display:flex;align-items:center;gap:12px;padding:17px 15px;border:1px solid #eadfd8;border-radius:16px;background:#fff;color:#382326;text-decoration:none;box-shadow:0 5px 18px rgba(43,21,21,.045);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+        .dashboard-action:hover,.dashboard-action:focus-visible{transform:translateY(-3px);border-color:#d9b2ad;box-shadow:0 12px 24px rgba(89,34,47,.1);outline:none}
+        .dashboard-action-primary{border-color:#e7c8b8;background:linear-gradient(135deg,#fffaf3,#fff0e9)}
+        .dashboard-action-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:13px;background:#f8e7e5;color:#8a354e;font-size:25px}
+        .dashboard-action-primary .dashboard-action-icon{background:#6b1f2b;color:#fff5e7}
+        .dashboard-action strong,.dashboard-action small{display:block;overflow-wrap:anywhere}
+        .dashboard-action strong{font-size:13px;color:#62243a}
+        .dashboard-action small{margin-top:5px;color:#827171;font-size:11px;line-height:1.45}
+        .dashboard-action-arrow{margin-left:auto;color:#a77a59;font-size:19px}
+        .dashboard-visibility{margin:0 0 25px;padding:19px 22px;border:1px solid #eadfd8;border-radius:17px;background:linear-gradient(120deg,#fff 0%,#fffaf6 100%);box-shadow:0 6px 20px rgba(43,21,21,.045)}
+        .dashboard-visibility-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+        .dashboard-visibility-heading h3{margin:5px 0 0;color:#61243a;font-size:17px}
+        .dashboard-visibility-count{padding:6px 10px;border-radius:20px;background:#f7e9e3;color:#7d3546;font-size:12px;font-weight:800;white-space:nowrap}
+        .dashboard-progress-track{height:9px;overflow:hidden;border-radius:99px;background:#f0e6e1}
+        .dashboard-progress-track>span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#70283b,#c9a227);transition:width .7s cubic-bezier(.2,.7,.2,1)}
+        .dashboard-visibility>p{margin:10px 0 0;color:#85746f;font-size:12px;line-height:1.5}
+        .stats-grid .stat-card{position:relative;overflow:hidden;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+        .stats-grid .stat-card:hover{transform:translateY(-3px);border-color:#dfc4b5;box-shadow:0 13px 28px rgba(43,21,21,.09)}
+        .stats-grid .stat-card:after{position:absolute;right:-17px;bottom:-27px;width:75px;height:75px;border:1px solid rgba(201,162,39,.2);border-radius:50%;content:"";pointer-events:none}
+        @keyframes dashboardFloat{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-7px) rotate(5deg)}}
+        @keyframes dashboardTwinkle{0%,100%{opacity:.6;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+        @media(prefers-reduced-motion:reduce){.dashboard-art-flower,.dashboard-art-sparkle{animation:none}.dashboard-action,.stats-grid .stat-card,.dashboard-progress-track>span{transition:none}}
+        @media(max-width:850px){.dashboard-welcome-art{right:12px;opacity:.65}.dashboard-welcome-copy{max-width:75%}.dashboard-quick-actions{grid-template-columns:1fr 1fr}.dashboard-action:last-child{grid-column:1/-1}}
+        @media(max-width:600px){.dashboard-welcome{min-height:180px;padding:22px 18px;border-radius:18px}.dashboard-welcome-copy{max-width:100%;padding-right:14px}.dashboard-welcome h3{font-size:24px;max-width:250px;line-height:1.25}.dashboard-welcome-copy>p{max-width:275px;font-size:13px}.dashboard-welcome-art{right:-58px;top:24px;transform:none;opacity:.23}.dashboard-quick-actions{grid-template-columns:1fr;gap:9px}.dashboard-action:last-child{grid-column:auto}.dashboard-action{padding:13px}.dashboard-action-icon{flex-basis:39px;width:39px;height:39px}.dashboard-visibility{padding:16px}.dashboard-visibility-heading h3{font-size:16px}}
+
 </style>
 </head>
 
@@ -761,6 +800,45 @@
                 </p>
 
             </div>
+
+            <section class="dashboard-welcome" aria-label="Dashboard overview">
+                <div class="dashboard-welcome-copy">
+                    <span class="dashboard-eyebrow">✦ YOUR BOUTIQUE AT A GLANCE</span>
+                    <h3>Namaste, welcome back! <span aria-hidden="true">🌷</span></h3>
+                    <p>Keep your latest creations beautifully organised and ready for customers.</p>
+                    <div class="dashboard-date-row"><span class="dashboard-live-dot"></span><span id="dashboardToday">Your boutique dashboard</span></div>
+                </div>
+                <div class="dashboard-welcome-art" aria-hidden="true"><span class="dashboard-art-flower">✿</span><span class="dashboard-art-sparkle">✧</span><span class="dashboard-art-ring"></span></div>
+            </section>
+
+            <section class="dashboard-quick-actions" aria-label="Quick actions">
+                <a class="dashboard-action dashboard-action-primary" href="#designForm">
+                    <span class="dashboard-action-icon" aria-hidden="true">＋</span>
+                    <span><strong>Add a design</strong><small>Upload a new creation</small></span>
+                    <span class="dashboard-action-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="dashboard-action" href="#designTableWrapper">
+                    <span class="dashboard-action-icon" aria-hidden="true">▦</span>
+                    <span><strong>Manage gallery</strong><small>Edit, feature or hide designs</small></span>
+                    <span class="dashboard-action-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="dashboard-action" href="#customerInterestPanel">
+                    <span class="dashboard-action-icon" aria-hidden="true">♡</span>
+                    <span><strong>Customer interest</strong><small>Explore activity statistics</small></span>
+                    <span class="dashboard-action-arrow" aria-hidden="true">↗</span>
+                </a>
+            </section>
+
+            <section class="dashboard-visibility" aria-label="Gallery visibility overview">
+                <div class="dashboard-visibility-heading">
+                    <div><span class="dashboard-section-kicker">YOUR ONLINE SHOWCASE</span><h3>Gallery visibility</h3></div>
+                    <span class="dashboard-visibility-count" id="dashboardVisibilityCount">Loading…</span>
+                </div>
+                <div class="dashboard-progress-track" role="progressbar" aria-label="Visible designs compared with all designs" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="dashboardVisibilityProgress">
+                    <span id="dashboardVisibilityBar"></span>
+                </div>
+                <p id="dashboardVisibilityHint">Your visible designs can appear in the customer gallery.</p>
+            </section>
 
 
             <!-- =====================================
@@ -2869,6 +2947,59 @@
         checkLogin();
 
     </script>
+
+
+<script>
+(function () {
+    const dateLabel = document.getElementById("dashboardToday");
+    const totalEl = document.getElementById("totalDesigns");
+    const visibleEl = document.getElementById("visibleDesigns");
+    const countLabel = document.getElementById("dashboardVisibilityCount");
+    const bar = document.getElementById("dashboardVisibilityBar");
+    const progress = document.getElementById("dashboardVisibilityProgress");
+    const hint = document.getElementById("dashboardVisibilityHint");
+    if (dateLabel) {
+        try {
+            dateLabel.textContent = new Intl.DateTimeFormat(undefined, {
+                weekday: "long", day: "numeric", month: "long", year: "numeric"
+            }).format(new Date());
+        } catch (_) {
+            dateLabel.textContent = "Your boutique dashboard";
+        }
+    }
+    function updateVisibility() {
+        if (!totalEl || !visibleEl || !countLabel || !bar || !progress) return;
+        const total = Math.max(0, Number(totalEl.textContent) || 0);
+        const visible = Math.max(0, Number(visibleEl.textContent) || 0);
+        const percent = total ? Math.min(100, Math.round((visible / total) * 100)) : 0;
+        countLabel.textContent = total ? visible + " of " + total + " visible" : "No designs yet";
+        bar.style.width = percent + "%";
+        progress.setAttribute("aria-valuenow", String(percent));
+        if (hint) {
+            hint.textContent = total
+                ? (visible === total ? "Lovely! Every design is visible in your customer gallery." : "You have " + (total - visible) + " hidden design" + (total - visible === 1 ? "" : "s") + ". You can manage visibility in the gallery below.")
+                : "Add your first design to start building your online showcase.";
+        }
+    }
+    ["totalDesigns", "visibleDesigns"].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el && window.MutationObserver) new MutationObserver(updateVisibility).observe(el, { childList: true, characterData: true, subtree: true });
+    });
+    updateVisibility();
+    document.querySelectorAll('.dashboard-action[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function () {
+            const target = document.querySelector(link.getAttribute("href"));
+            if (target) window.setTimeout(function () {
+                const focusTarget = target.matches("form") ? target.querySelector("input,select,textarea,button") : target;
+                if (focusTarget && focusTarget.focus && focusTarget.tagName !== "A") {
+                    if (!focusTarget.hasAttribute("tabindex") && !/INPUT|SELECT|TEXTAREA|BUTTON/.test(focusTarget.tagName)) focusTarget.setAttribute("tabindex", "-1");
+                    focusTarget.focus({ preventScroll: true });
+                }
+            }, 250);
+        });
+    });
+})();
+</script>
 
 </body>
 </html>
