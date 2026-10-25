@@ -1787,8 +1787,16 @@
                 return;
             }
 
-            if (files.some(file => !file.type.startsWith("image/"))) {
+            if (files.some(file => !file.type || !file.type.startsWith("image/"))) {
                 showMessage(adminMessage, "Please select image files only.", "error");
+                designImage.value = "";
+                selectedDesignFiles = [];
+                multiImagePreview.style.display = "none";
+                return;
+            }
+
+            if (files.some(file => file.size > 8 * 1024 * 1024)) {
+                showMessage(adminMessage, "Each photo must be 8 MB or smaller. Please resize large photos and try again.", "error");
                 designImage.value = "";
                 selectedDesignFiles = [];
                 multiImagePreview.style.display = "none";
@@ -2465,6 +2473,8 @@
                         : "Uploading Design...";
 
 
+                const uploadedFilePaths = [];
+                let databaseWriteCompleted = false;
                 try {
 
                     let imageUrl = null;
@@ -2482,6 +2492,7 @@
                                 .from("design-images")
                                 .upload(filePath, watermarkedImageFile, { cacheControl: "3600", upsert: false });
                             if (uploadError) throw uploadError;
+                            uploadedFilePaths.push(filePath);
                             const { data: publicData } = supabaseClient.storage
                                 .from("design-images")
                                 .getPublicUrl(filePath);
@@ -2563,7 +2574,7 @@
                         if (error) {
                             throw error;
                         }
-
+                        databaseWriteCompleted = true;
 
                         showMessage(
                             adminMessage,
@@ -2593,7 +2604,7 @@
                         if (error) {
                             throw error;
                         }
-
+                        databaseWriteCompleted = true;
 
                         showMessage(
                             adminMessage,
@@ -2612,11 +2623,21 @@
                 } catch (error) {
 
                     console.error(error);
+                    if (!databaseWriteCompleted && uploadedFilePaths.length) {
+                        try {
+                            const { error: cleanupError } = await supabaseClient.storage
+                                .from("design-images")
+                                .remove(uploadedFilePaths);
+                            if (cleanupError) console.warn("Temporary upload cleanup failed; check storage for unused files.", cleanupError);
+                        } catch (cleanupError) {
+                            console.warn("Temporary upload cleanup failed; check storage for unused files.", cleanupError);
+                        }
+                    }
 
                     showMessage(
                         adminMessage,
                         "Could not save design: " +
-                        error.message,
+                        (error && error.message ? error.message : "Please try again."),
                         "error"
                     );
 
