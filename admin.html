@@ -2046,29 +2046,21 @@
                     const statusCell =
                         document.createElement("td");
 
-                    let statusHTML = "";
-
+                    /* Build status labels as DOM nodes rather than parsing HTML. */
                     if (design.featured) {
-
-                        statusHTML +=
-                            '<span class="status status-featured">★ Featured</span> ';
-
+                        const featuredStatus = document.createElement("span");
+                        featuredStatus.className = "status status-featured";
+                        featuredStatus.textContent = "★ Featured";
+                        statusCell.appendChild(featuredStatus);
+                        statusCell.appendChild(document.createTextNode(" "));
                     }
 
-                    if (design.hidden === true) {
-
-                        statusHTML +=
-                            '<span class="status status-hidden">Hidden</span>';
-
-                    } else {
-
-                        statusHTML +=
-                            '<span class="status status-visible">Visible</span>';
-
-                    }
-
-                    statusCell.innerHTML =
-                        statusHTML;
+                    const visibilityStatus = document.createElement("span");
+                    visibilityStatus.className = design.hidden === true
+                        ? "status status-hidden"
+                        : "status status-visible";
+                    visibilityStatus.textContent = design.hidden === true ? "Hidden" : "Visible";
+                    statusCell.appendChild(visibilityStatus);
 
 
                     const actionsCell =
