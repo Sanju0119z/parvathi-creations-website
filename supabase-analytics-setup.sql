@@ -19,7 +19,10 @@ create index if not exists design_interactions_design_id_idx
 
 alter table public.design_interactions enable row level security;
 
-grant insert on public.design_interactions to anon, authenticated;
+-- Anonymous visitors may submit interaction fields only. They cannot choose IDs or timestamps.
+revoke insert on public.design_interactions from anon, authenticated;
+grant insert (event_type, design_id, design_code, design_name)
+  on public.design_interactions to anon, authenticated;
 grant select on public.design_interactions to authenticated;
 
 drop policy if exists "Allow public design interaction inserts" on public.design_interactions;
@@ -39,4 +42,4 @@ create policy "Authenticated admins can read design interactions"
   on public.design_interactions
   for select
   to authenticated
-  using (true);
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
