@@ -101,7 +101,7 @@
       { key: "saree", label: "Sarees & Tassels", aliases: ["saree", "sarees", "saree tassels", "tassels"] },
       { key: "custom", label: "Custom Designs", aliases: ["custom", "custom design", "custom designs", "tailoring", "salwar"] }
     ];
-    const normalizeText = value => String(value == null ? "" : value).toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9 ]+/g, " ").replace(/\\s+/g, " ").trim();
+    const normalizeText = value => String(value == null ? "" : value).toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
     const aliasToKey = {};
     list.forEach(category => {
       aliasToKey[normalizeText(category.key)] = category.key;
