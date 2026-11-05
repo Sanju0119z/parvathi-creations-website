@@ -7,7 +7,7 @@
   <meta name="description" content="Parvathi Creations — custom blouses, maggam work, embroidery, bridal wear, frocks and handcrafted tailoring in Telangana.">
   <title>Parvathi Creations | Thoughtfully Made, Beautifully Yours</title>
   <link rel="preconnect" href="https://ydhqjkyzbbooolaugydk.supabase.co">
-  <link rel="stylesheet" href="style.css?v=20261105-6">
+  <link rel="stylesheet" href="style.css?v=20261105-7">
 </head>
 <body>
   <div id="languageWelcome" class="language-welcome" role="dialog" aria-modal="true" aria-labelledby="languageWelcomeTitle" hidden>
@@ -43,7 +43,7 @@
 
   <main>
     <section class="hero" id="home">
-      <div class="hero-slider is-single" id="heroSlider" aria-label="Parvathi Creations featured designs">
+      <div class="hero-slider is-single" id="heroSlider" role="region" aria-label="Parvathi Creations featured designs">
         <a class="hero-slide-link" href="#collection" aria-label="Explore this design in the collection">
           <img class="hero-slide-image" id="heroSlideImage" src="sareejpg.jpg" alt="Parvathi Creations boutique design" loading="eager" decoding="async">
           <span class="hero-slide-shade" aria-hidden="true"></span>
@@ -51,7 +51,7 @@
         </a>
         <button class="hero-slide-arrow hero-slide-prev" id="heroSlidePrev" type="button" aria-label="Previous design">‹</button>
         <button class="hero-slide-arrow hero-slide-next" id="heroSlideNext" type="button" aria-label="Next design">›</button>
-        <div class="hero-slide-dots" id="heroSlideDots" aria-label="Choose featured design"></div>
+        <div class="hero-slide-dots" id="heroSlideDots" role="group" aria-label="Choose featured design"></div>
         <span class="hero-slide-count" id="heroSlideCount" aria-live="polite"></span>
       </div>
       <div class="hero-copy">
@@ -122,14 +122,14 @@
       ];
       function loadSiteScripts() {
         var categories = document.createElement("script");
-        categories.src = "categories.js?v=20261105-6";
+        categories.src = "categories.js?v=20261105-7";
         categories.onload = loadGallery;
         categories.onerror = loadGallery;
         document.body.appendChild(categories);
       }
       function loadGallery() {
         var app = document.createElement("script");
-        app.src = "script.js?v=20261105-6";
+        app.src = "script.js?v=20261105-7";
         document.body.appendChild(app);
       }
       function loadSdk(i) {
