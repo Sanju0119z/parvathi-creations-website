@@ -304,6 +304,48 @@
   function pcTranslateDesignText(value, language, kind) {
     const original = typeof value === "string" ? value.trim() : "";
     if (!original || language === "en") return original;
+    // Exact translations for the designs currently published in the gallery.
+    // Normalisation removes invisible zero-width characters and formatting differences from database text.
+    const normalisedOriginal = original.replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, " ").trim();
+    const publishedDesignTranslations = {
+      te: {
+        "Long frock":"పొడవాటి ఫ్రాక్",
+        "Knee length frock":"మోకాలి పొడవు ఫ్రాక్",
+        "White long Dress":"తెల్లని పొడవాటి డ్రెస్",
+        "Happy dasara":"దసరా శుభాకాంక్షలు",
+        "Lehanga":"లెహంగా",
+        "Maggam":"మగ్గం వర్క్",
+        "Sweetheart Blouse":"హార్ట్ నెక్ బ్లౌజ్",
+        "Cutwork scallop blouse":"కట్‌వర్క్ స్కాలోప్ బ్లౌజ్",
+        "Multicolour saree":"బహుళ రంగుల చీర",
+        "This silhouette is an Anarkali-style Gown Suit, a traditional South Asian attire known for its flared, floor-length umbrella cut paired with a simple neck line and matching dupatta. Style & Model Breakdown Neckline & Bodice: Features a clean scoop neck (wide U-shaped neckline) paired with a fitted chest region. Sleeve Design: Long, full-length fitted sleeves that create a streamlined aesthetic. Cut & Flare: High-waisted waistline featuring tight gathering that transitions into a wide, floor-length A-line flare (Umbrella cut). Fabric & Details: Crafted with a subtle, all-over tonal floral embroidery pattern, paired with a lightweight sheer dupatta wrapped neatly around the neck.":"ఈ డిజైన్ అనార్కలి శైలి గౌన్ సూట్. దక్షిణాసియా సంప్రదాయ దుస్తులైన ఇందులో, నేలవరకు వచ్చే గొడుగు ఆకారపు ఫ్లేర్‌తో పాటు సరళమైన మెడ డిజైన్ మరియు మ్యాచింగ్ దుపట్టా ఉంటాయి. డిజైన్ వివరాలు: మెడ మరియు పైభాగం: వెడల్పైన U ఆకారపు స్కూప్ నెక్‌తో పాటు శరీరానికి సరిపోయే ఫిట్. చేతుల డిజైన్: చక్కని ఆకృతిని ఇచ్చే పూర్తి పొడవైన ఫిట్ స్లీవ్స్. కట్ మరియు ఫ్లేర్: నడుము వద్ద గ్యాదరింగ్‌తో మొదలై, కిందికి విస్తరించే వెడల్పైన A-లైన్ గొడుగు కట్. వస్త్రం మరియు వివరాలు: మొత్తం మీద సున్నితమైన ఒకే టోన్ పూల ఎంబ్రాయిడరీ, మెడ చుట్టూ చక్కగా చుట్టిన తేలికపాటి పారదర్శక దుపట్టా.",
+        "This elegantly stiched frock is perfectly fit for parties is gives you of an amazing look it has puff seleves with the knee length frock":"పార్టీలకు చక్కగా సరిపోయే అందమైన మోకాలి పొడవు ఫ్రాక్ ఇది. పఫ్ స్లీవ్స్ ఈ ఫ్రాక్‌కు మరింత ఆకర్షణీయమైన రూపాన్ని ఇస్తాయి.",
+        "Can be stiched according to respective customer":"ప్రతి కస్టమర్ అభిరుచి మరియు కొలతలకు అనుగుణంగా కుట్టించవచ్చు.",
+        "Seasonal homepage greeting":"పండుగ సందర్భంగా హోమ్‌పేజీలో చూపించే శుభాకాంక్షల సందేశం.",
+        "#Stiching only Lavender Pearl Blouse Details✨ 💜Sleeve:Sheer puff organza style with scattered floral embroidery and wide embroidered cuffs. 💜Back:Deep U-cut,pearl border,dori tie-up with fabric latkans,lower button placket.":"కుట్టు మాత్రమే. లావెండర్ పెర్ల్ బ్లౌజ్ వివరాలు: చేతులు: అక్కడక్కడా పూల ఎంబ్రాయిడరీతో పారదర్శక ఆర్గన్జా పఫ్ స్లీవ్స్, వెడల్పైన ఎంబ్రాయిడరీ కఫ్స్. వెనుక భాగం: లోతైన U-కట్, ముత్యాల అంచు, దోరీ టై-అప్‌తో పాటు ఫాబ్రిక్ లట్కన్స్, కింద బటన్ల పట్టీ.",
+        "Customized according to measurements Design: Pastel yellow designer blouse with colorful floral embroidery. Neckline: Square neck with a scalloped border in the front, and a deep cut with gold dori and beaded tassels in the back. Finishing: Neat scalloped borders on the neckline, back, and sleeves. Sleeves: Elbow-length sleeves with matching floral threadwork and scalloped hems.":"కొలతలకు అనుగుణంగా కస్టమైజ్ చేయవచ్చు. డిజైన్: రంగురంగుల పూల ఎంబ్రాయిడరీతో పాస్టెల్ పసుపు రంగు డిజైనర్ బ్లౌజ్. మెడ డిజైన్: ముందు భాగంలో స్కాలోప్ అంచుతో చతురస్రాకార మెడ; వెనుక భాగంలో లోతైన కట్‌తో బంగారు దోరీ మరియు పూసల టాసెల్స్. ఫినిషింగ్: మెడ, వెనుక భాగం మరియు చేతుల వద్ద చక్కని స్కాలోప్ అంచులు. చేతులు: మ్యాచింగ్ పూల దారపు పనితో మోచేతి వరకు ఉండే స్లీవ్స్, స్కాలోప్ అంచులతో.",
+        "Saree doal silk borrder leavy":"డ్యూయల్ సిల్క్ బోర్డర్‌తో, హెవీ లుక్ కలిగిన చీర."
+      },
+      hi: {
+        "Long frock":"लंबी फ्रॉक",
+        "Knee length frock":"घुटने तक की फ्रॉक",
+        "White long Dress":"सफेद लंबी ड्रेस",
+        "Happy dasara":"दशहरा की शुभकामनाएँ",
+        "Lehanga":"लहंगा",
+        "Maggam":"मग्गम वर्क",
+        "Sweetheart Blouse":"हार्ट-नेक ब्लाउज़",
+        "Cutwork scallop blouse":"कटवर्क स्कैलप ब्लाउज़",
+        "Multicolour saree":"बहुरंगी साड़ी",
+        "This silhouette is an Anarkali-style Gown Suit, a traditional South Asian attire known for its flared, floor-length umbrella cut paired with a simple neck line and matching dupatta. Style & Model Breakdown Neckline & Bodice: Features a clean scoop neck (wide U-shaped neckline) paired with a fitted chest region. Sleeve Design: Long, full-length fitted sleeves that create a streamlined aesthetic. Cut & Flare: High-waisted waistline featuring tight gathering that transitions into a wide, floor-length A-line flare (Umbrella cut). Fabric & Details: Crafted with a subtle, all-over tonal floral embroidery pattern, paired with a lightweight sheer dupatta wrapped neatly around the neck.":"यह अनारकली शैली का गाउन सूट है। इस पारंपरिक दक्षिण एशियाई परिधान में फर्श तक फैला छतरी जैसा घेर, साधारण नेकलाइन और मैचिंग दुपट्टा है। डिज़ाइन का विवरण: गला और ऊपरी हिस्सा: चौड़ी U-आकार की स्कूप नेकलाइन और शरीर के अनुरूप फिटिंग। आस्तीन: साफ़-सुथरा लुक देने वाली पूरी लंबाई की फिटेड आस्तीन। कट और घेर: कमर पर बारीक चुन्नटों से शुरू होकर नीचे तक फैलता हुआ A-लाइन छतरी कट। कपड़ा और बारीकियाँ: पूरे कपड़े पर हल्की टोनल फूलों की कढ़ाई और गले के चारों ओर करीने से लपेटा गया हल्का पारदर्शी दुपट्टा।",
+        "This elegantly stiched frock is perfectly fit for parties is gives you of an amazing look it has puff seleves with the knee length frock":"यह सुंदर घुटने तक की फ्रॉक पार्टियों के लिए बहुत अच्छी है। इसकी पफ आस्तीन इसे आकर्षक लुक देती हैं।",
+        "Can be stiched according to respective customer":"हर ग्राहक की पसंद और नाप के अनुसार सिलाई की जा सकती है।",
+        "Seasonal homepage greeting":"त्योहार के अवसर पर होमपेज पर दिखाया जाने वाला शुभकामना संदेश।",
+        "#Stiching only Lavender Pearl Blouse Details✨ 💜Sleeve:Sheer puff organza style with scattered floral embroidery and wide embroidered cuffs. 💜Back:Deep U-cut,pearl border,dori tie-up with fabric latkans,lower button placket.":"केवल सिलाई। लैवेंडर पर्ल ब्लाउज़ का विवरण: आस्तीन: जगह-जगह फूलों की कढ़ाई वाला पारदर्शी ऑर्गेंज़ा पफ स्टाइल और चौड़े कढ़ाईदार कफ। पीछे: गहरी U-कट नेकलाइन, मोतियों की बॉर्डर, डोरी टाई-अप के साथ कपड़े की लटकन और नीचे बटनों की पट्टी।",
+        "Customized according to measurements Design: Pastel yellow designer blouse with colorful floral embroidery. Neckline: Square neck with a scalloped border in the front, and a deep cut with gold dori and beaded tassels in the back. Finishing: Neat scalloped borders on the neckline, back, and sleeves. Sleeves: Elbow-length sleeves with matching floral threadwork and scalloped hems.":"नाप के अनुसार कस्टमाइज़ किया जा सकता है। डिज़ाइन: रंगीन फूलों की कढ़ाई वाला हल्का पेस्टल पीला डिज़ाइनर ब्लाउज़। गला: सामने स्कैलप बॉर्डर वाला चौकोर गला और पीछे गहरी कट डिज़ाइन के साथ सुनहरी डोरी व मोतियों की लटकन। फिनिशिंग: गले, पीछे और आस्तीन पर साफ़ स्कैलप बॉर्डर। आस्तीन: मैचिंग फूलों की धागे वाली कढ़ाई और स्कैलप किनारों के साथ कोहनी तक की आस्तीन।",
+        "Saree doal silk borrder leavy":"डुअल सिल्क बॉर्डर वाली साड़ी, हैवी लुक के साथ।"
+      }
+    };
+    if (publishedDesignTranslations[language] && publishedDesignTranslations[language][normalisedOriginal]) return publishedDesignTranslations[language][normalisedOriginal];
     const phraseMaps = {
       te: {
         "Computer Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Computer Work":"కంప్యూటర్ వర్క్", "Computerized Embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "Designer Lehengas":"డిజైనర్ లెహంగాలు", "Designer Wear":"డిజైనర్ దుస్తులు", "Designer Blouses":"డిజైనర్ బ్లౌజులు", "Designer Blouse":"డిజైనర్ బ్లౌజ్", "Blouse Designs":"బ్లౌజ్ డిజైన్లు", "Blouse Design":"బ్లౌజ్ డిజైన్", "Wedding Dresses":"పెళ్లి దుస్తులు", "Wedding Wear":"పెళ్లి దుస్తులు", "Bridal Wear":"వధువు దుస్తులు", "Kids Wear":"పిల్లల దుస్తులు", "Sarees & Tassels":"చీరలు మరియు టాసెల్స్", "Saree Tassels":"చీర టాసెల్స్", "Custom Designs":"కస్టమ్ డిజైన్లు", "Custom Design":"కస్టమ్ డిజైన్", "Maggam Work":"మగ్గం వర్క్", "Sarees & Tassels":"చీరలు మరియు టాసెల్స్", "Other Designs":"ఇతర డిజైన్లు", "Festival Banner":"పండుగ బ్యానర్", "Frocks":"ఫ్రాక్స్", "Frock":"ఫ్రాక్", "Lehengas":"లెహంగాలు", "Lehenga":"లెహంగా", "Sarees":"చీరలు", "Saree":"చీర", "Tassels":"టాసెల్స్", "Embroidery":"ఎంబ్రాయిడరీ", "Tailoring":"దుస్తుల కుట్టు", "Traditional":"సంప్రదాయ", "Handwork":"చేతిపని", "Hand Work":"చేతిపని", "Silk":"పట్టు", "Cotton":"కాటన్", "Party Wear":"పార్టీ వేర్", "Bridal":"పెళ్లి", "Beautiful":"అందమైన", "New Design":"కొత్త డిజైన్", "Description":"వివరణ", "Price available on enquiry":"ధర కోసం సంప్రదించండి", "Please contact us for more details about this design.":"ఈ డిజైన్ వివరాల కోసం దయచేసి మమ్మల్ని సంప్రదించండి."
