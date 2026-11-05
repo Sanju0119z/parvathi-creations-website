@@ -39,50 +39,13 @@
 
   /* Gallery status and count text follows the same language selector as the rest of the site. */
   const galleryTextByLanguage = {
-    te: {
-      loading: "డిజైన్లు లోడ్ అవుతున్నాయి…",
-      errorTitle: "ప్రస్తుతం డిజైన్లను లోడ్ చేయలేకపోయాం.",
-      errorHelp: "ఇంటర్నెట్ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
-      retry: "మళ్లీ ప్రయత్నించండి",
-      emptyTitle: "మా డిజైన్ గ్యాలరీ నవీకరించబడుతోంది.",
-      emptyHelp: "కొత్త డిజైన్లు త్వరలో కనిపిస్తాయి. అప్పటివరకు తాజా డిజైన్ల కోసం WhatsAppలో సందేశం పంపండి.",
-      noMatchTitle: "మీ ఎంపికలకు సరిపోయే డిజైన్లు లేవు.",
-      noMatchHelp: "మరొక వర్గం లేదా శోధనను ప్రయత్నించండి, లేదా ఫిల్టర్లను తొలగించండి.",
-      clearFilters: "ఫిల్టర్లను తొలగించండి",
-      photoUnavailable: "ఫోటో అందుబాటులో లేదు",
-      showing: (n, total) => total + " డిజైన్లలో " + n + " చూపిస్తున్నాం"
-    },
-    hi: {
-      loading: "डिज़ाइन लोड हो रहे हैं…",
-      errorTitle: "अभी डिज़ाइन लोड नहीं हो सके।",
-      errorHelp: "अपना इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",
-      retry: "फिर कोशिश करें",
-      emptyTitle: "हमारी डिज़ाइन गैलरी अपडेट हो रही है।",
-      emptyHelp: "नए डिज़ाइन जल्द दिखाई देंगे। तब तक हमारे नए काम देखने के लिए WhatsApp पर संदेश भेजें।",
-      noMatchTitle: "आपकी पसंद से मेल खाने वाले डिज़ाइन नहीं मिले।",
-      noMatchHelp: "दूसरी श्रेणी या खोज आज़माएँ, या फ़िल्टर हटाएँ।",
-      clearFilters: "फ़िल्टर हटाएँ",
-      photoUnavailable: "फ़ोटो उपलब्ध नहीं है",
-      showing: (n, total) => total + " डिज़ाइन में से " + n + " दिखाए जा रहे हैं"
-    }
+    en: {loading:"Loading designs…",errorTitle:"We couldn't load the designs right now.",errorHelp:"Please check your connection and try again.",retry:"Try again",emptyTitle:"Our design gallery is being updated.",emptyHelp:"New designs will appear here soon. In the meantime, message us on WhatsApp to see our latest work.",noMatchTitle:"No designs match your choices.",noMatchHelp:"Try another category or search, or clear the filters.",clearFilters:"Clear filters",photoUnavailable:"Photo unavailable",showing:(n,total)=>"Showing "+n+" of "+total+" design"+(total===1?"":"s"),featured:"★ Featured",featuredOnly:"★ Featured only",searchLabel:"Search designs",searchPlaceholder:"Search designs…",sortLabel:"Sort designs",sortNewest:"Newest first",sortOldest:"Oldest first",sortName:"Name A–Z",like:"♡ I Like This Design",liked:"♥ Liked",enquire:"Enquire on WhatsApp",contactUnavailable:"The WhatsApp contact number is not available right now."},
+    te: {loading:"డిజైన్లు లోడ్ అవుతున్నాయి…",errorTitle:"ప్రస్తుతం డిజైన్లను లోడ్ చేయలేకపోయాం.",errorHelp:"ఇంటర్నెట్ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",retry:"మళ్లీ ప్రయత్నించండి",emptyTitle:"మా డిజైన్ గ్యాలరీ నవీకరించబడుతోంది.",emptyHelp:"కొత్త డిజైన్లు త్వరలో కనిపిస్తాయి. అప్పటివరకు మా తాజా పనిని చూడటానికి వాట్సాప్‌లో సందేశం పంపండి.",noMatchTitle:"మీ ఎంపికలకు సరిపోయే డిజైన్లు లేవు.",noMatchHelp:"మరొక వర్గం లేదా శోధనను ప్రయత్నించండి, లేదా ఫిల్టర్లను తొలగించండి.",clearFilters:"ఫిల్టర్లను తొలగించండి",photoUnavailable:"ఫోటో అందుబాటులో లేదు",showing:(n,total)=>total+" డిజైన్లలో "+n+" చూపిస్తున్నాం",featured:"★ ప్రత్యేక డిజైన్",featuredOnly:"★ ప్రత్యేక డిజైన్లు మాత్రమే",searchLabel:"డిజైన్లను వెతకండి",searchPlaceholder:"డిజైన్లను వెతకండి…",sortLabel:"డిజైన్లను క్రమబద్ధీకరించండి",sortNewest:"కొత్తవి ముందు",sortOldest:"పాతవి ముందు",sortName:"పేరు ప్రకారం",like:"♡ ఈ డిజైన్ నాకు నచ్చింది",liked:"♥ నచ్చింది",enquire:"వాట్సాప్‌లో వివరాలు అడగండి",contactUnavailable:"ప్రస్తుతం వాట్సాప్ నంబర్ అందుబాటులో లేదు."},
+    hi: {loading:"डिज़ाइन लोड हो रहे हैं…",errorTitle:"अभी डिज़ाइन लोड नहीं हो सके।",errorHelp:"अपना इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",retry:"फिर कोशिश करें",emptyTitle:"हमारी डिज़ाइन गैलरी अपडेट हो रही है।",emptyHelp:"नए डिज़ाइन जल्द दिखाई देंगे। तब तक हमारा नया काम देखने के लिए WhatsApp पर संदेश भेजें।",noMatchTitle:"आपकी पसंद से मेल खाने वाले डिज़ाइन नहीं मिले।",noMatchHelp:"दूसरी श्रेणी या खोज आज़माएँ, या फ़िल्टर हटाएँ।",clearFilters:"फ़िल्टर हटाएँ",photoUnavailable:"फ़ोटो उपलब्ध नहीं है",showing:(n,total)=>total+" डिज़ाइन में से "+n+" दिखाए जा रहे हैं",featured:"★ खास डिज़ाइन",featuredOnly:"★ केवल खास डिज़ाइन",searchLabel:"डिज़ाइन खोजें",searchPlaceholder:"डिज़ाइन खोजें…",sortLabel:"डिज़ाइन क्रमबद्ध करें",sortNewest:"नए पहले",sortOldest:"पुराने पहले",sortName:"नाम के अनुसार",like:"♡ मुझे यह डिज़ाइन पसंद है",liked:"♥ पसंद आया",enquire:"WhatsApp पर पूछताछ करें",contactUnavailable:"अभी WhatsApp नंबर उपलब्ध नहीं है।"}
   };
 
   function applyGalleryLanguage(language) {
-    const translated = galleryTextByLanguage[language];
-    if (!translated) {
-      TEXT.loading = "Loading designs…";
-      TEXT.errorTitle = "We couldn't load the designs right now.";
-      TEXT.errorHelp = "Please check your connection and try again.";
-      TEXT.retry = "Try again";
-      TEXT.emptyTitle = "Our design gallery is being updated.";
-      TEXT.emptyHelp = "New designs will appear here soon. In the meantime, message us on WhatsApp to see our latest work.";
-      TEXT.noMatchTitle = "No designs match your choices.";
-      TEXT.noMatchHelp = "Try another category or search, or clear the filters.";
-      TEXT.clearFilters = "Clear filters";
-      TEXT.photoUnavailable = "Photo unavailable";
-      TEXT.showing = (n, total) => "Showing " + n + " of " + total + " design" + (total === 1 ? "" : "s");
-      return;
-    }
+    const translated = galleryTextByLanguage[language] || galleryTextByLanguage.en;
     Object.keys(translated).forEach(key => { TEXT[key] = translated[key]; });
   }
 
@@ -121,6 +84,7 @@
   let loading = false;
   let heroSlideIndex = 0;
   let heroSlideTimer = null;
+  let heroSlides = [];
   const el = {};
 
   /* ---------- Data preparation ---------- */
@@ -227,11 +191,14 @@
   function openWhatsApp(design) {
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
     trackInterest("enquiry", design);
-    const parts = [pcUiText("message") + (design.name || design.categoryLabel) + " (" + design.categoryLabel + ")."];
+    const language = pcCurrentLanguage();
+    const translatedName = pcTranslateDesignText(design.name || design.categoryLabel, language, "name");
+    const translatedCategory = pcTranslateDesignText(design.categoryLabel, language, "category");
+    const parts = [pcUiText("message") + translatedName + " (" + translatedCategory + ")."];
     if (design.code) parts.push(pcUiText("code") + design.code + ".");
     if (design.price) parts.push(pcUiText("price") + design.price);
-    if (design.description) parts.push(pcUiText("description") + design.description);
-    parts.push("Image: " + design.imageUrl);
+    if (design.description) parts.push(pcUiText("description") + pcTranslateDesignText(design.description, language, "description"));
+    parts.push(pcCurrentLanguage() === "te" ? "చిత్రం: " + design.imageUrl : pcCurrentLanguage() === "hi" ? "तस्वीर: " + design.imageUrl : "Image: " + design.imageUrl);
     parts.push(pcUiText("details"));
     window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" ")), "_blank", "noopener,noreferrer");
   }
@@ -345,6 +312,12 @@
         "Computer Embroidery":"कंप्यूटर कढ़ाई", "Computer Work":"कंप्यूटर वर्क", "Computerized Embroidery":"कंप्यूटर कढ़ाई", "Designer Lehengas":"डिज़ाइनर लहंगे", "Designer Wear":"डिज़ाइनर कपड़े", "Designer Blouses":"डिज़ाइनर ब्लाउज़", "Designer Blouse":"डिज़ाइनर ब्लाउज़", "Blouse Designs":"ब्लाउज़ डिज़ाइन", "Blouse Design":"ब्लाउज़ डिज़ाइन", "Wedding Dresses":"शादी के कपड़े", "Wedding Wear":"शादी के कपड़े", "Bridal Wear":"दुल्हन के कपड़े", "Kids Wear":"बच्चों के कपड़े", "Sarees & Tassels":"साड़ी और लटकन", "Saree Tassels":"साड़ी टैसल", "Custom Designs":"कस्टम डिज़ाइन", "Custom Design":"कस्टम डिज़ाइन", "Maggam Work":"मग्गम वर्क", "Frocks":"फ्रॉक", "Frock":"फ्रॉक", "Lehengas":"लहंगे", "Lehenga":"लहंगा", "Sarees":"साड़ियाँ", "Saree":"साड़ी", "Tassels":"लटकन", "Embroidery":"कढ़ाई", "Tailoring":"सिलाई", "Traditional":"पारंपरिक", "Handwork":"हाथ का काम", "Hand Work":"हाथ का काम", "Silk":"रेशम", "Cotton":"सूती", "Party Wear":"पार्टी वियर", "Bridal":"दुल्हन", "Beautiful":"सुंदर", "New Design":"नया डिज़ाइन", "Description":"विवरण", "Price available on enquiry":"कीमत जानने के लिए संपर्क करें", "Please contact us for more details about this design.":"इस डिज़ाइन की अधिक जानकारी के लिए कृपया संपर्क करें."
       }
     };
+    Object.assign(phraseMaps.te, {
+      "Featured Saree Design":"ప్రత్యేక చీర డిజైన్", "Parvathi Creations":"పార్వతి క్రియేషన్స్", "custom blouse":"కస్టమ్ బ్లౌజ్", "blouse stitching":"బ్లౌజ్ కుట్టు", "hand embroidery":"చేతి ఎంబ్రాయిడరీ", "maggam work":"మగ్గం వర్క్", "computer embroidery":"కంప్యూటర్ ఎంబ్రాయిడరీ", "bridal wear":"పెళ్లి దుస్తులు", "wedding wear":"పెళ్లి దుస్తులు", "kids wear":"పిల్లల దుస్తులు", "designer blouse":"డిజైనర్ బ్లౌజ్", "designer wear":"డిజైనర్ దుస్తులు", "saree tassels":"చీర టాసెల్స్", "new collection":"కొత్త కలెక్షన్", "available on request":"అడిగినప్పుడు అందుబాటులో ఉంటుంది", "made to order":"ఆర్డర్‌పై తయారు చేస్తాం", "customised design":"మీ అభిరుచికి అనుగుణంగా రూపొందించిన డిజైన్", "customized design":"మీ అభిరుచికి అనుగుణంగా రూపొందించిన డిజైన్", "beautiful design":"అందమైన డిజైన్", "latest design":"తాజా డిజైన్", "traditional design":"సంప్రదాయ డిజైన్", "neck design":"మెడ డిజైన్", "sleeve design":"చేతి డిజైన్", "back design":"వెనుక భాగం డిజైన్", "front design":"ముందు భాగం డిజైన్", "work blouse":"వర్క్ బ్లౌజ్", "silk saree":"పట్టు చీర", "cotton saree":"కాటన్ చీర", "please contact us":"దయచేసి మమ్మల్ని సంప్రదించండి", "for more details":"మరిన్ని వివరాల కోసం", "price":"ధర", "description":"వివరణ", "design":"డిజైన్", "blouse":"బ్లౌజ్", "saree":"చీర", "frock":"ఫ్రాక్", "lehenga":"లెహంగా", "sleeves":"చేతులు", "neck":"మెడ", "front":"ముందు", "back":"వెనుక", "work":"పని", "handmade":"చేతితో తయారు చేసిన"
+    });
+    Object.assign(phraseMaps.hi, {
+      "Featured Saree Design":"खास साड़ी डिज़ाइन", "Parvathi Creations":"पार्वती क्रिएशन्स", "custom blouse":"कस्टम ब्लाउज़", "blouse stitching":"ब्लाउज़ सिलाई", "hand embroidery":"हाथ की कढ़ाई", "maggam work":"मग्गम वर्क", "computer embroidery":"कंप्यूटर कढ़ाई", "bridal wear":"दुल्हन के कपड़े", "wedding wear":"शादी के कपड़े", "kids wear":"बच्चों के कपड़े", "designer blouse":"डिज़ाइनर ब्लाउज़", "designer wear":"डिज़ाइनर परिधान", "saree tassels":"साड़ी की लटकन", "new collection":"नया कलेक्शन", "available on request":"अनुरोध पर उपलब्ध", "made to order":"ऑर्डर मिलने पर तैयार किया जाएगा", "customised design":"आपकी पसंद के अनुसार तैयार डिज़ाइन", "customized design":"आपकी पसंद के अनुसार तैयार डिज़ाइन", "beautiful design":"सुंदर डिज़ाइन", "latest design":"नया डिज़ाइन", "traditional design":"पारंपरिक डिज़ाइन", "neck design":"गले का डिज़ाइन", "sleeve design":"आस्तीन का डिज़ाइन", "back design":"पीछे का डिज़ाइन", "front design":"सामने का डिज़ाइन", "work blouse":"वर्क ब्लाउज़", "silk saree":"रेशमी साड़ी", "cotton saree":"सूती साड़ी", "please contact us":"कृपया हमसे संपर्क करें", "for more details":"अधिक जानकारी के लिए", "price":"कीमत", "description":"विवरण", "design":"डिज़ाइन", "blouse":"ब्लाउज़", "saree":"साड़ी", "frock":"फ्रॉक", "lehenga":"लहंगा", "sleeves":"आस्तीन", "neck":"गला", "front":"सामने", "back":"पीछे", "work":"काम", "handmade":"हाथ से बनाया गया"
+    });
     let result = original;
     const map = phraseMaps[language] || {};
     Object.keys(map).sort((a,b) => b.length-a.length).forEach(key => {
@@ -549,6 +522,7 @@
       el.recent.textContent = state.view === "recent" ? t.recentOn : t.recent;
     }
     if (state.status !== "loading" && el.grid) render();
+    if (heroSlides.length) initHeroSlider(heroSlides);
   });
 
   /* ---------- Homepage hero slider: only real Supabase design uploads ---------- */
@@ -561,7 +535,8 @@
     const count = document.getElementById("heroSlideCount");
     if (!root || !image || !dots) return;
     if (heroSlideTimer) { window.clearInterval(heroSlideTimer); heroSlideTimer = null; }
-    const availableSlides = (Array.isArray(designs) ? designs : []).filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
+    heroSlides = Array.isArray(designs) ? designs : [];
+    const availableSlides = heroSlides.filter(d => d && !d.hidden && /^https?:\/\//i.test(d.imageUrl || ""));
     /* Prefer designs marked Featured in Admin, but fall back to all visible uploaded designs so the hero never disappears just because none are featured. */
     const featuredSlides = availableSlides.filter(d => d.featured);
     const slides = featuredSlides.length ? featuredSlides : availableSlides;
@@ -590,7 +565,7 @@
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "hero-slide-dot";
-      dot.setAttribute("aria-label", "Show design " + (index + 1) + ": " + (design.name || design.categoryLabel || "Boutique design"));
+      dot.setAttribute("aria-label", (pcCurrentLanguage() === "te" ? "డిజైన్ చూడండి " : pcCurrentLanguage() === "hi" ? "डिज़ाइन देखें " : "Show design ") + (index + 1) + ": " + pcTranslateDesignText(design.name || design.categoryLabel || "Boutique design", pcCurrentLanguage(), "name"));
       dot.addEventListener("click", () => { heroSlideIndex = index; showSlide(); restartTimer(); });
       dots.append(dot);
     });
@@ -602,7 +577,7 @@
         ? (activeLanguage === "te" ? "పండుగ శుభాకాంక్షలు" : activeLanguage === "hi" ? "त्योहार की शुभकामनाएँ" : "FESTIVAL GREETINGS")
         : (activeLanguage === "te" ? "శ్రద్ధతో రూపొందించాం" : activeLanguage === "hi" ? "सावधानी से बनाया गया" : "MADE WITH CARE");
       image.src = design.imageUrl;
-      image.alt = [design.name, design.categoryLabel, "Parvathi Creations design"].filter(Boolean).join(" — ");
+      image.alt = [pcTranslateDesignText(design.name, activeLanguage, "name"), pcTranslateDesignText(design.categoryLabel, activeLanguage, "category"), activeLanguage === "te" ? "పార్వతి క్రియేషన్స్ డిజైన్" : activeLanguage === "hi" ? "पार्वती क्रिएशन्स डिज़ाइन" : "Parvathi Creations design"].filter(Boolean).join(" — ");
       name.textContent = pcTranslateDesignText(design.name || design.categoryLabel || "A design made with care", activeLanguage, "name");
       category.textContent = pcTranslateDesignText(design.categoryLabel || "Parvathi Creations", activeLanguage, "category");
       count.textContent = String(heroSlideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
@@ -785,14 +760,14 @@
   else init();
 
 const pcTranslations = {
-  en: { home:"Home", collection:"Collection", craft:"Our Craft", services:"Services", contact:"Contact", enquire:"Enquire", language:"🌐 Language", all:"All Designs", maggam:"Maggam Work", computer:"Computer Embroidery", blouse:"Blouse Designs", designerBlouses:"Designer Blouses", custom:"Custom Designs", designer:"Designer Wear", frocks:"Frocks", lehenga:"Designer Lehengas", bridal:"Wedding Wear", kids:"Kids Wear", saree:"Saree Tassels", search:"Search designs", sortNewest:"Newest first", sortOldest:"Oldest first", sortName:"Name A–Z", featured:"★ Featured only", heroEyebrow:"PARVATHI CREATIONS · TELANGANA", heroTitle:"Tradition, tailored to you.", heroDescription:"Thoughtful stitching, intricate embroidery and occasionwear made with care — for the moments you want to remember.", explore:"Explore the collection", heroNote:"Made with care. Finished with love.", collectionEyebrow:"A LITTLE SOMETHING FOR EVERY OCCASION", collectionTitle:"Find your favourite.", collectionDescription:"From everyday elegance to wedding-day details, explore pieces inspired by your style.", photoDisclaimer:"Each custom order is discussed with you before stitching.", craftEyebrow:"THE BEAUTY IS IN THE DETAILS", craftTitle:"Made by hand. Made for you.", craftDescription:"From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.", craftCta:"Let's create something together", servicesEyebrow:"WHAT WE DO", servicesTitle:"Every detail, considered.", servicesDescription:"Tell us what you have in mind. We'll help you find the right finish, fit and details for your occasion.", contactEyebrow:"YOUR IDEA, OUR CRAFT", contactTitle:"Have something in mind?", contactDescription:"Share your inspiration with us. Let's talk about your design.", whatsapp:"Chat with us on WhatsApp", footerStory:"Where every stitch tells a story.", instagram:"Instagram", youtube:"YouTube", owner:"Owner login", visitBoutique:"Visit our boutique", welcomeTitle:"Choose your language", welcomeNote:"You can change your language anytime from the top of the page.", footerCollection:"Collection", footerServices:"Services", footerContact:"Contact", service1:"Maggam work & hand embroidery", service2:"Computer embroidery", service3:"Blouse stitching & custom designs", service4:"Bridal wear, lehengas & occasionwear", service5:"Frocks, kids wear & salwar stitching", service6:"Saree tassels & finishing" },
-  te: { home:"హోమ్", collection:"కలెక్షన్", craft:"మా కళ", services:"సేవలు", contact:"సంప్రదించండి", enquire:"విచారించండి", language:"🌐 భాష", all:"అన్ని డిజైన్లు", maggam:"మగ్గం వర్క్", computer:"కంప్యూటర్ ఎంబ్రాయిడరీ", blouse:"బ్లౌజ్ డిజైన్లు", designerBlouses:"డిజైనర్ బ్లౌజులు", custom:"కస్టమ్ డిజైన్లు", designer:"డిజైనర్ దుస్తులు", frocks:"ఫ్రాక్స్", lehenga:"డిజైనర్ లెహంగాలు", bridal:"పెళ్లి దుస్తులు", kids:"పిల్లల దుస్తులు", saree:"చీర టాసెల్స్", search:"డిజైన్లను వెతకండి", sortNewest:"కొత్తవి ముందు", sortOldest:"పాతవి ముందు", sortName:"పేరు ప్రకారం", featured:"★ ప్రత్యేక డిజైన్లు మాత్రమే", heroEyebrow:"పార్వతి క్రియేషన్స్ · తెలంగాణ", heroTitle:"మీ అభిరుచికి తగ్గ సంప్రదాయ శైలి.", heroDescription:"మీకు గుర్తుండిపోయే సందర్భాల కోసం శ్రద్ధగా కుట్టిన దుస్తులు, అందమైన ఎంబ్రాయిడరీ, ప్రత్యేక వేడుకల దుస్తులు.", explore:"కలెక్షన్ చూడండి", heroNote:"శ్రద్ధతో తయారు చేసి, ప్రేమతో పూర్తి చేస్తాం.", collectionEyebrow:"ప్రతి సందర్భానికీ ప్రత్యేకంగా", collectionTitle:"మీకు నచ్చిన డిజైన్‌ను ఎంచుకోండి.", collectionDescription:"రోజువారీ అందం నుంచి పెళ్లి వేడుకల దుస్తుల వరకు, మీ శైలికి సరిపోయే డిజైన్లను చూడండి.", photoDisclaimer:"కుట్టు ప్రారంభించే ముందు ప్రతి కస్టమ్ ఆర్డర్ గురించి మీతో చర్చిస్తాం.", craftEyebrow:"వివరాల్లోనే అందం", craftTitle:"చేతితో తయారు చేసినవి. మీకోసమే.", craftDescription:"సున్నితమైన దారపు పనుల నుంచి చక్కగా పూర్తి చేసిన బ్లౌజ్‌ల వరకు, మీ ఆలోచనలకు రూపం ఇస్తాం.", craftCta:"మనిద్దరం కలిసి అందమైన డిజైన్ చేద్దాం", servicesEyebrow:"మా సేవలు", servicesTitle:"ప్రతి వివరానికీ ప్రత్యేక శ్రద్ధ.", servicesDescription:"మీకు కావలసిన డిజైన్‌ను చెప్పండి. సరైన ఫిట్, ఫినిషింగ్, వివరాలను ఎంచుకోవడంలో సహాయం చేస్తాం.", contactEyebrow:"మీ ఆలోచన — మా కళ", contactTitle:"మీ మనసులో ఏదైనా డిజైన్ ఉందా?", contactDescription:"మీకు నచ్చిన నమూనాను మాతో పంచుకోండి. మీ డిజైన్ గురించి మాట్లాడుకుందాం.", whatsapp:"వాట్సాప్‌లో మాట్లాడండి", footerStory:"ప్రతి కుట్టులో ఒక కథ ఉంటుంది.", instagram:"ఇన్‌స్టాగ్రామ్", youtube:"యూట్యూబ్", owner:"యజమాని లాగిన్", visitBoutique:"మా బుటిక్‌ను సందర్శించండి", welcomeTitle:"మీ భాషను ఎంచుకోండి", welcomeNote:"పేజీ పైభాగంలో ఎప్పుడైనా భాషను మార్చుకోవచ్చు.", footerCollection:"కలెక్షన్", footerServices:"సేవలు", footerContact:"సంప్రదించండి", service1:"మగ్గం వర్క్ మరియు చేతి ఎంబ్రాయిడరీ", service2:"కంప్యూటర్ ఎంబ్రాయిడరీ", service3:"బ్లౌజ్ కుట్టు మరియు కస్టమ్ డిజైన్లు", service4:"పెళ్లి దుస్తులు, లెహంగాలు మరియు ప్రత్యేక దుస్తులు", service5:"ఫ్రాక్స్, పిల్లల దుస్తులు మరియు సల్వార్ కుట్టు", service6:"చీర టాసెల్స్ మరియు ఫినిషింగ్" },
-  hi: { home:"होम", collection:"कलेक्शन", craft:"हमारी कला", services:"सेवाएँ", contact:"संपर्क", enquire:"पूछताछ", language:"🌐 भाषा", all:"सभी डिज़ाइन", maggam:"मग्गम वर्क", computer:"कंप्यूटर कढ़ाई", blouse:"ब्लाउज़ डिज़ाइन", designerBlouses:"डिज़ाइनर ब्लाउज़", custom:"कस्टम डिज़ाइन", designer:"डिज़ाइनर वियर", frocks:"फ्रॉक", lehenga:"डिज़ाइनर लहंगे", bridal:"शादी के कपड़े", kids:"बच्चों के कपड़े", saree:"साड़ी टैसल", search:"डिज़ाइन खोजें", sortNewest:"नए पहले", sortOldest:"पुराने पहले", sortName:"नाम के अनुसार", featured:"★ केवल विशेष डिज़ाइन", heroEyebrow:"पार्वती क्रिएशन्स · तेलंगाना", heroTitle:"आपकी पसंद के अनुसार परंपरा।", heroDescription:"यादगार पलों के लिए सावधानी से की गई सिलाई, बारीक कढ़ाई और खास अवसरों के कपड़े।", explore:"कलेक्शन देखें", heroNote:"सावधानी से बनाया, प्यार से पूरा किया।", collectionEyebrow:"हर अवसर के लिए कुछ खास", collectionTitle:"अपना पसंदीदा डिज़ाइन चुनें।", collectionDescription:"रोज़मर्रा की सुंदरता से लेकर शादी के खास कपड़ों तक, अपनी शैली से प्रेरित डिज़ाइन देखें।", photoDisclaimer:"सिलाई शुरू करने से पहले हर कस्टम ऑर्डर पर आपसे चर्चा की जाती है।", craftEyebrow:"खूबसूरती बारीकियों में है", craftTitle:"हाथों से बनाया। आपके लिए।", craftDescription:"नाज़ुक धागे के काम से लेकर अच्छी तरह तैयार ब्लाउज़ तक, हम आपके विचारों को आकार देते हैं।", craftCta:"आइए, मिलकर कुछ खास बनाएँ", servicesEyebrow:"हमारी सेवाएँ", servicesTitle:"हर बारीकी पर ध्यान।", servicesDescription:"अपनी पसंद बताएँ। हम सही फिट, फिनिश और अवसर के अनुसार विवरण चुनने में मदद करेंगे।", contactEyebrow:"आपका विचार, हमारी कला", contactTitle:"क्या आपके मन में कोई डिज़ाइन है?", contactDescription:"अपनी पसंद की तस्वीर या प्रेरणा साझा करें। आइए, आपके डिज़ाइन पर बात करें।", whatsapp:"WhatsApp पर बात करें", footerStory:"हर सिलाई एक कहानी कहती है।", instagram:"इंस्टाग्राम", youtube:"YouTube", owner:"मालिक लॉगिन", visitBoutique:"हमारे बुटीक आएँ", welcomeTitle:"अपनी भाषा चुनें", welcomeNote:"आप पेज के ऊपर से कभी भी भाषा बदल सकते हैं।", footerCollection:"कलेक्शन", footerServices:"सेवाएँ", footerContact:"संपर्क", service1:"मग्गम वर्क और हाथ की कढ़ाई", service2:"कंप्यूटर कढ़ाई", service3:"ब्लाउज़ सिलाई और कस्टम डिज़ाइन", service4:"शादी के कपड़े, लहंगे और खास परिधान", service5:"फ्रॉक, बच्चों के कपड़े और सलवार सिलाई", service6:"साड़ी टैसल और फिनिशिंग" }
+  en: { home:"Home", collection:"Collection", craft:"Our Craft", services:"Services", contact:"Contact", enquire:"Enquire", language:"🌐 Language", all:"All Designs", maggam:"Maggam Work", computer:"Computer Embroidery", blouse:"Blouse Designs", designerBlouses:"Designer Blouses", custom:"Custom Designs", designer:"Designer Wear", frocks:"Frocks", lehenga:"Designer Lehengas", bridal:"Wedding Wear", kids:"Kids Wear", saree:"Saree Tassels", search:"Search designs", sortNewest:"Newest first", sortOldest:"Oldest first", sortName:"Name A–Z", featured:"★ Featured only", sectionCollection:"01 — THE COLLECTION", sectionServices:"02 — OUR SERVICES", heroEyebrow:"PARVATHI CREATIONS · TELANGANA", heroTitle:"Tradition, tailored to you.", heroDescription:"Thoughtful stitching, intricate embroidery and occasionwear made with care — for the moments you want to remember.", explore:"Explore the collection", heroNote:"Made with care. Finished with love.", collectionEyebrow:"A LITTLE SOMETHING FOR EVERY OCCASION", collectionTitle:"Find your favourite.", collectionDescription:"From everyday elegance to wedding-day details, explore pieces inspired by your style.", photoDisclaimer:"Each custom order is discussed with you before stitching.", craftEyebrow:"THE BEAUTY IS IN THE DETAILS", craftTitle:"Made by hand. Made for you.", craftDescription:"From delicate threadwork to carefully finished blouses, we bring your ideas to life with patience, skill and a personal touch.", craftCta:"Let's create something together", servicesEyebrow:"WHAT WE DO", servicesTitle:"Every detail, considered.", servicesDescription:"Tell us what you have in mind. We'll help you find the right finish, fit and details for your occasion.", contactEyebrow:"YOUR IDEA, OUR CRAFT", contactTitle:"Have something in mind?", contactDescription:"Share your inspiration with us. Let's talk about your design.", whatsapp:"Chat with us on WhatsApp", footerStory:"Where every stitch tells a story.", instagram:"Instagram", youtube:"YouTube", owner:"Owner login", visitBoutique:"Visit our boutique", welcomeTitle:"Choose your language", welcomeNote:"You can change your language anytime from the top of the page.", footerCollection:"Collection", footerServices:"Services", footerContact:"Contact", service1:"Maggam work & hand embroidery", service2:"Computer embroidery", service3:"Blouse stitching & custom designs", service4:"Bridal wear, lehengas & occasionwear", service5:"Frocks, kids wear & salwar stitching", service6:"Saree tassels & finishing" },
+  te: { home:"హోమ్", collection:"కలెక్షన్", craft:"మా కళ", services:"సేవలు", contact:"సంప్రదించండి", enquire:"విచారించండి", language:"🌐 భాష", all:"అన్ని డిజైన్లు", maggam:"మగ్గం వర్క్", computer:"కంప్యూటర్ ఎంబ్రాయిడరీ", blouse:"బ్లౌజ్ డిజైన్లు", designerBlouses:"డిజైనర్ బ్లౌజులు", custom:"కస్టమ్ డిజైన్లు", designer:"డిజైనర్ దుస్తులు", frocks:"ఫ్రాక్స్", lehenga:"డిజైనర్ లెహంగాలు", bridal:"పెళ్లి దుస్తులు", kids:"పిల్లల దుస్తులు", saree:"చీర టాసెల్స్", search:"డిజైన్లను వెతకండి", sortNewest:"కొత్తవి ముందు", sortOldest:"పాతవి ముందు", sortName:"పేరు ప్రకారం", featured:"★ ప్రత్యేక డిజైన్లు మాత్రమే", sectionCollection:"01 — కలెక్షన్", sectionServices:"02 — మా సేవలు", heroEyebrow:"పార్వతి క్రియేషన్స్ · తెలంగాణ", heroTitle:"మీ అభిరుచికి తగ్గ సంప్రదాయ శైలి.", heroDescription:"మీకు గుర్తుండిపోయే సందర్భాల కోసం శ్రద్ధగా కుట్టిన దుస్తులు, అందమైన ఎంబ్రాయిడరీ, ప్రత్యేక వేడుకల దుస్తులు.", explore:"కలెక్షన్ చూడండి", heroNote:"శ్రద్ధతో తయారు చేసి, ప్రేమతో పూర్తి చేస్తాం.", collectionEyebrow:"ప్రతి సందర్భానికీ ప్రత్యేకంగా", collectionTitle:"మీకు నచ్చిన డిజైన్‌ను ఎంచుకోండి.", collectionDescription:"రోజువారీ అందం నుంచి పెళ్లి వేడుకల దుస్తుల వరకు, మీ శైలికి సరిపోయే డిజైన్లను చూడండి.", photoDisclaimer:"కుట్టు ప్రారంభించే ముందు ప్రతి కస్టమ్ ఆర్డర్ గురించి మీతో చర్చిస్తాం.", craftEyebrow:"వివరాల్లోనే అందం", craftTitle:"చేతితో తయారు చేసినవి. మీకోసమే.", craftDescription:"సున్నితమైన దారపు పనుల నుంచి చక్కగా పూర్తి చేసిన బ్లౌజ్‌ల వరకు, మీ ఆలోచనలకు రూపం ఇస్తాం.", craftCta:"మనిద్దరం కలిసి అందమైన డిజైన్ చేద్దాం", servicesEyebrow:"మా సేవలు", servicesTitle:"ప్రతి వివరానికీ ప్రత్యేక శ్రద్ధ.", servicesDescription:"మీకు కావలసిన డిజైన్‌ను చెప్పండి. సరైన ఫిట్, ఫినిషింగ్, వివరాలను ఎంచుకోవడంలో సహాయం చేస్తాం.", contactEyebrow:"మీ ఆలోచన — మా కళ", contactTitle:"మీ మనసులో ఏదైనా డిజైన్ ఉందా?", contactDescription:"మీకు నచ్చిన నమూనాను మాతో పంచుకోండి. మీ డిజైన్ గురించి మాట్లాడుకుందాం.", whatsapp:"వాట్సాప్‌లో మాట్లాడండి", footerStory:"ప్రతి కుట్టులో ఒక కథ ఉంటుంది.", instagram:"ఇన్‌స్టాగ్రామ్", youtube:"యూట్యూబ్", owner:"యజమాని లాగిన్", visitBoutique:"మా బుటిక్‌ను సందర్శించండి", welcomeTitle:"మీ భాషను ఎంచుకోండి", welcomeNote:"పేజీ పైభాగంలో ఎప్పుడైనా భాషను మార్చుకోవచ్చు.", footerCollection:"కలెక్షన్", footerServices:"సేవలు", footerContact:"సంప్రదించండి", service1:"మగ్గం వర్క్ మరియు చేతి ఎంబ్రాయిడరీ", service2:"కంప్యూటర్ ఎంబ్రాయిడరీ", service3:"బ్లౌజ్ కుట్టు మరియు కస్టమ్ డిజైన్లు", service4:"పెళ్లి దుస్తులు, లెహంగాలు మరియు ప్రత్యేక దుస్తులు", service5:"ఫ్రాక్స్, పిల్లల దుస్తులు మరియు సల్వార్ కుట్టు", service6:"చీర టాసెల్స్ మరియు ఫినిషింగ్" },
+  hi: { home:"होम", collection:"कलेक्शन", craft:"हमारी कला", services:"सेवाएँ", contact:"संपर्क", enquire:"पूछताछ", language:"🌐 भाषा", all:"सभी डिज़ाइन", maggam:"मग्गम वर्क", computer:"कंप्यूटर कढ़ाई", blouse:"ब्लाउज़ डिज़ाइन", designerBlouses:"डिज़ाइनर ब्लाउज़", custom:"कस्टम डिज़ाइन", designer:"डिज़ाइनर वियर", frocks:"फ्रॉक", lehenga:"डिज़ाइनर लहंगे", bridal:"शादी के कपड़े", kids:"बच्चों के कपड़े", saree:"साड़ी टैसल", search:"डिज़ाइन खोजें", sortNewest:"नए पहले", sortOldest:"पुराने पहले", sortName:"नाम के अनुसार", featured:"★ केवल विशेष डिज़ाइन", sectionCollection:"01 — कलेक्शन", sectionServices:"02 — हमारी सेवाएँ", heroEyebrow:"पार्वती क्रिएशन्स · तेलंगाना", heroTitle:"आपकी पसंद के अनुसार परंपरा।", heroDescription:"यादगार पलों के लिए सावधानी से की गई सिलाई, बारीक कढ़ाई और खास अवसरों के कपड़े।", explore:"कलेक्शन देखें", heroNote:"सावधानी से बनाया, प्यार से पूरा किया।", collectionEyebrow:"हर अवसर के लिए कुछ खास", collectionTitle:"अपना पसंदीदा डिज़ाइन चुनें।", collectionDescription:"रोज़मर्रा की सुंदरता से लेकर शादी के खास कपड़ों तक, अपनी शैली से प्रेरित डिज़ाइन देखें।", photoDisclaimer:"सिलाई शुरू करने से पहले हर कस्टम ऑर्डर पर आपसे चर्चा की जाती है।", craftEyebrow:"खूबसूरती बारीकियों में है", craftTitle:"हाथों से बनाया। आपके लिए।", craftDescription:"नाज़ुक धागे के काम से लेकर अच्छी तरह तैयार ब्लाउज़ तक, हम आपके विचारों को आकार देते हैं।", craftCta:"आइए, मिलकर कुछ खास बनाएँ", servicesEyebrow:"हमारी सेवाएँ", servicesTitle:"हर बारीकी पर ध्यान।", servicesDescription:"अपनी पसंद बताएँ। हम सही फिट, फिनिश और अवसर के अनुसार विवरण चुनने में मदद करेंगे।", contactEyebrow:"आपका विचार, हमारी कला", contactTitle:"क्या आपके मन में कोई डिज़ाइन है?", contactDescription:"अपनी पसंद की तस्वीर या प्रेरणा साझा करें। आइए, आपके डिज़ाइन पर बात करें।", whatsapp:"WhatsApp पर बात करें", footerStory:"हर सिलाई एक कहानी कहती है।", instagram:"इंस्टाग्राम", youtube:"YouTube", owner:"मालिक लॉगिन", visitBoutique:"हमारे बुटीक आएँ", welcomeTitle:"अपनी भाषा चुनें", welcomeNote:"आप पेज के ऊपर से कभी भी भाषा बदल सकते हैं।", footerCollection:"कलेक्शन", footerServices:"सेवाएँ", footerContact:"संपर्क", service1:"मग्गम वर्क और हाथ की कढ़ाई", service2:"कंप्यूटर कढ़ाई", service3:"ब्लाउज़ सिलाई और कस्टम डिज़ाइन", service4:"शादी के कपड़े, लहंगे और खास परिधान", service5:"फ्रॉक, बच्चों के कपड़े और सलवार सिलाई", service6:"साड़ी टैसल और फिनिशिंग" }
 };
 
 const pcStaticTranslations = [
   [".hero-copy .eyebrow","heroEyebrow"],[".hero-copy h1","heroTitle"],[".hero-description","heroDescription"],[".hero-copy .button-dark span:first-child","explore"],[".hero-note","heroNote"],
-  [".collection .section-topline .eyebrow","collectionEyebrow"],[".collection .section-heading-row h2","collectionTitle"],[".collection .section-heading-row > p","collectionDescription"],[".photo-disclaimer","photoDisclaimer"],
+  [".collection .section-topline .eyebrow","collectionEyebrow"],[".collection .section-index","sectionCollection"],[".services .section-index","sectionServices"],[".collection .section-heading-row h2","collectionTitle"],[".collection .section-heading-row > p","collectionDescription"],[".photo-disclaimer","photoDisclaimer"],
   [".craft-copy .eyebrow","craftEyebrow"],[".craft-copy h2","craftTitle"],[".craft-copy > p:not(.eyebrow)","craftDescription"],
   [".services .section-topline .eyebrow","servicesEyebrow"],[".services-heading h2","servicesTitle"],[".services-heading > p","servicesDescription"],
   [".contact-band .eyebrow","contactEyebrow"],[".contact-band h2","contactTitle"],[".contact-band > p:not(.eyebrow)","contactDescription"],[".contact-band .button span:first-child","whatsapp"],
@@ -851,6 +826,20 @@ window.changeLanguage = function (language) {
     contactWhatsApp.href = "https://wa.me/919550766784?text=" + encodeURIComponent(messages[language] || messages.en);
   }
 
+  const heroSlider = document.getElementById("heroSlider");
+  if (heroSlider) heroSlider.setAttribute("aria-label", language === "te" ? "పార్వతి క్రియేషన్స్ ప్రత్యేక డిజైన్లు" : language === "hi" ? "पार्वती क्रिएशन्स के खास डिज़ाइन" : "Parvathi Creations featured designs");
+  const heroLink = document.querySelector(".hero-slide-link");
+  if (heroLink) heroLink.setAttribute("aria-label", language === "te" ? "ఈ డిజైన్‌ను కలెక్షన్‌లో చూడండి" : language === "hi" ? "इस डिज़ाइन को कलेक्शन में देखें" : "Explore this design in the collection");
+  const heroPrev = document.getElementById("heroSlidePrev");
+  const heroNext = document.getElementById("heroSlideNext");
+  const heroDots = document.getElementById("heroSlideDots");
+  if (heroPrev) heroPrev.setAttribute("aria-label", language === "te" ? "మునుపటి డిజైన్" : language === "hi" ? "पिछला डिज़ाइन" : "Previous design");
+  if (heroNext) heroNext.setAttribute("aria-label", language === "te" ? "తదుపరి డిజైన్" : language === "hi" ? "अगला डिज़ाइन" : "Next design");
+  if (heroDots) heroDots.setAttribute("aria-label", language === "te" ? "ప్రత్యేక డిజైన్‌ను ఎంచుకోండి" : language === "hi" ? "खास डिज़ाइन चुनें" : "Choose featured design");
+  const logoImages = document.querySelectorAll(".brand img, .footer-brand img");
+  logoImages.forEach(function (img) { img.alt = language === "te" ? "పార్వతి క్రియేషన్స్ లోగో" : language === "hi" ? "पार्वती क्रिएशन्स लोगो" : "Parvathi Creations logo"; });
+  const heroImage = document.getElementById("heroSlideImage");
+  if (heroImage && !heroImage.dataset.designId) heroImage.alt = language === "te" ? "పార్వతి క్రియేషన్స్ బుటిక్ డిజైన్" : language === "hi" ? "पार्वती क्रिएशन्स बुटीक डिज़ाइन" : "Parvathi Creations boutique design";
   const label = document.querySelector('label[for="languageSelect"]');
   if (label) label.textContent = t.language;
   const welcomeTitle = document.getElementById("languageWelcomeTitle");
