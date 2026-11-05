@@ -158,3 +158,9 @@ a{color:inherit}
 .gallery-view-btn{white-space:nowrap}
 .gallery-view-btn.active,.gallery-view-btn[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff}
 @media(max-width:560px){.gallery-view-btn{white-space:normal;text-align:center}}
+
+
+/* Footer and language layout refinements */
+.footer-location{display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#6c665e;font-size:11px;line-height:1.6}
+.footer-location strong{color:var(--wine);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:560px){.site-footer{grid-template-columns:1fr;gap:15px;padding:30px 5% 22px}.site-footer>p{text-align:left}.footer-links{gap:14px 18px}.site-footer small{text-align:left}.footer-location{padding-top:2px}.language-picker{z-index:1}}
