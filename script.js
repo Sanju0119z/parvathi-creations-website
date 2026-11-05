@@ -95,6 +95,19 @@
     return value === true || (typeof value === "string" && value.trim().toLowerCase() === "true");
   }
 
+  function polishGalleryCopy(value, kind) {
+    const text = cleanText(value);
+    const normalised = text.replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, " ").trim();
+    if (kind === "name" && /^Lehanga$/i.test(normalised)) return "Lehenga";
+    const corrections = {
+      "This elegantly stiched frock is perfectly fit for parties is gives you of an amazing look it has puff seleves with the knee length frock": "This elegantly stitched knee-length frock is perfect for parties. Its puff sleeves give it a lovely, stylish look.",
+      "Can be stiched according to respective customer": "Can be stitched to each customer's measurements and preferences.",
+      "#Stiching only Lavender Pearl Blouse Details✨ 💜Sleeve:Sheer puff organza style with scattered floral embroidery and wide embroidered cuffs. 💜Back:Deep U-cut,pearl border,dori tie-up with fabric latkans,lower button placket.": "#Stitching only. Lavender Pearl Blouse details: Sleeves: Sheer puff organza with scattered floral embroidery and wide embroidered cuffs. Back: Deep U-cut with a pearl border, dori tie-up with fabric latkans, and a lower button placket.",
+      "Saree doal silk borrder leavy": "Saree with a dual-silk border and a rich, heavy look."
+    };
+    return corrections[normalised] || text;
+  }
+
   function toDesign(row) {
     let savedImages = row && row.image_urls;
     if (typeof savedImages === "string") {
@@ -105,7 +118,7 @@
     const storedCover = cleanText(row && row.image_url);
     const imageUrl = /^https?:\/\//i.test(storedCover) ? storedCover : (galleryImages[0] || "");
     if (imageUrl && !galleryImages.includes(imageUrl)) galleryImages.unshift(imageUrl);
-    const name = cleanText(row && row.name);
+    const name = polishGalleryCopy(row && row.name, "name");
     const categoryRaw = cleanText(row && row.category);
     const key = cats.keyFor(categoryRaw);
     return {
@@ -115,7 +128,7 @@
       categoryKey: key,
       categoryLabel: /^festival\s*banner$/i.test(categoryRaw) ? "Festival Greeting" : (key === cats.UNCATEGORIZED ? (categoryRaw || "Other") : cats.labelFor(key)),
       isFestivalBanner: /^festival\s*banner$/i.test(categoryRaw),
-      description: cleanText(row && row.description),
+      description: polishGalleryCopy(row && row.description, "description"),
       code: cleanText(row && row.design_code),
       price: cleanText(row && row.price),
       imageUrl: imageUrl,
@@ -188,19 +201,27 @@
     }
   }
 
-  function openWhatsApp(design) {
+  async function openWhatsApp(design) {
     if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) { window.alert(TEXT.contactUnavailable); return; }
     trackInterest("enquiry", design);
+    const popup = window.open("about:blank", "_blank");
+    if (popup) popup.opener = null;
     const language = pcCurrentLanguage();
-    const translatedName = pcTranslateDesignText(design.name || design.categoryLabel, language, "name");
-    const translatedCategory = pcTranslateDesignText(design.categoryLabel, language, "category");
+    const [translatedName, translatedCategory, translatedDescription] = await Promise.all([
+      pcTranslateDesignTextAsync(design.name || design.categoryLabel, language, "name"),
+      pcTranslateDesignTextAsync(design.categoryLabel, language, "category"),
+      design.description ? pcTranslateDesignTextAsync(design.description, language, "description") : Promise.resolve("")
+    ]);
+    if (pcCurrentLanguage() !== language) { if (popup && !popup.closed) popup.close(); return; }
     const parts = [pcUiText("message") + translatedName + " (" + translatedCategory + ")."];
     if (design.code) parts.push(pcUiText("code") + design.code + ".");
     if (design.price) parts.push(pcUiText("price") + design.price);
-    if (design.description) parts.push(pcUiText("description") + pcTranslateDesignText(design.description, language, "description"));
+    if (translatedDescription) parts.push(pcUiText("description") + translatedDescription);
     parts.push(pcCurrentLanguage() === "te" ? "చిత్రం: " + design.imageUrl : pcCurrentLanguage() === "hi" ? "तस्वीर: " + design.imageUrl : "Image: " + design.imageUrl);
     parts.push(pcUiText("details"));
-    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" ")), "_blank", "noopener,noreferrer");
+    const whatsappUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(parts.join(" "));
+    if (popup && !popup.closed) popup.location.href = whatsappUrl;
+    else window.location.href = whatsappUrl;
   }
 
   /* ---------- Photo details dialog ---------- */
@@ -225,8 +246,11 @@
     const closeDialog = () => {
       overlay.remove();
       document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("parvathi-language-changed", onLanguageChanged);
     };
     const onKeyDown = event => { if (event.key === "Escape") closeDialog(); };
+    const onLanguageChanged = () => { closeDialog(); openDesignDetails(design); };
+    document.addEventListener("parvathi-language-changed", onLanguageChanged);
     close.addEventListener("click", closeDialog);
 
     const media = document.createElement("div");
@@ -297,6 +321,19 @@
     document.addEventListener("keydown", onKeyDown);
     document.body.append(overlay);
     close.focus();
+    const detailsLanguage = pcCurrentLanguage();
+    Promise.all([
+      pcTranslateDesignTextAsync(design.name || design.categoryLabel, detailsLanguage, "name"),
+      pcTranslateDesignTextAsync(design.categoryLabel, detailsLanguage, "category"),
+      design.description ? pcTranslateDesignTextAsync(design.description, detailsLanguage, "description") : Promise.resolve(description.textContent)
+    ]).then(([translatedName, translatedCategory, translatedDescription]) => {
+      if (!overlay.isConnected || pcCurrentLanguage() !== detailsLanguage) return;
+      dialog.setAttribute("aria-label", translatedName + (detailsLanguage === "te" ? " వివరాలు" : detailsLanguage === "hi" ? " विवरण" : " details"));
+      photo.alt = translatedName + (detailsLanguage === "te" ? " డిజైన్" : detailsLanguage === "hi" ? " डिज़ైన్" : " design");
+      heading.textContent = translatedName;
+      category.textContent = translatedCategory;
+      description.textContent = translatedDescription;
+    });
   }
 
   /* ---------- Rendering ---------- */
@@ -313,36 +350,36 @@
         "Knee length frock":"మోకాలి పొడవు ఫ్రాక్",
         "White long Dress":"తెల్లని పొడవాటి డ్రెస్",
         "Happy dasara":"దసరా శుభాకాంక్షలు",
-        "Lehanga":"లెహంగా",
+        "Lehenga":"లెహంగా",
         "Maggam":"మగ్గం వర్క్",
         "Sweetheart Blouse":"హార్ట్ నెక్ బ్లౌజ్",
         "Cutwork scallop blouse":"కట్‌వర్క్ స్కాలోప్ బ్లౌజ్",
         "Multicolour saree":"బహుళ రంగుల చీర",
         "This silhouette is an Anarkali-style Gown Suit, a traditional South Asian attire known for its flared, floor-length umbrella cut paired with a simple neck line and matching dupatta. Style & Model Breakdown Neckline & Bodice: Features a clean scoop neck (wide U-shaped neckline) paired with a fitted chest region. Sleeve Design: Long, full-length fitted sleeves that create a streamlined aesthetic. Cut & Flare: High-waisted waistline featuring tight gathering that transitions into a wide, floor-length A-line flare (Umbrella cut). Fabric & Details: Crafted with a subtle, all-over tonal floral embroidery pattern, paired with a lightweight sheer dupatta wrapped neatly around the neck.":"ఈ డిజైన్ అనార్కలి శైలి గౌన్ సూట్. దక్షిణాసియా సంప్రదాయ దుస్తులైన ఇందులో, నేలవరకు వచ్చే గొడుగు ఆకారపు ఫ్లేర్‌తో పాటు సరళమైన మెడ డిజైన్ మరియు మ్యాచింగ్ దుపట్టా ఉంటాయి. డిజైన్ వివరాలు: మెడ మరియు పైభాగం: వెడల్పైన U ఆకారపు స్కూప్ నెక్‌తో పాటు శరీరానికి సరిపోయే ఫిట్. చేతుల డిజైన్: చక్కని ఆకృతిని ఇచ్చే పూర్తి పొడవైన ఫిట్ స్లీవ్స్. కట్ మరియు ఫ్లేర్: నడుము వద్ద గ్యాదరింగ్‌తో మొదలై, కిందికి విస్తరించే వెడల్పైన A-లైన్ గొడుగు కట్. వస్త్రం మరియు వివరాలు: మొత్తం మీద సున్నితమైన ఒకే టోన్ పూల ఎంబ్రాయిడరీ, మెడ చుట్టూ చక్కగా చుట్టిన తేలికపాటి పారదర్శక దుపట్టా.",
-        "This elegantly stiched frock is perfectly fit for parties is gives you of an amazing look it has puff seleves with the knee length frock":"పార్టీలకు చక్కగా సరిపోయే అందమైన మోకాలి పొడవు ఫ్రాక్ ఇది. పఫ్ స్లీవ్స్ ఈ ఫ్రాక్‌కు మరింత ఆకర్షణీయమైన రూపాన్ని ఇస్తాయి.",
-        "Can be stiched according to respective customer":"ప్రతి కస్టమర్ అభిరుచి మరియు కొలతలకు అనుగుణంగా కుట్టించవచ్చు.",
+        "This elegantly stitched knee-length frock is perfect for parties. Its puff sleeves give it a lovely, stylish look.":"పార్టీలకు చక్కగా సరిపోయే అందమైన మోకాలి పొడవు ఫ్రాక్ ఇది. పఫ్ స్లీవ్స్ ఈ ఫ్రాక్‌కు మరింత ఆకర్షణీయమైన రూపాన్ని ఇస్తాయి.",
+        "Can be stitched to each customer's measurements and preferences.":"ప్రతి కస్టమర్ అభిరుచి మరియు కొలతలకు అనుగుణంగా కుట్టించవచ్చు.",
         "Seasonal homepage greeting":"పండుగ సందర్భంగా హోమ్‌పేజీలో చూపించే శుభాకాంక్షల సందేశం.",
-        "#Stiching only Lavender Pearl Blouse Details✨ 💜Sleeve:Sheer puff organza style with scattered floral embroidery and wide embroidered cuffs. 💜Back:Deep U-cut,pearl border,dori tie-up with fabric latkans,lower button placket.":"కుట్టు మాత్రమే. లావెండర్ పెర్ల్ బ్లౌజ్ వివరాలు: చేతులు: అక్కడక్కడా పూల ఎంబ్రాయిడరీతో పారదర్శక ఆర్గన్జా పఫ్ స్లీవ్స్, వెడల్పైన ఎంబ్రాయిడరీ కఫ్స్. వెనుక భాగం: లోతైన U-కట్, ముత్యాల అంచు, దోరీ టై-అప్‌తో పాటు ఫాబ్రిక్ లట్కన్స్, కింద బటన్ల పట్టీ.",
+        "#Stitching only. Lavender Pearl Blouse details: Sleeves: Sheer puff organza with scattered floral embroidery and wide embroidered cuffs. Back: Deep U-cut with a pearl border, dori tie-up with fabric latkans, and a lower button placket.":"కుట్టు మాత్రమే. లావెండర్ పెర్ల్ బ్లౌజ్ వివరాలు: చేతులు: అక్కడక్కడా పూల ఎంబ్రాయిడరీతో పారదర్శక ఆర్గన్జా పఫ్ స్లీవ్స్, వెడల్పైన ఎంబ్రాయిడరీ కఫ్స్. వెనుక భాగం: లోతైన U-కట్, ముత్యాల అంచు, దోరీ టై-అప్‌తో పాటు ఫాబ్రిక్ లట్కన్స్, కింద బటన్ల పట్టీ.",
         "Customized according to measurements Design: Pastel yellow designer blouse with colorful floral embroidery. Neckline: Square neck with a scalloped border in the front, and a deep cut with gold dori and beaded tassels in the back. Finishing: Neat scalloped borders on the neckline, back, and sleeves. Sleeves: Elbow-length sleeves with matching floral threadwork and scalloped hems.":"కొలతలకు అనుగుణంగా కస్టమైజ్ చేయవచ్చు. డిజైన్: రంగురంగుల పూల ఎంబ్రాయిడరీతో పాస్టెల్ పసుపు రంగు డిజైనర్ బ్లౌజ్. మెడ డిజైన్: ముందు భాగంలో స్కాలోప్ అంచుతో చతురస్రాకార మెడ; వెనుక భాగంలో లోతైన కట్‌తో బంగారు దోరీ మరియు పూసల టాసెల్స్. ఫినిషింగ్: మెడ, వెనుక భాగం మరియు చేతుల వద్ద చక్కని స్కాలోప్ అంచులు. చేతులు: మ్యాచింగ్ పూల దారపు పనితో మోచేతి వరకు ఉండే స్లీవ్స్, స్కాలోప్ అంచులతో.",
-        "Saree doal silk borrder leavy":"డ్యూయల్ సిల్క్ బోర్డర్‌తో, హెవీ లుక్ కలిగిన చీర."
+        "Saree with a dual-silk border and a rich, heavy look.":"డ్యూయల్ సిల్క్ బోర్డర్‌తో, హెవీ లుక్ కలిగిన చీర."
       },
       hi: {
         "Long frock":"लंबी फ्रॉक",
         "Knee length frock":"घुटने तक की फ्रॉक",
         "White long Dress":"सफेद लंबी ड्रेस",
         "Happy dasara":"दशहरा की शुभकामनाएँ",
-        "Lehanga":"लहंगा",
+        "Lehenga":"लहंगा",
         "Maggam":"मग्गम वर्क",
         "Sweetheart Blouse":"हार्ट-नेक ब्लाउज़",
         "Cutwork scallop blouse":"कटवर्क स्कैलप ब्लाउज़",
         "Multicolour saree":"बहुरंगी साड़ी",
         "This silhouette is an Anarkali-style Gown Suit, a traditional South Asian attire known for its flared, floor-length umbrella cut paired with a simple neck line and matching dupatta. Style & Model Breakdown Neckline & Bodice: Features a clean scoop neck (wide U-shaped neckline) paired with a fitted chest region. Sleeve Design: Long, full-length fitted sleeves that create a streamlined aesthetic. Cut & Flare: High-waisted waistline featuring tight gathering that transitions into a wide, floor-length A-line flare (Umbrella cut). Fabric & Details: Crafted with a subtle, all-over tonal floral embroidery pattern, paired with a lightweight sheer dupatta wrapped neatly around the neck.":"यह अनारकली शैली का गाउन सूट है। इस पारंपरिक दक्षिण एशियाई परिधान में फर्श तक फैला छतरी जैसा घेर, साधारण नेकलाइन और मैचिंग दुपट्टा है। डिज़ाइन का विवरण: गला और ऊपरी हिस्सा: चौड़ी U-आकार की स्कूप नेकलाइन और शरीर के अनुरूप फिटिंग। आस्तीन: साफ़-सुथरा लुक देने वाली पूरी लंबाई की फिटेड आस्तीन। कट और घेर: कमर पर बारीक चुन्नटों से शुरू होकर नीचे तक फैलता हुआ A-लाइन छतरी कट। कपड़ा और बारीकियाँ: पूरे कपड़े पर हल्की टोनल फूलों की कढ़ाई और गले के चारों ओर करीने से लपेटा गया हल्का पारदर्शी दुपट्टा।",
-        "This elegantly stiched frock is perfectly fit for parties is gives you of an amazing look it has puff seleves with the knee length frock":"यह सुंदर घुटने तक की फ्रॉक पार्टियों के लिए बहुत अच्छी है। इसकी पफ आस्तीन इसे आकर्षक लुक देती हैं।",
-        "Can be stiched according to respective customer":"हर ग्राहक की पसंद और नाप के अनुसार सिलाई की जा सकती है।",
+        "This elegantly stitched knee-length frock is perfect for parties. Its puff sleeves give it a lovely, stylish look.":"यह सुंदर घुटने तक की फ्रॉक पार्टियों के लिए बहुत अच्छी है। इसकी पफ आस्तीन इसे आकर्षक लुक देती हैं।",
+        "Can be stitched to each customer's measurements and preferences.":"हर ग्राहक की पसंद और नाप के अनुसार सिलाई की जा सकती है।",
         "Seasonal homepage greeting":"त्योहार के अवसर पर होमपेज पर दिखाया जाने वाला शुभकामना संदेश।",
-        "#Stiching only Lavender Pearl Blouse Details✨ 💜Sleeve:Sheer puff organza style with scattered floral embroidery and wide embroidered cuffs. 💜Back:Deep U-cut,pearl border,dori tie-up with fabric latkans,lower button placket.":"केवल सिलाई। लैवेंडर पर्ल ब्लाउज़ का विवरण: आस्तीन: जगह-जगह फूलों की कढ़ाई वाला पारदर्शी ऑर्गेंज़ा पफ स्टाइल और चौड़े कढ़ाईदार कफ। पीछे: गहरी U-कट नेकलाइन, मोतियों की बॉर्डर, डोरी टाई-अप के साथ कपड़े की लटकन और नीचे बटनों की पट्टी।",
+        "#Stitching only. Lavender Pearl Blouse details: Sleeves: Sheer puff organza with scattered floral embroidery and wide embroidered cuffs. Back: Deep U-cut with a pearl border, dori tie-up with fabric latkans, and a lower button placket.":"केवल सिलाई। लैवेंडर पर्ल ब्लाउज़ का विवरण: आस्तीन: जगह-जगह फूलों की कढ़ाई वाला पारदर्शी ऑर्गेंज़ा पफ स्टाइल और चौड़े कढ़ाईदार कफ। पीछे: गहरी U-कट नेकलाइन, मोतियों की बॉर्डर, डोरी टाई-अप के साथ कपड़े की लटकन और नीचे बटनों की पट्टी।",
         "Customized according to measurements Design: Pastel yellow designer blouse with colorful floral embroidery. Neckline: Square neck with a scalloped border in the front, and a deep cut with gold dori and beaded tassels in the back. Finishing: Neat scalloped borders on the neckline, back, and sleeves. Sleeves: Elbow-length sleeves with matching floral threadwork and scalloped hems.":"नाप के अनुसार कस्टमाइज़ किया जा सकता है। डिज़ाइन: रंगीन फूलों की कढ़ाई वाला हल्का पेस्टल पीला डिज़ाइनर ब्लाउज़। गला: सामने स्कैलप बॉर्डर वाला चौकोर गला और पीछे गहरी कट डिज़ाइन के साथ सुनहरी डोरी व मोतियों की लटकन। फिनिशिंग: गले, पीछे और आस्तीन पर साफ़ स्कैलप बॉर्डर। आस्तीन: मैचिंग फूलों की धागे वाली कढ़ाई और स्कैलप किनारों के साथ कोहनी तक की आस्तीन।",
-        "Saree doal silk borrder leavy":"डुअल सिल्क बॉर्डर वाली साड़ी, हैवी लुक के साथ।"
+        "Saree with a dual-silk border and a rich, heavy look.":"डुअल सिल्क बॉर्डर वाली साड़ी, हैवी लुक के साथ।"
       }
     };
     if (publishedDesignTranslations[language] && publishedDesignTranslations[language][normalisedOriginal]) return publishedDesignTranslations[language][normalisedOriginal];
@@ -379,6 +416,50 @@
       hi: {like:"♡ मुझे यह डिज़ाइन पसंद है", liked:"♥ पसंद आया", enquire:"WhatsApp पर पूछताछ करें", message:"नमस्ते पार्वती क्रिएशन्स! मुझे इस डिज़ाइन के बारे में जानकारी चाहिए: ", code:"डिज़ाइन कोड: ", price:"कीमत: ₹", description:"विवरण: ", details:"कृपया और जानकारी साझा करें।"}
     };
     return (labels[pcCurrentLanguage()] || labels.en)[key] || labels.en[key] || "";
+  }
+
+  /* Automatic translation for new and edited gallery content. Results are cached per
+     language and source text, so future admin uploads need no manual translation. */
+  const PC_TRANSLATION_CACHE_KEY = "pcAutoTranslationCacheV1";
+  const pcTranslationPending = new Map();
+  function pcReadTranslationCache() {
+    try { const value = JSON.parse(localStorage.getItem(PC_TRANSLATION_CACHE_KEY) || "{}"); return value && typeof value === "object" ? value : {}; }
+    catch (_) { return {}; }
+  }
+  async function pcTranslateDesignTextAsync(value, language, kind) {
+    const original = typeof value === "string" ? value.trim() : "";
+    if (!original || language === "en") return original;
+    const known = pcTranslateDesignText(original, language, kind);
+    if (known && known !== original) return known;
+    const cache = pcReadTranslationCache();
+    const key = language + "|" + original;
+    if (cache[key]) return cache[key];
+    if (pcTranslationPending.has(key)) return pcTranslationPending.get(key);
+    const task = (async () => {
+      try {
+        const endpoint = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" + encodeURIComponent(language) + "&dt=t&q=" + encodeURIComponent(original);
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => controller.abort(), 15000);
+        let response;
+        try { response = await fetch(endpoint, { method: "GET", mode: "cors", signal: controller.signal, cache: "no-store" }); }
+        finally { window.clearTimeout(timer); }
+        if (!response.ok) throw new Error("Translation service returned " + response.status);
+        const payload = await response.json();
+        const translated = Array.isArray(payload) && Array.isArray(payload[0])
+          ? payload[0].map(part => Array.isArray(part) ? part[0] : "").join("").trim() : "";
+        if (!translated) throw new Error("Translation service returned empty text");
+        cache[key] = translated;
+        const keys = Object.keys(cache);
+        if (keys.length > 350) keys.slice(0, keys.length - 350).forEach(oldKey => delete cache[oldKey]);
+        try { localStorage.setItem(PC_TRANSLATION_CACHE_KEY, JSON.stringify(cache)); } catch (_) {}
+        return translated;
+      } catch (error) {
+        if (window.__PC_TRANSLATION_DEBUG__) console.warn("Automatic gallery translation failed; showing saved text instead.", error);
+        return known || original;
+      } finally { pcTranslationPending.delete(key); }
+    })();
+    pcTranslationPending.set(key, task);
+    return task;
   }
 
   function buildCard(design) {
@@ -431,6 +512,17 @@
     textWrap.append(heading, sub);
     label.append(textWrap);
     card.append(label);
+    const cardLanguage = pcCurrentLanguage();
+    Promise.all([
+      pcTranslateDesignTextAsync(design.name || design.categoryLabel, cardLanguage, "name"),
+      pcTranslateDesignTextAsync(design.categoryLabel, cardLanguage, "category")
+    ]).then(([translatedName, translatedCategory]) => {
+      if (!card.isConnected || pcCurrentLanguage() !== cardLanguage) return;
+      heading.textContent = translatedName;
+      sub.textContent = translatedCategory;
+      img.alt = translatedName + (cardLanguage === "te" ? " డిజైన్" : cardLanguage === "hi" ? " डिज़ाइन" : " design");
+      imageButton.setAttribute("aria-label", (cardLanguage === "te" ? "డిజైన్ వివరాలు చూడండి: " : cardLanguage === "hi" ? "डिज़ाइन विवरण देखें: " : "View details for ") + translatedName);
+    });
 
     const actions = document.createElement("div");
     actions.className = "design-actions";
@@ -622,6 +714,16 @@
       image.alt = [pcTranslateDesignText(design.name, activeLanguage, "name"), pcTranslateDesignText(design.categoryLabel, activeLanguage, "category"), activeLanguage === "te" ? "పార్వతి క్రియేషన్స్ డిజైన్" : activeLanguage === "hi" ? "पार्वती क्रिएशन्स डिज़ाइन" : "Parvathi Creations design"].filter(Boolean).join(" — ");
       name.textContent = pcTranslateDesignText(design.name || design.categoryLabel || "A design made with care", activeLanguage, "name");
       category.textContent = pcTranslateDesignText(design.categoryLabel || "Parvathi Creations", activeLanguage, "category");
+      const slideIndexAtRequest = heroSlideIndex;
+      Promise.all([
+        pcTranslateDesignTextAsync(design.name || design.categoryLabel || "A design made with care", activeLanguage, "name"),
+        pcTranslateDesignTextAsync(design.categoryLabel || "Parvathi Creations", activeLanguage, "category")
+      ]).then(([translatedName, translatedCategory]) => {
+        if (pcCurrentLanguage() !== activeLanguage || heroSlideIndex !== slideIndexAtRequest || !root.isConnected) return;
+        name.textContent = translatedName;
+        category.textContent = translatedCategory;
+        image.alt = [translatedName, translatedCategory, activeLanguage === "te" ? "పార్వతి క్రియేషన్స్ డిజైన్" : activeLanguage === "hi" ? "पार्वती क्रिएशन्स डिज़ाइन" : "Parvathi Creations design"].filter(Boolean).join(" — ");
+      });
       count.textContent = String(heroSlideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
       Array.from(dots.children).forEach((dot, index) => {
         dot.classList.toggle("active", index === heroSlideIndex);
